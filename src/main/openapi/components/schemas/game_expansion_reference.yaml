@@ -1,0 +1,10 @@
+type: object
+description: Reference to a game expansion by ID or name
+properties:
+  gameExpansionId:
+    type: string
+    format: uuid
+  gameExpansionName:
+    type: string
+minProperties: 1
+additionalProperties: false

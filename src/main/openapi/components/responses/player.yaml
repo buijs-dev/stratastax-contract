@@ -1,0 +1,5 @@
+description: Player retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/player.yaml

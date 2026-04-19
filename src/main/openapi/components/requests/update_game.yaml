@@ -1,0 +1,15 @@
+type: object
+properties:
+  name:
+    type: string
+  publisher:
+    type: string
+  description:
+    type: string
+  imageUrl:
+    type: string
+    format: uri
+  gameExtensions:
+    type: array
+    items:
+      $ref: ../schemas/game_extension.yaml

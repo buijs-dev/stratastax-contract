@@ -1,0 +1,6 @@
+name: updatedAt
+in: query
+required: false
+description: Filter by moment of last update
+schema:
+  $ref: ../schemas/date_time.yaml

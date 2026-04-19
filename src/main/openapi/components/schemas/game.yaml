@@ -1,0 +1,22 @@
+type: object
+required:
+  - publicId
+  - name
+  - publisher
+properties:
+  publicId:
+    type: string
+    format: uuid
+  name:
+    type: string
+  publisher:
+    type: string
+  description:
+    type: string
+  imageUrl:
+    type: string
+    format: uri
+  gameExtensions:
+    type: array
+    items:
+      $ref: game_extension.yaml

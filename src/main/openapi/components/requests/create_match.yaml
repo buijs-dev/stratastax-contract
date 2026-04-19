@@ -1,0 +1,26 @@
+type: object
+required:
+  - game
+  - date
+  - score
+  - playerScores
+properties:
+  game:
+    $ref: ../schemas/game_reference.yaml
+  score:
+    $ref: ../schemas/score_system.yaml
+  date:
+    $ref: ../schemas/date_time.yaml
+  visibility:
+    $ref: ../schemas/visibility.yaml
+    description: Defaults to PRIVATE if omitted
+    default: PRIVATE
+  playerScores:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../schemas/player_score_input.yaml
+  expansions:
+    type: array
+    items:
+      type: string

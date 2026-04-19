@@ -1,0 +1,11 @@
+type: object
+required:
+  - type
+  - outcome
+properties:
+  type:
+    type: string
+    enum: [WIN_LOSS]
+  outcome:
+    type: string
+    enum: [WIN, LOSS, DRAW]

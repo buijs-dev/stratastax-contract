@@ -1,0 +1,6 @@
+name: visibility
+in: query
+required: false
+description: Filter players by visibility
+schema:
+  $ref: ../schemas/visibility.yaml

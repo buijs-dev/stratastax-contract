@@ -1,0 +1,13 @@
+type: object
+required:
+  - player
+  - result
+  - rank
+properties:
+  rank:
+    type: integer
+    format: int32
+  player:
+    $ref: ./player_reference.yaml
+  result:
+    $ref: ./player_result.yaml

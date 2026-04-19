@@ -1,0 +1,29 @@
+name: sort
+in: query
+required: false
+description: >
+  Sort order for matches. Format: `field:direction`. Direction is ASC or DESC
+  (default ASC if omitted). Use a comma-separated list for multi-column sorting
+  — priority follows the parameter order.
+style: form
+explode: false
+schema:
+  type: array
+  items:
+    type: string
+    pattern: '^(displayName|createdAt|visibility)(:(ASC|DESC))?$'
+examples:
+  singleColumn:
+    summary: Sort by a single column
+    value:
+      - 'createdAt:DESC'
+  multiColumn:
+    summary: Sort by multiple columns
+    value:
+      - 'createdAt:DESC'
+      - 'visibility:ASC'
+  implicitDirection:
+    summary: Omitted direction defaults to ASC
+    value:
+      - 'displayName'
+      - 'visibility:DESC'

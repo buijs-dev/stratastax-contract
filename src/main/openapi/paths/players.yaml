@@ -1,0 +1,47 @@
+get:
+  summary: List players
+  operationId: listPlayers
+  tags:
+    - players
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_offset.yaml
+    - $ref: ../components/parameters/query_player_name.yaml
+    - $ref: ../components/parameters/query_player_sort.yaml
+    - $ref: ../components/parameters/query_search.yaml
+    - $ref: ../components/parameters/query_search_mode.yaml
+    - $ref: ../components/parameters/query_visibility.yaml
+    - $ref: ../components/parameters/query_user_id.yaml
+    - $ref: ../components/parameters/query_created_at.yaml
+    - $ref: ../components/parameters/query_created_by.yaml
+    - $ref: ../components/parameters/query_updated_at.yaml
+    - $ref: ../components/parameters/query_updated_by.yaml
+    - $ref: ../components/parameters/query_deleted_at.yaml
+    - $ref: ../components/parameters/query_deleted_by.yaml
+
+  responses:
+    '200':
+      $ref: ../components/responses/player_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+
+post:
+  summary: Create player
+  operationId: createPlayer
+  tags:
+    - players
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_player.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/player.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml

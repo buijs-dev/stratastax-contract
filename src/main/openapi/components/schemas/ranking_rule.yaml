@@ -1,0 +1,3 @@
+enum:
+  - HIGHEST_WINS
+  - LOWEST_WINS

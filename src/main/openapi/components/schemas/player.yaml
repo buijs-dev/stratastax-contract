@@ -1,0 +1,39 @@
+type: object
+required:
+  - publicId
+  - displayName
+  - visibility
+  - createdAt
+  - createdBy
+properties:
+  publicId:
+    type: string
+    format: uuid
+
+  displayName:
+    type: string
+
+  visibility:
+    $ref: ./visibility.yaml
+
+  userId:
+    type: string
+    format: uuid
+
+  createdAt:
+    $ref: ./date_time.yaml
+
+  createdBy:
+    $ref: ./user_id.yaml
+
+  updatedAt:
+    $ref: ./date_time.yaml
+
+  updatedBy:
+    $ref: ./user_id.yaml
+
+  deletedAt:
+    $ref: ./date_time.yaml
+
+  deletedBy:
+    $ref: ./user_id.yaml

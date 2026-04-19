@@ -1,0 +1,27 @@
+name: searchMode
+in: query
+required: false
+description: |
+  Controls how string matching is applied when using the `search` parameter.
+  - `contains`: Case-insensitive partial match (default)
+  - `exact`: Exact match
+  - `startsWith`: Value must start with input
+  - `rsql`: RSQL expression evaluated against all filterable fields
+
+  **RSQL conflict rule:** When `searchMode=rsql`, the `search` parameter must be
+  a valid RSQL expression. Any field that appears in the RSQL expression **must not**
+  also be provided as a separate query parameter in the same request. If a field
+  is present in both the RSQL expression and as an explicit query parameter, the
+  server returns `400 Bad Request` with an error identifying the conflicting field.
+
+  Example of an invalid request:
+  `?searchMode=rsql&search=gameName==Everdell&gameName=Catan`
+  → 400: `gameName` is present both as a query parameter and inside the RSQL expression.
+schema:
+  type: string
+  enum:
+    - exact
+    - contains
+    - startsWith
+    - rsql
+  default: contains

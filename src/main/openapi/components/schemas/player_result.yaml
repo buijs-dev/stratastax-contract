@@ -1,0 +1,16 @@
+type: object
+required:
+  - type
+properties:
+  type:
+    type: string
+    enum: [NUMERIC, TIME, TURNS, WIN_LOSS]
+
+discriminator:
+  propertyName: type
+
+oneOf:
+  - $ref: ./player_result_numeric.yaml
+  - $ref: ./player_result_time.yaml
+  - $ref: ./player_result_turns.yaml
+  - $ref: ./player_result_win_loss.yaml

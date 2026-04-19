@@ -1,0 +1,7 @@
+name: 'gameId'
+in: 'query'
+required: false
+description: 'Public game identifier'
+schema:
+  type: 'string'
+  format: 'uuid'

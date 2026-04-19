@@ -1,0 +1,7 @@
+name: 'publicId'
+in: 'query'
+required: false
+description: 'Public identifier'
+schema:
+  type: 'string'
+  format: 'uuid'

@@ -1,0 +1,43 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+
+get:
+  summary: Get match
+  operationId: getMatch
+  tags:
+    - matches
+  responses:
+    '200':
+      $ref: ../components/responses/match.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+
+put:
+  summary: Update match
+  operationId: updateMatch
+  tags:
+    - matches
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/update_match.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/match.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+
+delete:
+  summary: Delete match
+  operationId: deleteMatch
+  tags:
+    - matches
+  responses:
+    '204':
+      description: Deleted successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml

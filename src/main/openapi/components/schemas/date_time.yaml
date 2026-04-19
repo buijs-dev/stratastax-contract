@@ -1,0 +1,3 @@
+description: 'date-time (ISO 8601)'
+type: 'string'
+format: 'date-time'

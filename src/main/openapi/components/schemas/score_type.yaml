@@ -1,0 +1,5 @@
+enum:
+  - NUMERIC
+  - TIME
+  - TURNS
+  - WIN_LOSS

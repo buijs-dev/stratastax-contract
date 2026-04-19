@@ -1,0 +1,66 @@
+get:
+  summary: Get game by ID
+  operationId: getGame
+  tags:
+    - games
+  parameters:
+    - $ref: ../components/parameters/path_id.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/game.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+
+put:
+  summary: Update game
+  operationId: updateGame
+  tags:
+    - games
+  parameters:
+    - $ref: ../components/parameters/path_id.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/update_game.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/game.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+
+delete:
+  summary: Delete game
+  operationId: deleteGame
+  tags:
+    - games
+  parameters:
+    - $ref: ../components/parameters/path_id.yaml
+  responses:
+    '204':
+      description: Game deleted successfully
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

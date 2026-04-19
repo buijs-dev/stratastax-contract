@@ -1,0 +1,11 @@
+type: object
+required:
+  - type
+  - turns
+properties:
+  type:
+    type: string
+    enum: [TURNS]
+  turns:
+    type: integer
+    minimum: 0

@@ -1,0 +1,7 @@
+name: userId
+in: query
+required: false
+description: Filter by linked user identifier
+schema:
+  type: string
+  format: uuid

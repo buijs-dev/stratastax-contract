@@ -1,0 +1,53 @@
+type: object
+required:
+  - publicId
+  - game
+  - date
+  - createdAt
+  - createdBy
+  - visibility
+  - playerScores
+properties:
+  publicId:
+    type: string
+    format: uuid
+
+  game:
+    $ref: ./game_reference.yaml
+
+  date:
+    $ref: ./date_time.yaml
+
+  createdAt:
+    $ref: ./date_time.yaml
+
+  createdBy:
+    $ref: ./user_id.yaml
+
+  updatedAt:
+    $ref: ./date_time.yaml
+
+  updatedBy:
+    $ref: ./user_id.yaml
+
+  deletedAt:
+    $ref: ./date_time.yaml
+
+  deletedBy:
+    $ref: ./user_id.yaml
+
+  visibility:
+    $ref: ./visibility.yaml
+
+  status:
+    $ref: ./data_status.yaml
+
+  playerScores:
+    type: array
+    items:
+      $ref: ./player_score.yaml
+
+  expansions:
+    type: array
+    items:
+      $ref: ./game_expansion_reference.yaml

@@ -1,0 +1,14 @@
+description: 'Optimistic locking conflict'
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/problem_detail.yaml
+    examples:
+      conflict:
+        value:
+          type: 'https://errors.stratastax.io/conflict'
+          title: 'Failed to update resource'
+          status: 409
+          detail:
+            'The requested resource could not be updated because it has been
+            modified by another user.'

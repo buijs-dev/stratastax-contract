@@ -1,0 +1,8 @@
+name: q
+in: query
+required: true
+description: Partial name to match suggestions against (minimum 1 character)
+schema:
+  type: string
+  minLength: 1
+  maxLength: 100

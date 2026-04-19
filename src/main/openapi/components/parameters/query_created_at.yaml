@@ -1,0 +1,6 @@
+name: createdAt
+in: query
+required: false
+description: Filter by moment of creation
+schema:
+  $ref: ../schemas/date_time.yaml

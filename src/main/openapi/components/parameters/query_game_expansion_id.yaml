@@ -1,0 +1,14 @@
+name: gameExpansionId
+in: query
+required: false
+style: form
+explode: true
+description: >
+  Filter matches by game expansion identifier. Repeat to filter on multiple
+  expansions (OR logic — matches containing at least one of the given expansions
+  are returned).
+schema:
+  type: array
+  items:
+    type: string
+    format: uuid

@@ -1,0 +1,26 @@
+description: 'Request validation failed'
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/validation_problem_detail.yaml
+    examples:
+      bad_request:
+        value:
+          type: https://errors.stratastax.io/validation
+          title: Bad Request
+          status: 400
+          detail: Received invalid request data
+          errors:
+            - field: errors
+              message: missing required field
+      rsql_conflict:
+        value:
+          type: https://errors.stratastax.io/validation
+          title: Bad Request
+          status: 400
+          detail: Conflicting filter parameters detected
+          errors:
+            - field: gameName
+              message: >
+                'gameName' may not appear both as a query parameter and inside
+                the RSQL expression. Use one or the other.

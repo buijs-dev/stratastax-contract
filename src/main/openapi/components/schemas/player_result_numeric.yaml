@@ -1,0 +1,10 @@
+type: object
+required:
+  - type
+  - value
+properties:
+  type:
+    type: string
+    enum: [NUMERIC]
+  value:
+    type: number

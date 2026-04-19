@@ -1,0 +1,10 @@
+name: search
+in: query
+description:
+  'Free-text search across searchable fields. Supports partial matching
+  (case-insensitive).'
+required: false
+schema:
+  type: 'string'
+  minLength: 1
+  maxLength: 255

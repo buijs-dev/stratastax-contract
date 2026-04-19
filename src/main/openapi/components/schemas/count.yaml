@@ -1,0 +1,9 @@
+type: object
+required:
+  - count
+properties:
+  count:
+    type: integer
+    format: int64
+    minimum: 0
+    description: Total number of records matching the given filter criteria

@@ -1,0 +1,12 @@
+description: 'Unexpected server error'
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/problem_detail.yaml
+    examples:
+      conflict:
+        value:
+          type: 'https://errors.stratastax.io/internal'
+          title: 'Oops! Something went wrong.'
+          status: 500
+          detail: 'Try again later.'
