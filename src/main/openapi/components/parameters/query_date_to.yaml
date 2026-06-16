@@ -1,6 +1,0 @@
-name: 'dateTo'
-in: 'query'
-required: false
-description: 'Filter entities on or before this date-time (ISO 8601)'
-schema:
-  $ref: ../schemas/date_time.yaml

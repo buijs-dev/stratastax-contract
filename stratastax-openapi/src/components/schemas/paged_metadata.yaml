@@ -1,0 +1,24 @@
+type: object
+required:
+  - limit
+properties:
+  limit:
+    type: integer
+    format: int32
+    description: Maximum number of items returned in this page
+  prevCursor:
+    type:
+      - string
+      - 'null'
+    description: >
+      Opaque cursor to pass as the `cursor` query parameter to fetch the
+      previous page. Null when there is no previous results. Clients must not
+      parse or construct this value.
+  nextCursor:
+    type:
+      - string
+      - 'null'
+    description: >
+      Opaque cursor to pass as the `cursor` query parameter to fetch the next
+      page. Null when there are no more results. Clients must not parse or
+      construct this value.

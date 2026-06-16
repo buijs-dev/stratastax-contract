@@ -1,0 +1,12 @@
+type: object
+allOf:
+  - $ref: ./paged_metadata.yaml
+  - type: object
+    required:
+      - items
+    properties:
+      items:
+        type: array
+        description: Claim edges in this page
+        items:
+          $ref: ./claim_edge.yaml

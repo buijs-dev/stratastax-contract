@@ -1,0 +1,21 @@
+type: object
+required:
+  - id
+  - community
+  - proposedBy
+  - status
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  community:
+    $ref: ./community_ref.yaml
+  proposedBy:
+    $ref: ./user_ref.yaml
+  decidedBy:
+    $ref: ./user_ref.yaml
+  status:
+    $ref: ./approval_status.yaml
+  createdAt:
+    $ref: ./date_time.yaml

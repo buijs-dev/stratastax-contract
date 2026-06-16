@@ -1,0 +1,14 @@
+get:
+  summary: Get ghost player suggestions
+  operationId: getGhostPlayerSuggestions
+  tags:
+    - ghostPlayers
+  parameters:
+    - $ref: ../components/parameters/query_query.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/suggestion_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

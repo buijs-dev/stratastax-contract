@@ -1,0 +1,33 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: List memberships in a community
+  operationId: listMemberships
+  tags:
+    - memberships
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/membership_list.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Join a community directly (OPEN join policy)
+  operationId: joinCommunity
+  tags:
+    - memberships
+  responses:
+    '201':
+      $ref: ../components/responses/membership.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml

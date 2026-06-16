@@ -1,0 +1,48 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: Get community
+  operationId: getCommunity
+  tags:
+    - communities
+  responses:
+    '200':
+      $ref: ../components/responses/community.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+patch:
+  summary: Update community
+  operationId: updateCommunity
+  tags:
+    - communities
+  parameters:
+    - $ref: ../components/parameters/header_if_match.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/update_community.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/community.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+delete:
+  summary: Delete community
+  operationId: deleteCommunity
+  tags:
+    - communities
+  parameters:
+    - $ref: ../components/parameters/header_if_match.yaml
+  responses:
+    '204':
+      description: Deleted successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml

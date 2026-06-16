@@ -1,0 +1,5 @@
+description: Claim edge retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/claim_edge.yaml

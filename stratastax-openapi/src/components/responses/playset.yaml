@@ -1,0 +1,5 @@
+description: Playset retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/playset.yaml

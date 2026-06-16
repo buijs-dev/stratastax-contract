@@ -1,0 +1,7 @@
+name: userId
+in: path
+required: true
+description: Public user identifier
+schema:
+  type: string
+  format: uuid

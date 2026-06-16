@@ -1,0 +1,24 @@
+description:
+  Optimistic locking conflict, or the requested mutation is not allowed in the
+  resource's current state
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/problem_detail.yaml
+    examples:
+      concurrent_modification:
+        value:
+          type: https://errors.stratastax.io/conflict
+          title: Failed to update resource
+          status: 409
+          detail:
+            The requested resource could not be updated because it has been
+            modified by another user.
+      finalized_match:
+        value:
+          type: https://errors.stratastax.io/conflict
+          title: Match is finalized
+          status: 409
+          detail:
+            This match is FINALIZED; propose a change via POST
+            /matches/{id}/edits instead.

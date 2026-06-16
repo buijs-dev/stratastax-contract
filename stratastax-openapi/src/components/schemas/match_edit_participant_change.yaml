@@ -1,0 +1,14 @@
+type: object
+required:
+  - matchParticipantId
+properties:
+  matchParticipantId:
+    type: string
+    format: uuid
+  score:
+    type: number
+  rank:
+    type: integer
+    format: int32
+  outcome:
+    $ref: ./outcome.yaml

@@ -1,0 +1,16 @@
+type: object
+required:
+  - id
+  - community
+  - user
+  - joinedAt
+properties:
+  id:
+    type: string
+    format: uuid
+  community:
+    $ref: ./community_ref.yaml
+  user:
+    $ref: ./user_ref.yaml
+  joinedAt:
+    $ref: ./date_time.yaml

@@ -1,7 +1,0 @@
-type: object
-properties:
-  scoreType:
-    $ref: ./score_type.yaml
-
-  rankingRule:
-    $ref: ./ranking_rule.yaml

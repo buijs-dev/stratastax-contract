@@ -1,0 +1,24 @@
+type: object
+required:
+  - id
+  - ghostPlayer
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  ghostPlayer:
+    $ref: ./ghost_player_ref.yaml
+  score:
+    type: number
+  rank:
+    type: integer
+    format: int32
+  outcome:
+    $ref: ./outcome.yaml
+  disputeReason:
+    type: string
+  loadout:
+    $ref: ./loadout.yaml
+  createdAt:
+    $ref: ./date_time.yaml

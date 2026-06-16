@@ -1,0 +1,41 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: List expansions for a game
+  operationId: listExpansions
+  tags:
+    - expansions
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/expansion_list.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Create expansion for a game
+  operationId: createExpansion
+  tags:
+    - expansions
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_expansion.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/expansion.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

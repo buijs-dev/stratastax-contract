@@ -1,0 +1,22 @@
+type: object
+required:
+  - field
+  - code
+  - message
+properties:
+  field:
+    type: string
+    description: Field or property that failed validation
+  code:
+    type: string
+    description: >
+      Machine-readable validation error code, e.g. REQUIRED, VALUE_TOO_LONG,
+      INVALID_FORMAT, OUT_OF_RANGE. Canonical list is maintained per resource in
+      the documentation.
+  message:
+    type: string
+    description: Human readable validation message
+  rejectedValue:
+    description:
+      The actual value that failed validation. Omitted if the value is
+      sensitive.

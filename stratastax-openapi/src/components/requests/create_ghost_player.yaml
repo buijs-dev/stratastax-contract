@@ -1,0 +1,6 @@
+type: object
+required:
+  - displayName
+properties:
+  displayName:
+    $ref: ../schemas/display_name.yaml

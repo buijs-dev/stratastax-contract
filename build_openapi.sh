@@ -1,0 +1,1 @@
+./gradlew clean build -p "stratastax-openapi"

@@ -1,0 +1,12 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+delete:
+  summary: Revoke trusted editor access
+  operationId: revokeTrustedEditor
+  tags:
+    - trustedEditors
+  responses:
+    '204':
+      description: Revoked successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml

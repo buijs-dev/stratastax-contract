@@ -1,0 +1,8 @@
+allOf:
+  - $ref: ./problem_detail.yaml
+  - type: object
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: ./validation_error.yaml

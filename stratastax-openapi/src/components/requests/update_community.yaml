@@ -1,0 +1,11 @@
+type: object
+properties:
+  displayName:
+    $ref: ../schemas/display_name.yaml
+  description:
+    type: string
+  joinPolicy:
+    $ref: ../schemas/join_policy.yaml
+  adminGroupId:
+    type: string
+    format: uuid

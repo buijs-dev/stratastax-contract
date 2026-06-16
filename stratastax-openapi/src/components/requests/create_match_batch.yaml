@@ -1,0 +1,6 @@
+type: array
+description: Create multiple matches in a single request.
+minItems: 1
+maxItems: 50
+items:
+  $ref: ./create_match.yaml

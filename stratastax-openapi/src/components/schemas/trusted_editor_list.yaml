@@ -1,0 +1,12 @@
+type: object
+allOf:
+  - $ref: ./paged_metadata.yaml
+  - type: object
+    required:
+      - items
+    properties:
+      items:
+        type: array
+        description: Trusted editors in this page
+        items:
+          $ref: ./trusted_editor.yaml

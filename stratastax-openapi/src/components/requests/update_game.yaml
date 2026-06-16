@@ -1,0 +1,23 @@
+type: object
+properties:
+  displayName:
+    type: string
+  description:
+    type: string
+  minPlayers:
+    type: integer
+    format: int32
+  maxPlayers:
+    type: integer
+    format: int32
+  imageUrl:
+    type: string
+    format: uri
+  tags:
+    type: array
+    items:
+      type: string
+  scoreType:
+    $ref: ../schemas/score_type.yaml
+  winCondition:
+    $ref: ../schemas/win_condition.yaml

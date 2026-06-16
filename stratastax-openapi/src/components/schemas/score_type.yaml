@@ -1,0 +1,6 @@
+type: string
+enum:
+  - SCORE
+  - TIME
+  - TURNS
+  - WIN_LOSS

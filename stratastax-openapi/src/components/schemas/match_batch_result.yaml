@@ -1,0 +1,8 @@
+type: object
+required:
+  - results
+properties:
+  results:
+    type: array
+    items:
+      $ref: ./match_batch_result_item.yaml

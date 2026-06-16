@@ -1,8 +1,0 @@
-name: gameName
-in: query
-required: false
-description: Filter matches by game name (case-insensitive partial match)
-schema:
-  type: string
-  minLength: 1
-  maxLength: 255

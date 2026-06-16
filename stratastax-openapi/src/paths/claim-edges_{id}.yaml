@@ -1,0 +1,22 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: Get claim edge
+  operationId: getClaimEdge
+  tags:
+    - claimEdges
+  responses:
+    '200':
+      $ref: ../components/responses/claim_edge.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+delete:
+  summary: Revoke claim edge
+  operationId: revokeClaimEdge
+  tags:
+    - claimEdges
+  responses:
+    '204':
+      description: Claim edge revoked successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml

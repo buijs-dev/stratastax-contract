@@ -1,0 +1,5 @@
+description: Expansions retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/expansion_list.yaml

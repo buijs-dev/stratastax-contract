@@ -1,3 +1,0 @@
-type: string
-enum: [PRIVATE, PUBLIC, PRIVILEGED]
-default: PRIVATE

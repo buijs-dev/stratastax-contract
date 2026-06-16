@@ -6,4 +6,7 @@
 The REST API interface definition for the Stratastax platform.
 
 ## TODO
-- maven publish
+- maven publish openapi jar
+- maven publish schema jar
+- versioning strategy
+- publish openapi yaml and schema docs as zip on github?

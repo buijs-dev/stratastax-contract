@@ -1,0 +1,27 @@
+type: object
+required:
+  - id
+  - owner
+  - displayName
+  - joinPolicy
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  owner:
+    $ref: ./user_ref.yaml
+  adminGroup:
+    $ref: ./group_ref.yaml
+  displayName:
+    $ref: ./display_name.yaml
+  description:
+    type: string
+  joinPolicy:
+    $ref: ./join_policy.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml
+  deletedAt:
+    $ref: ./date_time.yaml

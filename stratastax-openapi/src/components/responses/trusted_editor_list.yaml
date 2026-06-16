@@ -1,0 +1,5 @@
+description: Trusted editors retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/trusted_editor_list.yaml

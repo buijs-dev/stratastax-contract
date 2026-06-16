@@ -1,0 +1,5 @@
+description: Match edit retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/match_edit.yaml

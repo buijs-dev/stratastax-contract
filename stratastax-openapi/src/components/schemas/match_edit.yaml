@@ -1,0 +1,32 @@
+type: object
+required:
+  - id
+  - matchId
+  - proposedBy
+  - status
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  matchId:
+    type: string
+    format: uuid
+  proposedBy:
+    $ref: ./user_ref.yaml
+  approvedBy:
+    $ref: ./user_ref.yaml
+  status:
+    $ref: ./approval_status.yaml
+  participantChanges:
+    type: array
+    items:
+      $ref: ./match_edit_participant_change.yaml
+  loadoutChanges:
+    type: array
+    items:
+      $ref: ./match_edit_loadout_change.yaml
+  playsetChange:
+    $ref: ./match_edit_playset_change.yaml
+  createdAt:
+    $ref: ./date_time.yaml

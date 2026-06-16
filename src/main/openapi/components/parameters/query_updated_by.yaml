@@ -1,6 +1,0 @@
-name: updatedBy
-in: query
-required: false
-description: Filter by the user who updated them
-schema:
-  $ref: ../schemas/user_id.yaml

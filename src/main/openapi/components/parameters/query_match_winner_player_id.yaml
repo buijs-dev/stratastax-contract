@@ -1,6 +1,0 @@
-name: winnerPlayerId
-in: query
-required: false
-schema:
-  type: string
-  format: uuid

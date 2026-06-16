@@ -1,5 +1,0 @@
-description: List of players
-content:
-  application/json:
-    schema:
-      $ref: ../schemas/player_list.yaml

@@ -1,0 +1,11 @@
+type: object
+required:
+  - matchParticipantId
+  - attributes
+properties:
+  matchParticipantId:
+    type: string
+    format: uuid
+  attributes:
+    type: object
+    additionalProperties: true

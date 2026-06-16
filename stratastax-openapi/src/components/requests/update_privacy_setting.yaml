@@ -1,0 +1,10 @@
+type: object
+properties:
+  level:
+    $ref: ../schemas/visibility.yaml
+  groupIds:
+    type: array
+    description: Only meaningful when level is PRIVILEGED_ACCESS
+    items:
+      type: string
+      format: uuid
