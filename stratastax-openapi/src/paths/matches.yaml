@@ -1,0 +1,37 @@
+get:
+  summary: List matches
+  operationId: listMatches
+  tags:
+    - matches
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/match_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Create match
+  operationId: createMatch
+  tags:
+    - matches
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_match.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/match.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

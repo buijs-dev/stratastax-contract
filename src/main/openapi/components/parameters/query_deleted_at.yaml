@@ -1,6 +1,0 @@
-name: deletedAt
-in: query
-required: false
-description: Filter by moment of deletion
-schema:
-  $ref: ../schemas/date_time.yaml

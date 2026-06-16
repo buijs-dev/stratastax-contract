@@ -1,0 +1,15 @@
+type: object
+properties:
+  displayName:
+    type: string
+  scenario:
+    type: string
+  variants:
+    type: array
+    items:
+      type: string
+  expansions:
+    type: array
+    items:
+      type: string
+      format: uuid

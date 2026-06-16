@@ -1,9 +1,0 @@
-type: object
-required:
-  - displayName
-  - visibility
-properties:
-  displayName:
-    $ref: ../schemas/display_name.yaml
-  visibility:
-    $ref: ../schemas/visibility.yaml

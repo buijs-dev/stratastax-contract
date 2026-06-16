@@ -1,6 +1,0 @@
-name: status
-in: query
-required: false
-description: Filter matches by data status
-schema:
-  $ref: ../schemas/data_status.yaml

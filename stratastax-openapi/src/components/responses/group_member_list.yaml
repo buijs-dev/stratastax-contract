@@ -1,0 +1,5 @@
+description: Group members retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/group_member_list.yaml

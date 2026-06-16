@@ -1,0 +1,5 @@
+description: Games retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/game_list.yaml

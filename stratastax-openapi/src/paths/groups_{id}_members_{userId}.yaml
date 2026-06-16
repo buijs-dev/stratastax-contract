@@ -1,0 +1,13 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_user_id.yaml
+delete:
+  summary: Remove member from group
+  operationId: removeGroupMember
+  tags:
+    - groups
+  responses:
+    '204':
+      description: Member removed successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml

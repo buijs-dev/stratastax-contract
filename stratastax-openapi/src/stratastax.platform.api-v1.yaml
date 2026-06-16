@@ -1,0 +1,128 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Stratastax API
+  contact:
+    name: Contact our support
+    email: info@buijs.dev
+    url: https://buijs.dev/
+  license:
+    name: Apache-2.0
+    url: https://github.com/buijs-dev/stratastax-contract/blob/develop/LICENSE
+  description: Match tracking API for the Stratastax engine platform.
+servers:
+  - url: https://stratastax.dev/rest
+security:
+  - bearerAuth: []
+tags:
+  - name: matches
+    description: Match tracking operations.
+  - name: matchEdits
+    description: Match edit proposal and approval workflow.
+  - name: games
+    description: Game catalogue.
+  - name: expansions
+    description: Game expansion management.
+  - name: playsets
+    description: Playset configuration management.
+  - name: ghostPlayers
+    description: Ghost player management.
+  - name: canonicalPlayers
+    description: Canonical player profile.
+  - name: trustedEditors
+    description: Trusted editor grant management.
+  - name: claimRequests
+    description: Ghost player claim request workflow.
+  - name: claimEdges
+    description: Active ghost player claim edges.
+  - name: privacySettings
+    description: Privacy configuration per data type.
+  - name: groups
+    description: Group management for privileged access control.
+  - name: communities
+    description: Community management.
+  - name: memberships
+    description: Community membership management.
+  - name: membershipRequests
+    description: Community membership request workflow.
+paths:
+  /api/v1/matches/count:
+    $ref: ./paths/matches_count.yaml
+  /api/v1/matches/{id}:
+    $ref: './paths/matches_{id}.yaml'
+  /api/v1/matches/{id}/finalize:
+    $ref: './paths/matches_{id}_finalize.yaml'
+  /api/v1/matches/{id}/edits:
+    $ref: './paths/matches_{id}_edits.yaml'
+  /api/v1/matches/{id}/edits/{editId}:
+    $ref: './paths/matches_{id}_edits_{editId}.yaml'
+  /api/v1/matches:
+    $ref: ./paths/matches.yaml
+  /api/v1/matches/batch:
+    $ref: ./paths/matches_batch.yaml
+  /api/v1/games/suggestions:
+    $ref: ./paths/games_suggestions.yaml
+  /api/v1/games/{id}:
+    $ref: './paths/games_{id}.yaml'
+  /api/v1/games/{id}/expansions:
+    $ref: './paths/games_{id}_expansions.yaml'
+  /api/v1/games/{id}/expansions/{expansionId}:
+    $ref: './paths/games_{id}_expansions_{expansionId}.yaml'
+  /api/v1/games:
+    $ref: ./paths/games.yaml
+  /api/v1/playsets:
+    $ref: ./paths/playsets.yaml
+  /api/v1/playsets/{id}:
+    $ref: './paths/playsets_{id}.yaml'
+  /api/v1/ghost-players/count:
+    $ref: ./paths/ghost-players_count.yaml
+  /api/v1/ghost-players/suggestions:
+    $ref: ./paths/ghost-players_suggestions.yaml
+  /api/v1/ghost-players/{id}:
+    $ref: './paths/ghost-players_{id}.yaml'
+  /api/v1/ghost-players:
+    $ref: ./paths/ghost-players.yaml
+  /api/v1/canonical-players/{id}:
+    $ref: './paths/canonical-players_{id}.yaml'
+  /api/v1/trusted-editors:
+    $ref: ./paths/trusted-editors.yaml
+  /api/v1/trusted-editors/{id}:
+    $ref: './paths/trusted-editors_{id}.yaml'
+  /api/v1/claim-requests:
+    $ref: ./paths/claim-requests.yaml
+  /api/v1/claim-requests/{id}:
+    $ref: './paths/claim-requests_{id}.yaml'
+  /api/v1/claim-edges:
+    $ref: ./paths/claim-edges.yaml
+  /api/v1/claim-edges/{id}:
+    $ref: './paths/claim-edges_{id}.yaml'
+  /api/v1/privacy-settings:
+    $ref: ./paths/privacy-settings.yaml
+  /api/v1/privacy-settings/{id}:
+    $ref: './paths/privacy-settings_{id}.yaml'
+  /api/v1/groups:
+    $ref: ./paths/groups.yaml
+  /api/v1/groups/{id}:
+    $ref: './paths/groups_{id}.yaml'
+  /api/v1/groups/{id}/members:
+    $ref: './paths/groups_{id}_members.yaml'
+  /api/v1/groups/{id}/members/{userId}:
+    $ref: './paths/groups_{id}_members_{userId}.yaml'
+  /api/v1/communities:
+    $ref: ./paths/communities.yaml
+  /api/v1/communities/{id}:
+    $ref: './paths/communities_{id}.yaml'
+  /api/v1/communities/{id}/memberships:
+    $ref: './paths/communities_{id}_memberships.yaml'
+  /api/v1/communities/{id}/memberships/{userId}:
+    $ref: './paths/communities_{id}_memberships_{userId}.yaml'
+  /api/v1/communities/{id}/membership-requests:
+    $ref: './paths/communities_{id}_membership-requests.yaml'
+  /api/v1/communities/{id}/membership-requests/{requestId}:
+    $ref: './paths/communities_{id}_membership-requests_{requestId}.yaml'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

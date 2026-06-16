@@ -1,0 +1,6 @@
+type: object
+required:
+  - trusteeUserId
+properties:
+  trusteeUserId:
+    $ref: ../schemas/user_id.yaml

@@ -1,0 +1,12 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: Get canonical player
+  operationId: getCanonicalPlayer
+  tags:
+    - canonicalPlayers
+  responses:
+    '200':
+      $ref: ../components/responses/canonical_player.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml

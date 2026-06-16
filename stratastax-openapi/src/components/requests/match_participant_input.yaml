@@ -1,0 +1,17 @@
+type: object
+required:
+  - ghostPlayerId
+properties:
+  ghostPlayerId:
+    type: string
+    format: uuid
+  score:
+    type: number
+  rank:
+    type: integer
+    format: int32
+  outcome:
+    $ref: ../schemas/outcome.yaml
+  loadoutAttributes:
+    type: object
+    additionalProperties: true

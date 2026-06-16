@@ -1,0 +1,5 @@
+description: Membership requests retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/membership_request_list.yaml

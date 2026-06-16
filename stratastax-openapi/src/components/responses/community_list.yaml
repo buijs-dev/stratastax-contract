@@ -1,0 +1,5 @@
+description: Communities retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/community_list.yaml

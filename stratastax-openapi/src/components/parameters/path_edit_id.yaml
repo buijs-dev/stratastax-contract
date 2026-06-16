@@ -1,0 +1,7 @@
+name: editId
+in: path
+required: true
+description: Public match edit identifier
+schema:
+  type: string
+  format: uuid

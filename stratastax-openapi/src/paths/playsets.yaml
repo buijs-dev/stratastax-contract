@@ -1,0 +1,37 @@
+get:
+  summary: List playsets
+  operationId: listPlaysets
+  tags:
+    - playsets
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/playset_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Create playset
+  operationId: createPlayset
+  tags:
+    - playsets
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_playset.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/playset.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

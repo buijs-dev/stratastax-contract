@@ -1,6 +1,0 @@
-name: type
-in: query
-required: true
-description: The entity type to search suggestions for
-schema:
-  $ref: ../schemas/suggestion.yaml

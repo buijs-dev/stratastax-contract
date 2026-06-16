@@ -1,0 +1,14 @@
+description: The If-Match header did not match the current resource's ETag
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/problem_detail.yaml
+    examples:
+      precondition_failed:
+        value:
+          type: https://errors.stratastax.io/precondition-failed
+          title: Resource has changed
+          status: 412
+          detail:
+            The resource was modified since you last fetched it. Reload and try
+            again.

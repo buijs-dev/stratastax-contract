@@ -1,0 +1,13 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_expansion_id.yaml
+get:
+  summary: Get expansion
+  operationId: getExpansion
+  tags:
+    - expansions
+  responses:
+    '200':
+      $ref: ../components/responses/expansion.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml

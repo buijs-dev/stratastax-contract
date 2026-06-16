@@ -1,9 +1,0 @@
-type: object
-required:
-  - player
-  - result
-properties:
-  player:
-    $ref: ./player_reference.yaml
-  result:
-    $ref: ./player_result.yaml

@@ -1,0 +1,21 @@
+type: object
+required:
+  - gameId
+  - variants
+properties:
+  gameId:
+    type: string
+    format: uuid
+  displayName:
+    type: string
+  variants:
+    type: array
+    items:
+      type: string
+  scenario:
+    type: string
+  expansions:
+    type: array
+    items:
+      type: string
+      format: uuid

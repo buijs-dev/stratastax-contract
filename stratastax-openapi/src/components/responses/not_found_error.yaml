@@ -1,0 +1,12 @@
+description: Resource not found
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/problem_detail.yaml
+    examples:
+      not_found:
+        value:
+          type: https://errors.stratastax.io/not-found
+          title: Resource not found
+          status: 404
+          detail: The requested resource could not be found

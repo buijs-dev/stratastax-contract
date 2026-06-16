@@ -1,0 +1,48 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: Get ghost player
+  operationId: getGhostPlayer
+  tags:
+    - ghostPlayers
+  responses:
+    '200':
+      $ref: ../components/responses/ghost_player.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+patch:
+  summary: Update ghost player
+  operationId: updateGhostPlayer
+  tags:
+    - ghostPlayers
+  parameters:
+    - $ref: ../components/parameters/header_if_match.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/update_ghost_player.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/ghost_player.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+delete:
+  summary: Delete ghost player
+  operationId: deleteGhostPlayer
+  tags:
+    - ghostPlayers
+  parameters:
+    - $ref: ../components/parameters/header_if_match.yaml
+  responses:
+    '204':
+      description: Deleted successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml

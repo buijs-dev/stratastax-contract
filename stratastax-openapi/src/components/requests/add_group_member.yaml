@@ -1,0 +1,6 @@
+type: object
+required:
+  - userId
+properties:
+  userId:
+    $ref: ../schemas/user_id.yaml

@@ -1,0 +1,17 @@
+get:
+  summary: List claim edges
+  operationId: listClaimEdges
+  tags:
+    - claimEdges
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/claim_edge_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

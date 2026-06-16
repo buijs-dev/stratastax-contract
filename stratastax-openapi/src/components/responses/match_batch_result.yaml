@@ -1,0 +1,6 @@
+description:
+  Batch match creation result (some items may have failed independently)
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/match_batch_result.yaml

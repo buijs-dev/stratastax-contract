@@ -1,0 +1,13 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_user_id.yaml
+delete:
+  summary: Leave or remove a member from a community
+  operationId: removeMembership
+  tags:
+    - memberships
+  responses:
+    '204':
+      description: Membership removed successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml

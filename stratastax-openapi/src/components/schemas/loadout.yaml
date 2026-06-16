@@ -1,0 +1,14 @@
+type: object
+required:
+  - id
+  - attributes
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  attributes:
+    type: object
+    additionalProperties: true
+  createdAt:
+    $ref: ./date_time.yaml

@@ -1,0 +1,8 @@
+name: If-Match
+in: header
+required: true
+description: >
+  ETag of the resource being modified, for optimistic concurrency control.
+  Obtain this from the ETag response header of a previous GET/PATCH.
+schema:
+  type: string

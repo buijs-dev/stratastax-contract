@@ -1,0 +1,5 @@
+description: Groups retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/group_list.yaml

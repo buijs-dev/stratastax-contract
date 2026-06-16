@@ -1,0 +1,18 @@
+[versions]
+java = "25"
+gradle-node = "7.1.0"
+kotlin = "2.3.20"
+node = "24.11.1"
+spotless = "8.2.1"
+stratastax-contract-v1 = "1.1.12-SNAPSHOT"
+
+[libraries]
+# Plugins that are added as dependencies in the root build.gradle.kts so they can be applied as plugin by scripts in src/main/kotlin
+kotlin-plugin = { group = "org.jetbrains.kotlin.jvm", name = "org.jetbrains.kotlin.jvm.gradle.plugin", version.ref = "kotlin" }
+node-plugin = { group = "com.github.node-gradle.node", name = "com.github.node-gradle.node.gradle.plugin", version.ref = "gradle-node" }
+spotless-plugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+
+[plugins]
+
+
+[bundles]

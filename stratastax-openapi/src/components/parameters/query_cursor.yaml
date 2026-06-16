@@ -1,0 +1,9 @@
+name: cursor
+in: query
+required: false
+description: >
+  Opaque cursor from a previous response's nextCursor. Omit to fetch the first
+  page. Clients must treat this value as opaque and only pass back what was
+  previously returned.
+schema:
+  type: string

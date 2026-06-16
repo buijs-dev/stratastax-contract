@@ -1,0 +1,34 @@
+type: object
+required:
+  - id
+  - owner
+  - game
+  - variants
+  - expansions
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  owner:
+    $ref: ./user_ref.yaml
+  game:
+    $ref: ./game_ref.yaml
+  displayName:
+    type: string
+  variants:
+    type: array
+    items:
+      type: string
+  scenario:
+    type: string
+  expansions:
+    type: array
+    items:
+      $ref: ./expansion_ref.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml
+  deletedAt:
+    $ref: ./date_time.yaml

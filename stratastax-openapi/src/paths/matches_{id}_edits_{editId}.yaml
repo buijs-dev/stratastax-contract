@@ -1,0 +1,33 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_edit_id.yaml
+get:
+  summary: Get match edit
+  operationId: getMatchEdit
+  tags:
+    - matchEdits
+  responses:
+    '200':
+      $ref: ../components/responses/match_edit.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+patch:
+  summary: Decide on a match edit (approve or reject)
+  operationId: decideMatchEdit
+  tags:
+    - matchEdits
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/decide_match_edit.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/match_edit.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml

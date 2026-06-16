@@ -1,6 +1,0 @@
-name: deletedBy
-in: query
-required: false
-description: Filter by the user who deleted them
-schema:
-  $ref: ../schemas/user_id.yaml

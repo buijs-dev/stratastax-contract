@@ -1,7 +1,0 @@
-description: List of games retrieved successfully
-content:
-  application/json:
-    schema:
-      type: array
-      items:
-        $ref: ../schemas/game.yaml

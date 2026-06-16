@@ -1,9 +1,0 @@
-name: winnerPlayerName
-in: query
-required: false
-description:
-  Filter matches by winner player name (case-insensitive partial match)
-schema:
-  type: string
-  minLength: 1
-  maxLength: 255

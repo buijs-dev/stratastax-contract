@@ -1,0 +1,32 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: Get claim request
+  operationId: getClaimRequest
+  tags:
+    - claimRequests
+  responses:
+    '200':
+      $ref: ../components/responses/claim_request.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+patch:
+  summary: Decide on a claim request (approve or reject)
+  operationId: decideClaimRequest
+  tags:
+    - claimRequests
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/decide_claim_request.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/claim_request.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml

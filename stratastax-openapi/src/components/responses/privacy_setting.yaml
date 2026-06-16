@@ -1,0 +1,5 @@
+description: Privacy setting retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/privacy_setting.yaml

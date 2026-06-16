@@ -1,0 +1,5 @@
+description: Ghost players retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ghost_player_list.yaml

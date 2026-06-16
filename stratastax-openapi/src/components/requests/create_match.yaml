@@ -1,0 +1,25 @@
+type: object
+required:
+  - gameId
+  - playedAt
+  - participants
+properties:
+  gameId:
+    type: string
+    format: uuid
+  playedAt:
+    $ref: ../schemas/date_time.yaml
+  participants:
+    type: array
+    minItems: 1
+    items:
+      $ref: ./match_participant_input.yaml
+  playsetId:
+    type: string
+    format: uuid
+  communityId:
+    type: string
+    format: uuid
+  editRequestsEnabled:
+    type: boolean
+    default: true

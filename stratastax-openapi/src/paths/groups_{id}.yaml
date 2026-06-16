@@ -1,0 +1,48 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: Get group
+  operationId: getGroup
+  tags:
+    - groups
+  responses:
+    '200':
+      $ref: ../components/responses/group.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+patch:
+  summary: Update group
+  operationId: updateGroup
+  tags:
+    - groups
+  parameters:
+    - $ref: ../components/parameters/header_if_match.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/update_group.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/group.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+delete:
+  summary: Delete group
+  operationId: deleteGroup
+  tags:
+    - groups
+  parameters:
+    - $ref: ../components/parameters/header_if_match.yaml
+  responses:
+    '204':
+      description: Deleted successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml

@@ -1,0 +1,4 @@
+type: string
+enum:
+  - HIGHER_WINS
+  - LOWER_WINS

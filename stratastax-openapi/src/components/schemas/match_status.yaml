@@ -1,0 +1,8 @@
+type: string
+description: >
+  DRAFT matches are freely mutable directly via PATCH. Once a match is finalized
+  it becomes immutable except through the match-edit proposal and approval
+  workflow.
+enum:
+  - DRAFT
+  - FINALIZED

@@ -1,0 +1,48 @@
+parameters:
+  - $ref: ../components/parameters/path_id.yaml
+get:
+  summary: Get privacy setting
+  operationId: getPrivacySetting
+  tags:
+    - privacySettings
+  responses:
+    '200':
+      $ref: ../components/responses/privacy_setting.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+patch:
+  summary: Update privacy setting
+  operationId: updatePrivacySetting
+  tags:
+    - privacySettings
+  parameters:
+    - $ref: ../components/parameters/header_if_match.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/update_privacy_setting.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/privacy_setting.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+delete:
+  summary: Delete privacy setting
+  operationId: deletePrivacySetting
+  tags:
+    - privacySettings
+  parameters:
+    - $ref: ../components/parameters/header_if_match.yaml
+  responses:
+    '204':
+      description: Deleted successfully
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
