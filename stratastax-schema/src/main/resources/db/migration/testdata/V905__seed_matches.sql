@@ -16,6 +16,7 @@ DECLARE
     recorder_id             BIGINT;
     match_row_id            BIGINT;
     playset_row_id          BIGINT;
+    loadout_row_id          BIGINT;
     use_community           BOOLEAN;
     recorder_ghost_ids      BIGINT[];
     selected_ghost_ids      BIGINT[];
@@ -77,29 +78,30 @@ BEGIN
         win_index := 1 + floor(random() * GREATEST(participant_count, 1))::INT;
 
         FOR j IN 1..COALESCE(array_length(selected_ghost_ids, 1), 0) LOOP
-            IF chosen_score_type = 'WIN_LOSS' THEN
-                INSERT INTO match_participant (match_id, ghost_player_id, outcome, version)
-                VALUES (match_row_id, selected_ghost_ids[j], CASE WHEN j = win_index THEN 'WIN' ELSE 'LOSS' END, 0);
-            ELSIF chosen_score_type = 'SCORE' THEN
-                raw_score := round((random() * 190 + 10)::NUMERIC, 0);
-                INSERT INTO match_participant (match_id, ghost_player_id, score, version)
-                VALUES (match_row_id, selected_ghost_ids[j], raw_score, 0);
-            ELSIF chosen_score_type = 'TIME' THEN
-                raw_score := round((random() * 550 + 50)::NUMERIC, 0); -- seconds
-                INSERT INTO match_participant (match_id, ghost_player_id, score, version)
-                VALUES (match_row_id, selected_ghost_ids[j], raw_score, 0);
-            ELSE -- TURNS
-                raw_score := round((random() * 40 + 5)::NUMERIC, 0);
-                INSERT INTO match_participant (match_id, ghost_player_id, score, version)
-                VALUES (match_row_id, selected_ghost_ids[j], raw_score, 0);
-            END IF;
+            loadout_row_id := NULL;
 
             -- Occasional Loadout for faction-driven games.
             IF chosen_game_id = ANY(faction_game_ids) AND random() < 0.8 THEN
-                INSERT INTO loadout (match_participant_id, attributes, version)
-                SELECT mp.id, jsonb_build_object('faction', factions[1 + floor(random() * array_length(factions, 1))::INT]), 0
-                FROM match_participant mp
-                WHERE mp.match_id = match_row_id AND mp.ghost_player_id = selected_ghost_ids[j];
+                INSERT INTO loadout (attributes, version)
+                VALUES (jsonb_build_object('faction', factions[1 + floor(random() * array_length(factions, 1))::INT]), 0)
+                RETURNING id INTO loadout_row_id;
+            END IF;
+
+            IF chosen_score_type = 'WIN_LOSS' THEN
+                INSERT INTO match_participant (match_id, ghost_player_id, loadout_id, outcome, version)
+                VALUES (match_row_id, selected_ghost_ids[j], loadout_row_id, CASE WHEN j = win_index THEN 'WIN' ELSE 'LOSS' END, 0);
+            ELSIF chosen_score_type = 'SCORE' THEN
+                raw_score := round((random() * 190 + 10)::NUMERIC, 0);
+                INSERT INTO match_participant (match_id, ghost_player_id, loadout_id, score, version)
+                VALUES (match_row_id, selected_ghost_ids[j], loadout_row_id, raw_score, 0);
+            ELSIF chosen_score_type = 'TIME' THEN
+                raw_score := round((random() * 550 + 50)::NUMERIC, 0); -- seconds
+                INSERT INTO match_participant (match_id, ghost_player_id, loadout_id, score, version)
+                VALUES (match_row_id, selected_ghost_ids[j], loadout_row_id, raw_score, 0);
+            ELSE -- TURNS
+                raw_score := round((random() * 40 + 5)::NUMERIC, 0);
+                INSERT INTO match_participant (match_id, ghost_player_id, loadout_id, score, version)
+                VALUES (match_row_id, selected_ghost_ids[j], loadout_row_id, raw_score, 0);
             END IF;
         END LOOP;
     END LOOP;

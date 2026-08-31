@@ -28,8 +28,8 @@ These scripts define the core Stratastax domain model.
 ### Match & Gaming History
 
 -   **`V11__create_match.sql`**: The aggregate root for gaming history.
--   **`V12__create_match_participant.sql`**: Records a player's role and result in a Match. References GhostPlayers.
--   **`V13__create_loadout.sql`**: Per-player configuration (faction, character, etc.) for a match participant.
+-   **`V13__create_match_participant.sql`**: Records a player's role and result in a Match. References GhostPlayers.
+-   **`V12__create_match_loadout.sql`**: Per-player configuration (faction, character, etc.) for a match participant.
 -   **`V14__create_claim_request.sql`**: Proposed links between a CanonicalPlayer and GhostPlayers.
 -   **`V15__create_claim_edge.sql`**: The approved, revocable relationship between a CanonicalPlayer and a GhostPlayer.
 -   **`V16__create_match_edit.sql`**: Proposed changes to recorded Matches. Uses three fully normalized child tables rather than a JSONB blob: `match_edit_participant_change` (score/rank/outcome), `match_edit_loadout_change` (loadout attributes), and `match_edit_playset_change` (Playset reference). The change set is a genuine closed set, so FK-validated tables are both more explicit and no larger than a JSONB approach.

@@ -13,6 +13,7 @@ CREATE TABLE match (
     last_edited_at          TIMESTAMPTZ,
     last_edited_by_user_id  BIGINT,
     created_at              TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at              TIMESTAMPTZ,
     version                 BIGINT NOT NULL,
     CONSTRAINT fk_match_game_id_ref_game_id FOREIGN KEY (game_id) REFERENCES game (id),
     CONSTRAINT fk_match_playset_id_ref_playset_id FOREIGN KEY (playset_id) REFERENCES playset (id),

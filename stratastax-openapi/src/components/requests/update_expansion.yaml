@@ -1,0 +1,9 @@
+type: object
+properties:
+  displayName:
+    type: string
+  description:
+    type: string
+  imageUrl:
+    type: string
+    format: uri

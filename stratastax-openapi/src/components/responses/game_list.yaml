@@ -1,4 +1,4 @@
-description: Games retrieved successfully
+description: List of games
 content:
   application/json:
     schema:
