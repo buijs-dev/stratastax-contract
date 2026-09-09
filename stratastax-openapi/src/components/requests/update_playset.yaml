@@ -1,15 +1,16 @@
 type: object
 properties:
   displayName:
-    type: string
+    type: [string, "null"]
   scenario:
-    type: string
+    type: [string, "null"]
   variants:
-    type: array
+    type: [array, "null"]
     items:
       type: string
   expansions:
-    type: array
+    type: [array, "null"]
     items:
       type: string
       format: uuid
+

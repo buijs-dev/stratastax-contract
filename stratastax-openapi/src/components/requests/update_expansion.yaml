@@ -1,9 +1,9 @@
 type: object
 properties:
   displayName:
-    type: string
+    type: [string, "null"]
   description:
-    type: string
+    type: [string, "null"]
   imageUrl:
-    type: string
+    type: [string, "null"]
     format: uri

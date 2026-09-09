@@ -35,6 +35,10 @@ properties:
     $ref: ./user_ref.yaml
   createdAt:
     $ref: ./date_time.yaml
+  expansions:
+    type: array
+    items:
+      $ref: ./expansion_ref.yaml
   participants:
     type: array
     minItems: 1

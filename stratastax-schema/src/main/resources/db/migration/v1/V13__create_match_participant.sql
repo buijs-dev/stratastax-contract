@@ -17,7 +17,7 @@ CREATE TABLE match_participant (
     UNIQUE (match_id, ghost_player_id),
     CONSTRAINT fk_match_participant_match_id_ref_match_id FOREIGN KEY (match_id) REFERENCES match (id),
     CONSTRAINT fk_match_participant_ghost_player_id_ref_ghost_player_id FOREIGN KEY (ghost_player_id) REFERENCES ghost_player (id),
-    CONSTRAINT fk_match_participant_loadout_id_ref_loadout_id FOREIGN KEY (loadout_id) REFERENCES loadout (id),
+    CONSTRAINT fk_match_participant_loadout_id_ref_loadout_id FOREIGN KEY (loadout_id) REFERENCES match_loadout (id),
     CONSTRAINT chk_match_participant_outcome CHECK (outcome IS NULL OR outcome IN ('WIN', 'LOSS'))
 );
 

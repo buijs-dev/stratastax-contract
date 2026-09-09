@@ -2,25 +2,49 @@ type: object
 description: >
   Update match fields. While the match has status DRAFT, all fields below may be
   updated directly. Once the match is FINALIZED, only playedAt and
-  editRequestsEnabled remain directly editable — attempting to change gameId,
+  editRequestsEnabled remain directly editable — attempting to change
   playsetId, communityId or participants on a finalized match returns 409
   Conflict; use POST /matches/{id}/edits instead.
 properties:
-  gameId:
-    type: string
-    format: uuid
   playsetId:
-    type: string
+    type: [string, "null"]
     format: uuid
+
   communityId:
-    type: string
+    type: [string, "null"]
     format: uuid
+
   playedAt:
-    $ref: ../schemas/date_time.yaml
+    anyOf:
+      - $ref: ../schemas/date_time.yaml
+      - type: "null"
+
   editRequestsEnabled:
-    type: boolean
+    type: [boolean, "null"]
+
+  expansions:
+    type: [array, "null"]
+    items:
+      type: string
+      format: uuid
+    description: |
+      Replaces the complete expansion collection.
+
+      If omitted, the existing expansions remain unchanged.
+      If provided, the complete expansion collection is replaced
+      by the supplied collection.
+
   participants:
-    type: array
+    type: [array, "null"]
     minItems: 1
+    description: |
+      Replaces the complete participant collection.
+
+      If omitted, the existing participants remain unchanged.
+      If provided, the complete participant collection is replaced
+      by the supplied collection.
+
+      Each participant must be fully specified. Partial participant
+      updates are not supported while the match is in DRAFT status.
     items:
       $ref: ./match_participant_input.yaml

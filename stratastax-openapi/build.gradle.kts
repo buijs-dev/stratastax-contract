@@ -15,7 +15,7 @@ val bundleOpenApi = tasks.register<NpxTask>("bundleOpenApi") {
     group = "openapi"
     description = "Bundle OpenAPI into single file"
 
-    inputs.file(openApiInput)
+    inputs.dir(layout.projectDirectory.dir("src")).withPropertyName("openApiSources")
     outputs.file(bundledFile)
 
     dependsOn("npmInstall")

@@ -26,3 +26,14 @@ CREATE INDEX ix_match_recorder_user_id ON match (recorder_user_id);
 CREATE INDEX ix_match_game_id ON match (game_id);
 CREATE INDEX ix_match_community_id ON match (community_id);
 CREATE INDEX ix_match_playset_id ON match (playset_id);
+
+CREATE TABLE match_expansion (
+    match_id     BIGINT NOT NULL,
+    expansion_id BIGINT NOT NULL,
+
+    PRIMARY KEY (match_id, expansion_id),
+    CONSTRAINT fk_match_expansion_match_id_ref_match_id FOREIGN KEY (match_id) REFERENCES match (id),
+    CONSTRAINT fk_match_expansion_expansion_id_ref_expansion_id FOREIGN KEY (expansion_id) REFERENCES expansion (id)
+);
+
+CREATE INDEX ix_match_expansion_expansion_id ON match_expansion (expansion_id);

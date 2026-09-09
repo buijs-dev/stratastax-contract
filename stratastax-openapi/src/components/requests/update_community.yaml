@@ -1,11 +1,15 @@
 type: object
 properties:
   displayName:
-    $ref: ../schemas/display_name.yaml
+    anyOf:
+      - $ref: ../schemas/display_name.yaml
+      - type: "null"
   description:
-    type: string
+    type: [string, "null"]
   joinPolicy:
-    $ref: ../schemas/join_policy.yaml
+    anyOf:
+      - $ref: ../schemas/join_policy.yaml
+      - type: "null"
   adminGroupId:
-    type: string
+    type: [string, "null"]
     format: uuid

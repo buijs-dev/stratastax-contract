@@ -2,7 +2,7 @@ type: object
 required:
   - ghostPlayerId
 properties:
-  ghostPlayerId:
+  playerId:
     type: string
     format: uuid
   score:

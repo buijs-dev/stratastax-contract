@@ -82,7 +82,7 @@ BEGIN
 
             -- Occasional Loadout for faction-driven games.
             IF chosen_game_id = ANY(faction_game_ids) AND random() < 0.8 THEN
-                INSERT INTO loadout (attributes, version)
+                INSERT INTO match_loadout (attributes, version)
                 VALUES (jsonb_build_object('faction', factions[1 + floor(random() * array_length(factions, 1))::INT]), 0)
                 RETURNING id INTO loadout_row_id;
             END IF;

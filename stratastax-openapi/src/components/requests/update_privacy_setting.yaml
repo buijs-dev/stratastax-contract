@@ -1,9 +1,11 @@
 type: object
 properties:
   level:
-    $ref: ../schemas/visibility.yaml
+    anyOf:
+      - $ref: ../schemas/visibility.yaml
+      - type: "null"
   groupIds:
-    type: array
+    type: [array, "null"]
     description: Only meaningful when level is PRIVILEGED_ACCESS
     items:
       type: string

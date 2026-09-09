@@ -1,23 +1,27 @@
 type: object
 properties:
   displayName:
-    type: string
+    type: [string, "null"]
   description:
-    type: string
+    type: [string, "null"]
   minPlayers:
-    type: integer
+    type: [integer, "null"]
     format: int32
   maxPlayers:
-    type: integer
+    type: [integer, "null"]
     format: int32
   imageUrl:
-    type: string
+    type: [string, "null"]
     format: uri
   tags:
-    type: array
+    type: [array, "null"]
     items:
       type: string
   scoreType:
-    $ref: ../schemas/score_type.yaml
+    anyOf:
+      - $ref: ../schemas/score_type.yaml
+      - type: "null"
   winCondition:
-    $ref: ../schemas/win_condition.yaml
+    anyOf:
+      - $ref: ../schemas/win_condition.yaml
+      - type: "null"
