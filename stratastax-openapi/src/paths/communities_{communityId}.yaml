@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_community_id.yaml
 get:
   summary: Get community
   operationId: getCommunity

@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_trusted_editor_id.yaml
 delete:
   summary: Revoke trusted editor access
   operationId: revokeTrustedEditor

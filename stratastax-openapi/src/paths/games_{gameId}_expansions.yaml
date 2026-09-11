@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_game_id.yaml
 get:
   summary: List expansions for a game
   operationId: listExpansions

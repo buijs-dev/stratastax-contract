@@ -1,10 +1,10 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_group_id.yaml
 get:
-  summary: List membership requests for a community
-  operationId: listMembershipRequests
+  summary: List members of a group
+  operationId: listGroupMembers
   tags:
-    - membershipRequests
+    - groups
   parameters:
     - $ref: ../components/parameters/query_limit.yaml
     - $ref: ../components/parameters/query_cursor.yaml
@@ -12,19 +12,25 @@ get:
     - $ref: ../components/parameters/query_sort.yaml
   responses:
     '200':
-      $ref: ../components/responses/membership_request_list.yaml
+      $ref: ../components/responses/group_member_list.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml
 post:
-  summary: Submit a membership request (REQUIRES_APPROVAL join policy)
-  operationId: createMembershipRequest
+  summary: Add member to group
+  operationId: addGroupMember
   tags:
-    - membershipRequests
+    - groups
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/add_group_member.yaml
   responses:
-    '201':
-      $ref: ../components/responses/membership_request.yaml
+    '204':
+      description: Member added successfully
     '400':
       $ref: ../components/responses/validation_error.yaml
     '404':

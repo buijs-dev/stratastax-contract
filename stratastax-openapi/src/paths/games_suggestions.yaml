@@ -7,7 +7,7 @@ get:
     - $ref: ../components/parameters/query_query.yaml
   responses:
     '200':
-      $ref: ../components/responses/suggestion_list.yaml
+      $ref: ../components/responses/game_ref_list.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':

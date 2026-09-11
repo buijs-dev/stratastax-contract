@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_game_id.yaml
 get:
   summary: Get game
   operationId: getGame

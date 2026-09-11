@@ -1,10 +1,10 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_community_id.yaml
 get:
-  summary: List memberships in a community
-  operationId: listMemberships
+  summary: List membership requests for a community
+  operationId: listMembershipRequests
   tags:
-    - memberships
+    - membershipRequests
   parameters:
     - $ref: ../components/parameters/query_limit.yaml
     - $ref: ../components/parameters/query_cursor.yaml
@@ -12,19 +12,19 @@ get:
     - $ref: ../components/parameters/query_sort.yaml
   responses:
     '200':
-      $ref: ../components/responses/membership_list.yaml
+      $ref: ../components/responses/membership_request_list.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml
 post:
-  summary: Join a community directly (OPEN join policy)
-  operationId: joinCommunity
+  summary: Submit a membership request (REQUIRES_APPROVAL join policy)
+  operationId: createMembershipRequest
   tags:
-    - memberships
+    - membershipRequests
   responses:
     '201':
-      $ref: ../components/responses/membership.yaml
+      $ref: ../components/responses/membership_request.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '404':

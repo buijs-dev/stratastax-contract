@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_community_id.yaml
   - $ref: ../components/parameters/path_request_id.yaml
 get:
   summary: Get membership request

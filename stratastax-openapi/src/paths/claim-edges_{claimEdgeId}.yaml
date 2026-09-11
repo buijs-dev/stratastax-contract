@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_claim_edge_id.yaml
 get:
   summary: Get claim edge
   operationId: getClaimEdge

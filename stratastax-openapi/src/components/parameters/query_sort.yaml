@@ -10,15 +10,10 @@ schema:
 examples:
   singleColumn:
     summary: Sort by a single column
-    value:
-      - playedAt:DESC
+    value: playedAt:DESC
   multiColumn:
     summary: Sort by multiple columns
-    value:
-      - playedAt:DESC
-      - status:ASC
+    value: playedAt:DESC,status:ASC
   implicitDirection:
     summary: Omitted direction defaults to ASC
-    value:
-      - status
-      - playedAt:DESC
+    value: status,playedAt:DESC

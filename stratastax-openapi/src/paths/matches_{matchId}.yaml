@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_match_id.yaml
 get:
   summary: Get match
   operationId: getMatch
@@ -15,7 +15,7 @@ patch:
   description: >
     Updates match fields. While the match is DRAFT, all fields including
     participants may be changed here. Once FINALIZED, only playedAt and
-    editRequestsEnabled remain directly editable; use POST /matches/{id}/edits
+    editRequestsEnabled remain directly editable; use POST /matches/{matchId}/edits
     for anything else.
   operationId: updateMatch
   tags:

@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_group_id.yaml
   - $ref: ../components/parameters/path_user_id.yaml
 delete:
   summary: Remove member from group

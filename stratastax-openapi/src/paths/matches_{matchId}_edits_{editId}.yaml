@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_match_id.yaml
   - $ref: ../components/parameters/path_edit_id.yaml
 get:
   summary: Get match edit

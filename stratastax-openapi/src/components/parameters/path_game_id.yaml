@@ -1,4 +1,4 @@
-name: id
+name: gameId
 in: path
 required: true
 description: Public identifier

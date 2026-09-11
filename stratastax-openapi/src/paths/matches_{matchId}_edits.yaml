@@ -1,5 +1,5 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_match_id.yaml
 get:
   summary: List edits for a match
   operationId: listMatchEdits

@@ -21,4 +21,4 @@ content:
           status: 409
           detail:
             This match is FINALIZED; propose a change via POST
-            /matches/{id}/edits instead.
+            /matches/{matchId}/edits instead.

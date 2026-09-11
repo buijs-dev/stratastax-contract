@@ -4,7 +4,7 @@ description: >
   updated directly. Once the match is FINALIZED, only playedAt and
   editRequestsEnabled remain directly editable — attempting to change
   playsetId, communityId or participants on a finalized match returns 409
-  Conflict; use POST /matches/{id}/edits instead.
+  Conflict; use POST /matches/{matchId}/edits instead.
 properties:
   playsetId:
     type: [string, "null"]

@@ -1,10 +1,10 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_community_id.yaml
 get:
-  summary: List members of a group
-  operationId: listGroupMembers
+  summary: List memberships in a community
+  operationId: listMemberships
   tags:
-    - groups
+    - memberships
   parameters:
     - $ref: ../components/parameters/query_limit.yaml
     - $ref: ../components/parameters/query_cursor.yaml
@@ -12,25 +12,19 @@ get:
     - $ref: ../components/parameters/query_sort.yaml
   responses:
     '200':
-      $ref: ../components/responses/group_member_list.yaml
+      $ref: ../components/responses/membership_list.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml
 post:
-  summary: Add member to group
-  operationId: addGroupMember
+  summary: Join a community directly (OPEN join policy)
+  operationId: joinCommunity
   tags:
-    - groups
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: ../components/requests/add_group_member.yaml
+    - memberships
   responses:
-    '204':
-      description: Member added successfully
+    '201':
+      $ref: ../components/responses/membership.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '404':

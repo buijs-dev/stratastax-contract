@@ -1,20 +1,20 @@
 parameters:
-  - $ref: ../components/parameters/path_id.yaml
+  - $ref: ../components/parameters/path_group_id.yaml
 get:
-  summary: Get ghost player
-  operationId: getGhostPlayer
+  summary: Get group
+  operationId: getGroup
   tags:
-    - ghostPlayers
+    - groups
   responses:
     '200':
-      $ref: ../components/responses/ghost_player.yaml
+      $ref: ../components/responses/group.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
 patch:
-  summary: Update ghost player
-  operationId: updateGhostPlayer
+  summary: Update group
+  operationId: updateGroup
   tags:
-    - ghostPlayers
+    - groups
   parameters:
     - $ref: ../components/parameters/header_if_match.yaml
   requestBody:
@@ -22,10 +22,10 @@ patch:
     content:
       application/json:
         schema:
-          $ref: ../components/requests/update_ghost_player.yaml
+          $ref: ../components/requests/update_group.yaml
   responses:
     '200':
-      $ref: ../components/responses/ghost_player.yaml
+      $ref: ../components/responses/group.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '404':
@@ -33,10 +33,10 @@ patch:
     '412':
       $ref: ../components/responses/precondition_failed_error.yaml
 delete:
-  summary: Delete ghost player
-  operationId: deleteGhostPlayer
+  summary: Delete group
+  operationId: deleteGroup
   tags:
-    - ghostPlayers
+    - groups
   parameters:
     - $ref: ../components/parameters/header_if_match.yaml
   responses:

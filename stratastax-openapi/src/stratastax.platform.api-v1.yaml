@@ -48,78 +48,78 @@ tags:
 paths:
   /api/v1/matches/count:
     $ref: ./paths/matches_count.yaml
-  /api/v1/matches/{id}:
-    $ref: './paths/matches_{id}.yaml'
-  /api/v1/matches/{id}/finalize:
-    $ref: './paths/matches_{id}_finalize.yaml'
-  /api/v1/matches/{id}/edits:
-    $ref: './paths/matches_{id}_edits.yaml'
-  /api/v1/matches/{id}/edits/{editId}:
-    $ref: './paths/matches_{id}_edits_{editId}.yaml'
+  /api/v1/matches/{matchId}:
+    $ref: './paths/matches_{matchId}.yaml'
+  /api/v1/matches/{matchId}/finalize:
+    $ref: './paths/matches_{matchId}_finalize.yaml'
+  /api/v1/matches/{matchId}/edits:
+    $ref: './paths/matches_{matchId}_edits.yaml'
+  /api/v1/matches/{matchId}/edits/{editId}:
+    $ref: './paths/matches_{matchId}_edits_{editId}.yaml'
   /api/v1/matches:
     $ref: ./paths/matches.yaml
   /api/v1/matches/batch:
     $ref: ./paths/matches_batch.yaml
   /api/v1/games/suggestions:
     $ref: ./paths/games_suggestions.yaml
-  /api/v1/games/{id}:
-    $ref: './paths/games_{id}.yaml'
-  /api/v1/games/{id}/expansions:
-    $ref: './paths/games_{id}_expansions.yaml'
-  /api/v1/games/{id}/expansions/{expansionId}:
-    $ref: './paths/games_{id}_expansions_{expansionId}.yaml'
+  /api/v1/games/{gameId}:
+    $ref: './paths/games_{gameId}.yaml'
+  /api/v1/games/{gameId}/expansions:
+    $ref: './paths/games_{gameId}_expansions.yaml'
+  /api/v1/games/{gameId}/expansions/{expansionId}:
+    $ref: './paths/games_{gameId}_expansions_{expansionId}.yaml'
   /api/v1/games:
     $ref: ./paths/games.yaml
   /api/v1/playsets:
     $ref: ./paths/playsets.yaml
-  /api/v1/playsets/{id}:
-    $ref: './paths/playsets_{id}.yaml'
+  /api/v1/playsets/{playsetId}:
+    $ref: './paths/playsets_{playsetId}.yaml'
   /api/v1/ghost-players/count:
     $ref: ./paths/ghost-players_count.yaml
   /api/v1/ghost-players/suggestions:
     $ref: ./paths/ghost-players_suggestions.yaml
-  /api/v1/ghost-players/{id}:
-    $ref: './paths/ghost-players_{id}.yaml'
+  /api/v1/ghost-players/{ghostPlayerId}:
+    $ref: './paths/ghost-players_{ghostPlayerId}.yaml'
   /api/v1/ghost-players:
     $ref: ./paths/ghost-players.yaml
-  /api/v1/canonical-players/{id}:
-    $ref: './paths/canonical-players_{id}.yaml'
+  /api/v1/canonical-players/{canonicalPlayerId}:
+    $ref: './paths/canonical-players_{canonicalPlayerId}.yaml'
   /api/v1/trusted-editors:
     $ref: ./paths/trusted-editors.yaml
-  /api/v1/trusted-editors/{id}:
-    $ref: './paths/trusted-editors_{id}.yaml'
+  /api/v1/trusted-editors/{trustedEditorId}:
+    $ref: './paths/trusted-editors_{trustedEditorId}.yaml'
   /api/v1/claim-requests:
     $ref: ./paths/claim-requests.yaml
-  /api/v1/claim-requests/{id}:
-    $ref: './paths/claim-requests_{id}.yaml'
+  /api/v1/claim-requests/{claimRequestId}:
+    $ref: './paths/claim-requests_{claimRequestId}.yaml'
   /api/v1/claim-edges:
     $ref: ./paths/claim-edges.yaml
-  /api/v1/claim-edges/{id}:
-    $ref: './paths/claim-edges_{id}.yaml'
+  /api/v1/claim-edges/{claimEdgeId}:
+    $ref: './paths/claim-edges_{claimEdgeId}.yaml'
   /api/v1/privacy-settings:
     $ref: ./paths/privacy-settings.yaml
-  /api/v1/privacy-settings/{id}:
-    $ref: './paths/privacy-settings_{id}.yaml'
+  /api/v1/privacy-settings/{privacySettingId}:
+    $ref: './paths/privacy-settings_{privacySettingId}.yaml'
   /api/v1/groups:
     $ref: ./paths/groups.yaml
-  /api/v1/groups/{id}:
-    $ref: './paths/groups_{id}.yaml'
-  /api/v1/groups/{id}/members:
-    $ref: './paths/groups_{id}_members.yaml'
-  /api/v1/groups/{id}/members/{userId}:
-    $ref: './paths/groups_{id}_members_{userId}.yaml'
+  /api/v1/groups/{groupId}:
+    $ref: './paths/groups_{groupId}.yaml'
+  /api/v1/groups/{groupId}/members:
+    $ref: './paths/groups_{groupId}_members.yaml'
+  /api/v1/groups/{groupId}/members/{userId}:
+    $ref: './paths/groups_{groupId}_members_{userId}.yaml'
   /api/v1/communities:
     $ref: ./paths/communities.yaml
-  /api/v1/communities/{id}:
-    $ref: './paths/communities_{id}.yaml'
-  /api/v1/communities/{id}/memberships:
-    $ref: './paths/communities_{id}_memberships.yaml'
-  /api/v1/communities/{id}/memberships/{userId}:
-    $ref: './paths/communities_{id}_memberships_{userId}.yaml'
-  /api/v1/communities/{id}/membership-requests:
-    $ref: './paths/communities_{id}_membership-requests.yaml'
-  /api/v1/communities/{id}/membership-requests/{requestId}:
-    $ref: './paths/communities_{id}_membership-requests_{requestId}.yaml'
+  /api/v1/communities/{communityId}:
+    $ref: './paths/communities_{communityId}.yaml'
+  /api/v1/communities/{communityId}/memberships:
+    $ref: './paths/communities_{communityId}_memberships.yaml'
+  /api/v1/communities/{communityId}/memberships/{userId}:
+    $ref: './paths/communities_{communityId}_memberships_{userId}.yaml'
+  /api/v1/communities/{communityId}/membership-requests:
+    $ref: './paths/communities_{communityId}_membership-requests.yaml'
+  /api/v1/communities/{communityId}/membership-requests/{requestId}:
+    $ref: './paths/communities_{communityId}_membership-requests_{requestId}.yaml'
 components:
   securitySchemes:
     bearerAuth:
