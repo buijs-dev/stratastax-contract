@@ -35,7 +35,7 @@ properties:
   expansions:
     type: array
     items:
-      $ref: ./expansion.yaml
+      $ref: ./expansion_ref.yaml
   createdAt:
     $ref: ./date_time.yaml
   updatedAt:
