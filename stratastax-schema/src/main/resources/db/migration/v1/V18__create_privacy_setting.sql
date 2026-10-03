@@ -8,6 +8,7 @@ CREATE TABLE privacy_setting (
     level       VARCHAR(20) NOT NULL,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at  TIMESTAMPTZ,
+    version     BIGINT NOT NULL,
 
     CONSTRAINT fk_privacy_setting_user_id_ref_app_user_id FOREIGN KEY (user_id) REFERENCES app_user (id),
 

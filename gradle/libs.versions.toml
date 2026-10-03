@@ -4,7 +4,7 @@ gradle-node = "7.1.0"
 kotlin = "2.3.20"
 node = "24.11.1"
 spotless = "8.2.1"
-stratastax-contract-v1 = "1.1.23-SNAPSHOT"
+stratastax-contract-v1 = "1.1.25-SNAPSHOT"
 
 [libraries]
 # Plugins that are added as dependencies in the root build.gradle.kts so they can be applied as plugin by scripts in src/main/kotlin
