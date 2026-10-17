@@ -3,15 +3,10 @@ required:
   - displayName
 properties:
   displayName:
-    type: string
+    $ref: ../schemas/game_display_name.yaml
   description:
-    type: string
+    $ref: ../schemas/description.yaml
   imageUrl:
-    type: string
-    format: uri
+    $ref: ../schemas/image_url.yaml
   sourceRef:
-    type: string
-    maxLength: 64
-    description: >
-      Where the expansion came from, e.g. `bgg:199792`. Unique: creating a second
-      expansion with the same source is refused with 409.
+    $ref: ../schemas/source_ref.yaml

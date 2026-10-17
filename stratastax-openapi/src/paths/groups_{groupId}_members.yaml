@@ -2,6 +2,8 @@ parameters:
   - $ref: ../components/parameters/path_group_id.yaml
 get:
   summary: List members of a group
+  description: >
+    Filterable on `id`, `name`; sortable on `name`.
   operationId: listGroupMembers
   security:
     - bearerAuth:
@@ -16,6 +18,8 @@ get:
   responses:
     '200':
       $ref: ../components/responses/group_member_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':
@@ -32,6 +36,8 @@ post:
         - stx-engine:group-member-add
   tags:
     - groups
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
@@ -40,7 +46,7 @@ post:
           $ref: ../components/requests/add_group_member.yaml
   responses:
     '204':
-      description: Member added successfully
+      $ref: ../components/responses/no_content.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
@@ -51,3 +57,7 @@ post:
       $ref: ../components/responses/not_found_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

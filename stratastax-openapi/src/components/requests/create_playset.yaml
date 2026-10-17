@@ -7,15 +7,15 @@ properties:
     type: string
     format: uuid
   displayName:
-    type: string
+    $ref: ../schemas/playset_display_name.yaml
   variants:
-    type: array
-    items:
-      type: string
+    $ref: ../schemas/variant_list.yaml
   scenario:
-    type: string
+    $ref: ../schemas/scenario.yaml
   expansions:
     type: array
+    description: Expansions of the game
+    uniqueItems: true
     items:
       type: string
       format: uuid

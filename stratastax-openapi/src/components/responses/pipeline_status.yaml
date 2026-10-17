@@ -1,4 +1,7 @@
 description: Pipeline status
+headers:
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml
 content:
   application/json:
     schema:

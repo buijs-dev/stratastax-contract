@@ -18,15 +18,13 @@ properties:
     type: integer
     format: int64
   displayName:
-    type: string
+    $ref: ./game_display_name.yaml
   description:
-    type: string
+    $ref: ./description.yaml
   minPlayers:
-    type: integer
-    format: int32
+    $ref: ./player_count.yaml
   maxPlayers:
-    type: integer
-    format: int32
+    $ref: ./player_count.yaml
   playingTime:
     type: integer
     format: int32
@@ -38,12 +36,9 @@ properties:
     type: integer
     format: int32
   imageUrl:
-    type: string
-    format: uri
+    $ref: ./image_url.yaml
   tags:
-    type: array
-    items:
-      type: string
+    $ref: ./tag_list.yaml
   isExpansion:
     type: boolean
   baseGameBggId:

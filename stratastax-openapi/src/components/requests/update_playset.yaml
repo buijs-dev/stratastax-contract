@@ -1,16 +1,22 @@
 type: object
+description: >
+  Every field is optional; an absent field keeps its value. Only displayName and scenario accept
+  null, which clears them.
 properties:
   displayName:
-    type: [string, "null"]
+    anyOf:
+      - $ref: ../schemas/playset_display_name.yaml
+      - type: "null"
   scenario:
-    type: [string, "null"]
+    anyOf:
+      - $ref: ../schemas/scenario.yaml
+      - type: "null"
   variants:
-    type: [array, "null"]
-    items:
-      type: string
+    $ref: ../schemas/variant_list.yaml
   expansions:
-    type: [array, "null"]
+    type: array
+    description: Replaces the expansions; an empty list removes them all
+    uniqueItems: true
     items:
       type: string
       format: uuid
-

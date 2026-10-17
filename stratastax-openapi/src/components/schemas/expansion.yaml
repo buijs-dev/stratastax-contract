@@ -11,15 +11,13 @@ properties:
   game:
     $ref: ./game_ref.yaml
   displayName:
-    type: string
+    $ref: ./game_display_name.yaml
   description:
-    type: string
+    $ref: ./description.yaml
   imageUrl:
-    type: string
-    format: uri
+    $ref: ./image_url.yaml
   sourceRef:
-    type: string
-    description: Where it came from, e.g. `bgg:199792`; absent for one entered by hand.
+    $ref: ./source_ref.yaml
   createdAt:
     $ref: ./date_time.yaml
   updatedAt:

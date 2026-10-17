@@ -1,5 +1,10 @@
 get:
   summary: List games
+  description: >
+    Filterable on `id`, `name`, `description`, `minPlayers`, `maxPlayers`, `tags`,
+    `scoreType`, `winCondition`, `sourceRef`, `createdAt`, `updatedAt`,
+    `expansionsId`, `expansionsName`; sortable on `id`, `name`, `createdAt`,
+    `updatedAt`.
   operationId: listGames
   security:
     - bearerAuth:

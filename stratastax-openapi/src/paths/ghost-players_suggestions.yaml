@@ -1,5 +1,8 @@
 get:
   summary: Get ghost player suggestions
+  description: >
+    Ghost players of the caller whose display name matches the query; deleted
+    ghost players are never suggested.
   operationId: getGhostPlayerSuggestions
   security:
     - bearerAuth:

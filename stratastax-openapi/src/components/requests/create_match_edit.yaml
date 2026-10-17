@@ -1,4 +1,8 @@
 type: object
+description: >
+  A proposed change to a finalized match: at least one of the parts. A part that is absent
+  leaves that aspect of the match as it is.
+minProperties: 1
 properties:
   participantChanges:
     type: array
@@ -9,4 +13,6 @@ properties:
     items:
       $ref: ../schemas/match_edit_loadout_change.yaml
   playsetChange:
-    $ref: ../schemas/match_edit_playset_change.yaml
+    $ref: ../schemas/match_edit_playset_change_input.yaml
+  expansionChange:
+    $ref: ../schemas/match_edit_expansion_change_input.yaml

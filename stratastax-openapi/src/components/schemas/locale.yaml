@@ -1,5 +1,8 @@
 type: string
-description: BCP 47 language tag (language, optionally a region)
-pattern: ^[a-z]{2,3}(-[A-Z]{2})?$
+description: BCP 47 language tag (language, optionally a script and a region)
+pattern: ^[a-z]{2,3}(-[A-Z][a-z]{3})?(-([A-Z]{2}|[0-9]{3}))?$
 examples:
   - nl
+  - en-GB
+  - zh-Hant-TW
+  - es-419

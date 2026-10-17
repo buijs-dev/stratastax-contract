@@ -1,5 +1,10 @@
 get:
   summary: List claim edges
+  description: >
+    Filterable on `id`, `canonicalPlayerId`, `canonicalPlayerName`,
+    `ghostPlayerId`, `ghostPlayerName`, `claimRequestId`, `revokedAt`,
+    `revokedById`, `revokedByName`, `createdAt`; sortable on `id`, `revokedAt`,
+    `createdAt`.
   operationId: listClaimEdges
   security:
     - bearerAuth:

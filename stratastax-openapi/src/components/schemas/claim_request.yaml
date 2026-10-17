@@ -11,14 +11,18 @@ properties:
     format: uuid
   canonicalPlayer:
     $ref: ./canonical_player_ref.yaml
-  validatedBy:
-    $ref: ./user_ref.yaml
   status:
     $ref: ./approval_status.yaml
+  decidedBy:
+    $ref: ./user_ref.yaml
+  decidedAt:
+    $ref: ./date_time.yaml
   ghostPlayers:
     type: array
     minItems: 1
     items:
       $ref: ./ghost_player_ref.yaml
   createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
     $ref: ./date_time.yaml

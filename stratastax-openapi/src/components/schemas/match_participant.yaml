@@ -10,15 +10,20 @@ properties:
   ghostPlayer:
     $ref: ./ghost_player_ref.yaml
   score:
-    type: number
+    $ref: ./score.yaml
   rank:
-    type: integer
-    format: int32
+    $ref: ./rank.yaml
   outcome:
     $ref: ./outcome.yaml
-  disputeReason:
-    type: string
   loadout:
     $ref: ./loadout.yaml
+  disputeReason:
+    $ref: ./dispute_reason.yaml
+  disputedAt:
+    $ref: ./date_time.yaml
+  disputedBy:
+    $ref: ./user_ref.yaml
   createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
     $ref: ./date_time.yaml

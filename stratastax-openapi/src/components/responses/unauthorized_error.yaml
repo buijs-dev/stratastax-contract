@@ -6,7 +6,7 @@ content:
     examples:
       authentication:
         value:
-          type: https://errors.stratastax.io/authentication
+          type: https://errors.stratastax.dev/authentication
           title: Unauthorized
           status: 401
           detail: Authentication required

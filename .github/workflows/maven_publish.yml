@@ -14,13 +14,13 @@ jobs:
       - name: Setup Node (voor Redocly)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 25
 
       - name: Grant execute permission
         run: chmod +x gradlew

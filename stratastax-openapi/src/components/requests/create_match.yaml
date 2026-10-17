@@ -16,6 +16,8 @@ properties:
       $ref: ./match_participant_input.yaml
   expansions:
     type: array
+    description: Expansions of the game that were played
+    uniqueItems: true
     items:
       type: string
       format: uuid

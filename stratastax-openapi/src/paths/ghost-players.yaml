@@ -1,5 +1,9 @@
 get:
   summary: List ghost players
+  description: >
+    Deleted ghost players are never listed. Filterable on `id`, `name`, `isSelf`,
+    `ownerId`, `ownerName`, `createdAt`, `updatedAt`; sortable on `id`, `name`,
+    `createdAt`, `updatedAt`.
   operationId: listGhostPlayers
   security:
     - bearerAuth:
@@ -30,6 +34,8 @@ post:
         - stx-engine:ghost-player-create
   tags:
     - ghostPlayers
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
@@ -38,7 +44,7 @@ post:
           $ref: ../components/requests/create_ghost_player.yaml
   responses:
     '201':
-      $ref: ../components/responses/ghost_player.yaml
+      $ref: ../components/responses/created_ghost_player.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
@@ -47,5 +53,7 @@ post:
       $ref: ../components/responses/forbidden_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

@@ -1,4 +1,5 @@
 type: object
+description: A participant of a match; a ghost player takes part at most once (400 DUPLICATE).
 required:
   - ghostPlayerId
 properties:
@@ -6,10 +7,9 @@ properties:
     type: string
     format: uuid
   score:
-    type: number
+    $ref: ../schemas/score.yaml
   rank:
-    type: integer
-    format: int32
+    $ref: ../schemas/rank.yaml
   outcome:
     $ref: ../schemas/outcome.yaml
   loadoutAttributes:

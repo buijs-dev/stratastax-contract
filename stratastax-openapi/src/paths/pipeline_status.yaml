@@ -12,6 +12,8 @@ get:
   responses:
     '200':
       $ref: ../components/responses/pipeline_status.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':

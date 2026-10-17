@@ -1,9 +1,9 @@
-description: Message key retrieved successfully
+description: Message key retrieved or changed successfully
 headers:
   ETag:
-    schema:
-      type: string
-    description: Current version of the key, use as If-Match on a subsequent PUT/DELETE of a translation
+    $ref: ../headers/etag.yaml
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml
 content:
   application/json:
     schema:

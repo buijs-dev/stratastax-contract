@@ -1,10 +1,10 @@
 parameters:
   - $ref: ../components/parameters/path_match_id.yaml
-patch:
+post:
   summary: Finalize a match
   description: >
     Transitions a match from DRAFT to FINALIZED. From this point on, changes to
-    participants, scores, playset or expansions must go through POST
+    participants, scores, loadouts, playset or expansions must go through POST
     /matches/{matchId}/edits. This transition is one-way.
   operationId: finalizeMatch
   security:
@@ -13,10 +13,13 @@ patch:
   tags:
     - matches
   parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
     - $ref: ../components/parameters/header_if_match.yaml
   responses:
     '200':
       $ref: ../components/responses/match.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':
@@ -27,3 +30,7 @@ patch:
       $ref: ../components/responses/conflict_error.yaml
     '412':
       $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

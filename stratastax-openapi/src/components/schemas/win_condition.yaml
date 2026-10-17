@@ -1,4 +1,5 @@
 type: string
+description: Whether the highest or the lowest score wins; required unless the score type is WIN_LOSS, absent then
 enum:
   - HIGHER_WINS
   - LOWER_WINS

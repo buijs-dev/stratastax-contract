@@ -6,7 +6,7 @@ content:
     examples:
       not_found:
         value:
-          type: https://errors.stratastax.io/not-found
+          type: https://errors.stratastax.dev/not-found
           title: Resource not found
           status: 404
           detail: The requested resource could not be found

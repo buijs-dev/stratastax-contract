@@ -1,122 +1,109 @@
+-- 520 matches over the two years before 2026-01-01, picked deterministically from the match number
+-- i: the game, the recorder, the participants and their results all follow from i. One in five
+-- matches is recorded in the community (by a member), every second one uses a playset of its game
+-- with that playset's expansions, and three in four are finalized.
 DO $$
 DECLARE
-    all_user_ids            BIGINT[];
-    community_row_id        BIGINT;
-    community_member_ids    BIGINT[];
-    faction_game_ids        BIGINT[];
-    factions                TEXT[] := ARRAY['Crimean Khanate', 'Nordic Kingdom', 'Rusviet Union', 'Polania Republic', 'Saxony Empire'];
-
-    i                       INT;
-    j                       INT;
-    chosen_game_id          BIGINT;
-    chosen_min_players      INT;
-    chosen_max_players      INT;
-    chosen_score_type       VARCHAR;
-    participant_count       INT;
-    recorder_id             BIGINT;
-    match_row_id            BIGINT;
-    playset_row_id          BIGINT;
-    loadout_row_id          BIGINT;
-    use_community           BOOLEAN;
-    recorder_ghost_ids      BIGINT[];
-    selected_ghost_ids      BIGINT[];
-    win_index                INT;
-    raw_score                NUMERIC;
+    base_at            CONSTANT TIMESTAMPTZ := timestamptz '2026-01-01 12:00+00';
+    factions           CONSTANT TEXT[] := ARRAY['Crimean Khanate', 'Nordic Kingdom', 'Rusviet Union', 'Polania Republic', 'Saxony Empire'];
+    game_ids           BIGINT[];
+    user_ids           BIGINT[];
+    member_ids         BIGINT[];
+    community_row_id   BIGINT;
+    g                  RECORD;
+    i                  INT;
+    j                  INT;
+    recorder_id        BIGINT;
+    participant_count  INT;
+    match_row_id       BIGINT;
+    playset_row_id     BIGINT;
+    played             TIMESTAMPTZ;
+    self_ghost_id      BIGINT;
+    other_ghost_ids    BIGINT[];
+    ghost_id           BIGINT;
+    participant_row_id BIGINT;
 BEGIN
-    SELECT array_agg(id) INTO all_user_ids FROM app_user;
-    SELECT id INTO community_row_id FROM community WHERE name = 'Board Game Cafe Utrecht';
-    SELECT array_agg(user_id) INTO community_member_ids FROM membership WHERE community_id = community_row_id;
-    SELECT array_agg(id) INTO faction_game_ids FROM game WHERE name IN ('Scythe', 'Root');
+    SELECT array_agg(id ORDER BY public_id) INTO game_ids FROM game;
+    SELECT array_agg(id ORDER BY id) INTO user_ids FROM app_user;
+    SELECT id INTO community_row_id FROM community WHERE display_name = 'Board Game Cafe Utrecht';
+    SELECT array_agg(user_id ORDER BY user_id) INTO member_ids FROM membership WHERE community_id = community_row_id;
 
     FOR i IN 1..520 LOOP
-        SELECT id, min_players, max_players, score_type
-          INTO chosen_game_id, chosen_min_players, chosen_max_players, chosen_score_type
-          FROM game
-          ORDER BY random()
-          LIMIT 1;
+        SELECT * INTO g FROM game WHERE id = game_ids[1 + (i * 7) % array_length(game_ids, 1)];
 
-        participant_count := chosen_min_players
-            + floor(random() * (chosen_max_players - chosen_min_players + 1))::INT;
-
-        use_community := community_row_id IS NOT NULL AND random() < 0.2;
-
-        IF use_community THEN
-            recorder_id := community_member_ids[1 + floor(random() * array_length(community_member_ids, 1))::INT];
+        IF i % 5 = 0 THEN
+            recorder_id := member_ids[1 + i % array_length(member_ids, 1)];
         ELSE
-            recorder_id := all_user_ids[1 + floor(random() * array_length(all_user_ids, 1))::INT];
+            recorder_id := user_ids[1 + (i * 5) % array_length(user_ids, 1)];
         END IF;
 
-        -- A matching Playset, used about half the time when one exists.
+        participant_count := g.min_players + (i * 3) % (g.max_players - g.min_players + 1);
+        played := base_at - i * interval '1 day' - ((i * 37) % 24) * interval '1 hour';
+
         playset_row_id := NULL;
-        IF random() < 0.5 THEN
-            SELECT id INTO playset_row_id
-              FROM playset
-              WHERE game_id = chosen_game_id
-              ORDER BY random()
-              LIMIT 1;
+        IF i % 2 = 0 THEN
+            SELECT id INTO playset_row_id FROM playset WHERE game_id = g.id ORDER BY id LIMIT 1;
         END IF;
 
-        INSERT INTO match (game_id, playset_id, community_id, recorder_user_id, played_at, version)
-        VALUES (
-            chosen_game_id,
-            playset_row_id,
-            CASE WHEN use_community THEN community_row_id ELSE NULL END,
-            recorder_id,
-            now() - (random() * interval '730 days'),
-            0
-        )
+        INSERT INTO match (public_id, game_id, playset_id, community_id, recorder_user_id, played_at,
+                           finalized_at, created_at, version)
+        VALUES (format('0192f000-0007-7000-8000-%s', lpad(to_hex(i), 12, '0'))::uuid,
+                g.id, playset_row_id,
+                CASE WHEN i % 5 = 0 THEN community_row_id END,
+                recorder_id, played,
+                CASE WHEN i % 4 <> 0 THEN played + interval '2 hours' END,
+                played + interval '1 hour', 0)
         RETURNING id INTO match_row_id;
 
-        SELECT array_agg(id) INTO recorder_ghost_ids FROM ghost_player WHERE owner_user_id = recorder_id;
-        participant_count := LEAST(participant_count, COALESCE(array_length(recorder_ghost_ids, 1), 0));
+        INSERT INTO match_expansion (match_id, expansion_id)
+        SELECT match_row_id, expansion_id FROM playset_expansion WHERE playset_id = playset_row_id;
 
-        SELECT array_agg(gid) INTO selected_ghost_ids
-        FROM (
-            SELECT unnest(recorder_ghost_ids) AS gid ORDER BY random() LIMIT participant_count
-        ) shuffled;
+        -- The recorder plays every match (self ghost first), with a rotating window of their other ghosts.
+        SELECT id INTO self_ghost_id FROM ghost_player WHERE owner_user_id = recorder_id AND is_self;
+        SELECT array_agg(id ORDER BY id) INTO other_ghost_ids
+        FROM ghost_player WHERE owner_user_id = recorder_id AND NOT is_self AND deleted_at IS NULL;
 
-        win_index := 1 + floor(random() * GREATEST(participant_count, 1))::INT;
-
-        FOR j IN 1..COALESCE(array_length(selected_ghost_ids, 1), 0) LOOP
-            loadout_row_id := NULL;
-
-            -- Occasional Loadout for faction-driven games.
-            IF chosen_game_id = ANY(faction_game_ids) AND random() < 0.8 THEN
-                INSERT INTO match_loadout (attributes, version)
-                VALUES (jsonb_build_object('faction', factions[1 + floor(random() * array_length(factions, 1))::INT]), 0)
-                RETURNING id INTO loadout_row_id;
+        FOR j IN 1..participant_count LOOP
+            IF j = 1 THEN
+                ghost_id := self_ghost_id;
+            ELSE
+                ghost_id := other_ghost_ids[1 + (i + j - 2) % array_length(other_ghost_ids, 1)];
             END IF;
 
-            IF chosen_score_type = 'WIN_LOSS' THEN
-                INSERT INTO match_participant (match_id, ghost_player_id, loadout_id, outcome, version)
-                VALUES (match_row_id, selected_ghost_ids[j], loadout_row_id, CASE WHEN j = win_index THEN 'WIN' ELSE 'LOSS' END, 0);
-            ELSIF chosen_score_type = 'SCORE' THEN
-                raw_score := round((random() * 190 + 10)::NUMERIC, 0);
-                INSERT INTO match_participant (match_id, ghost_player_id, loadout_id, score, version)
-                VALUES (match_row_id, selected_ghost_ids[j], loadout_row_id, raw_score, 0);
-            ELSIF chosen_score_type = 'TIME' THEN
-                raw_score := round((random() * 550 + 50)::NUMERIC, 0); -- seconds
-                INSERT INTO match_participant (match_id, ghost_player_id, loadout_id, score, version)
-                VALUES (match_row_id, selected_ghost_ids[j], loadout_row_id, raw_score, 0);
-            ELSE -- TURNS
-                raw_score := round((random() * 40 + 5)::NUMERIC, 0);
-                INSERT INTO match_participant (match_id, ghost_player_id, loadout_id, score, version)
-                VALUES (match_row_id, selected_ghost_ids[j], loadout_row_id, raw_score, 0);
+            INSERT INTO match_participant (public_id, match_id, ghost_player_id, score, outcome, created_at, version)
+            VALUES (format('0192f000-0008-7000-8000-%s', lpad(to_hex(i * 10 + j), 12, '0'))::uuid,
+                    match_row_id, ghost_id,
+                    CASE g.score_type
+                        WHEN 'SCORE' THEN 10 + (i * 31 + j * 17) % 190
+                        WHEN 'TIME'  THEN 50 + (i * 13 + j * 29) % 550  -- seconds
+                        WHEN 'TURNS' THEN 5 + (i * 11 + j * 7) % 40
+                    END,
+                    CASE WHEN g.score_type = 'WIN_LOSS'
+                         THEN CASE WHEN j = 1 + i % participant_count THEN 'WIN' ELSE 'LOSS' END
+                    END,
+                    played + interval '1 hour', 0)
+            RETURNING id INTO participant_row_id;
+
+            -- A faction for most participants of faction-driven games.
+            IF g.display_name IN ('Scythe', 'Root') AND (i + j) % 5 <> 0 THEN
+                INSERT INTO match_loadout (public_id, match_participant_id, attributes, created_at, version)
+                VALUES (format('0192f000-0009-7000-8000-%s', lpad(to_hex(i * 10 + j), 12, '0'))::uuid,
+                        participant_row_id,
+                        jsonb_build_object('faction', factions[1 + (i + j) % array_length(factions, 1)]),
+                        played + interval '1 hour', 0);
             END IF;
         END LOOP;
     END LOOP;
 END $$;
 
--- Second pass: backfill rank for SCORE/TIME/TURNS participants, based on relative score
--- within each match. Sign is flipped for LOWER_WINS games so RANK() can uniformly order
--- descending regardless of win direction.
+-- Rank SCORE/TIME/TURNS participants on their score within the match; the sign is flipped for
+-- LOWER_WINS games so RANK() can order descending regardless of the win direction.
 WITH ranked AS (
-    SELECT
-        mp.id,
-        RANK() OVER (
-            PARTITION BY mp.match_id
-            ORDER BY mp.score * (CASE WHEN g.win_condition = 'LOWER_WINS' THEN -1 ELSE 1 END) DESC
-        ) AS computed_rank
+    SELECT mp.id,
+           RANK() OVER (
+               PARTITION BY mp.match_id
+               ORDER BY mp.score * (CASE WHEN g.win_condition = 'LOWER_WINS' THEN -1 ELSE 1 END) DESC
+           ) AS computed_rank
     FROM match_participant mp
     JOIN match m ON m.id = mp.match_id
     JOIN game g ON g.id = m.game_id
@@ -126,3 +113,55 @@ UPDATE match_participant mp
 SET rank = ranked.computed_rank
 FROM ranked
 WHERE mp.id = ranked.id;
+
+-- Nora disputes her result in the first finalized SCORE match she played in.
+UPDATE match_participant mp
+SET dispute_reason      = 'I scored 12 points more: the end-game bonus was not counted.',
+    disputed_at         = m.finalized_at + interval '1 day',
+    disputed_by_user_id = u.id,
+    updated_at          = m.finalized_at + interval '1 day',
+    version             = mp.version + 1
+FROM match m, game g, app_user u
+WHERE mp.id = (
+        SELECT mp2.id
+        FROM match_participant mp2
+        JOIN match m2 ON m2.id = mp2.match_id
+        JOIN game g2 ON g2.id = m2.game_id
+        JOIN claim_edge ce ON ce.ghost_player_id = mp2.ghost_player_id AND ce.revoked_at IS NULL
+        JOIN canonical_player cp ON cp.id = ce.canonical_player_id
+        WHERE cp.display_name = 'Nora' AND g2.score_type = 'SCORE' AND m2.finalized_at IS NOT NULL
+        ORDER BY m2.id, mp2.id
+        LIMIT 1)
+  AND m.id = mp.match_id AND g.id = m.game_id AND u.display_name = 'Nora';
+
+-- Peter proposes a change to the first finalized match he played in that was played without the
+-- expansions of its game: 5 more points for himself, and the game's expansions. The recorder has
+-- not decided yet.
+WITH target AS (
+    SELECT m.id AS match_id, m.game_id, m.finalized_at, mp.id AS participant_id, mp.score
+    FROM match m
+    JOIN match_participant mp ON mp.match_id = m.id
+    JOIN claim_edge ce ON ce.ghost_player_id = mp.ghost_player_id AND ce.revoked_at IS NULL
+    JOIN canonical_player cp ON cp.id = ce.canonical_player_id
+    WHERE cp.display_name = 'Peter' AND m.finalized_at IS NOT NULL
+      AND EXISTS (SELECT 1 FROM expansion e WHERE e.game_id = m.game_id)
+      AND NOT EXISTS (SELECT 1 FROM match_expansion me WHERE me.match_id = m.id)
+    ORDER BY m.id, mp.id
+    LIMIT 1
+),
+edit AS (
+    INSERT INTO match_edit (public_id, match_id, proposed_by_user_id, expansions_set, created_at, version)
+    SELECT '0192f000-000f-7000-8000-000000000001', t.match_id, u.id, true, t.finalized_at + interval '2 days', 0
+    FROM target t, app_user u
+    WHERE u.display_name = 'Peter'
+    RETURNING id
+),
+participant_change AS (
+    INSERT INTO match_edit_participant_change (public_id, match_edit_id, match_participant_id, score, score_set, created_at)
+    SELECT '0192f000-000f-7000-8000-000000000101', e.id, t.participant_id, t.score + 5, true, t.finalized_at + interval '2 days'
+    FROM edit e, target t
+)
+INSERT INTO match_edit_expansion_change (match_edit_id, expansion_id)
+SELECT e.id, x.id
+FROM edit e, target t
+JOIN expansion x ON x.game_id = t.game_id;

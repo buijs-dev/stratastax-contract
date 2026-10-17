@@ -1,5 +1,8 @@
 get:
   summary: List trusted editors
+  description: >
+    Filterable on `id`, `grantorId`, `grantorName`, `trusteeId`, `trusteeName`,
+    `revokedAt`, `createdAt`; sortable on `id`, `revokedAt`, `createdAt`.
   operationId: listTrustedEditors
   security:
     - bearerAuth:
@@ -14,6 +17,8 @@ get:
   responses:
     '200':
       $ref: ../components/responses/trusted_editor_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':
@@ -28,6 +33,8 @@ post:
         - stx-engine:trusted-editor-create
   tags:
     - trustedEditors
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
@@ -36,7 +43,7 @@ post:
           $ref: ../components/requests/create_trusted_editor.yaml
   responses:
     '201':
-      $ref: ../components/responses/trusted_editor.yaml
+      $ref: ../components/responses/created_trusted_editor.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
@@ -45,5 +52,7 @@ post:
       $ref: ../components/responses/forbidden_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

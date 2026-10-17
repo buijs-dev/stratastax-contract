@@ -1,4 +1,9 @@
-description: Candidate retrieved successfully
+description: Candidate retrieved or changed successfully
+headers:
+  ETag:
+    $ref: ../headers/etag.yaml
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml
 content:
   application/json:
     schema:

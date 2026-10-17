@@ -3,18 +3,23 @@ parameters:
 post:
   summary: Approve candidate
   description: >
-    Approves an interpreted candidate for publication to the engine. Every
-    field of the body overrides the candidate's own value. After the merge a
-    game needs a description, a player range and a score type, and a win
-    condition unless the score type is WIN_LOSS. An expansion also needs its
-    base game: `gameId`, or else the published candidate of its BGG base game.
-    The candidate is published asynchronously by the pipeline.
+    Approves an interpreted candidate for publication to the engine. Every field
+    of the body overrides the candidate's own value. After the merge a game needs
+    a description, a player range and a score type, and a win condition unless the
+    score type is WIN_LOSS (and none then). An expansion also needs its base game:
+    `gameId`, or else the published candidate of its BGG base game. The candidate
+    is published asynchronously by the pipeline. A PUBLISHED candidate can be
+    approved again with new values: it becomes APPROVED and the pipeline updates
+    the engine's game or expansion (updateGame, updateExpansion).
   operationId: approveCandidate
   security:
     - bearerAuth:
         - stx-game-catalog:candidate-approve
   tags:
     - candidates
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+    - $ref: ../components/parameters/header_if_match.yaml
   requestBody:
     required: true
     content:
@@ -34,5 +39,9 @@ post:
       $ref: ../components/responses/not_found_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

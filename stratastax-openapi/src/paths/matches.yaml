@@ -1,5 +1,12 @@
 get:
   summary: List matches
+  description: >
+    Soft-deleted matches are never listed. Filterable on `id`, `gameId`,
+    `gameName`, `playsetId`, `playsetName`, `communityId`, `communityName`,
+    `recorderId`, `recorderName`, `playedAt`, `finalizedAt`,
+    `editRequestsEnabled`, `lastEditedAt`, `lastEditedById`, `createdAt`,
+    `expansionsId`, `expansionsName`; sortable on `id`, `playedAt`,
+    `editRequestsEnabled`, `createdAt`.
   operationId: listMatches
   security:
     - bearerAuth:
@@ -24,12 +31,17 @@ get:
       $ref: ../components/responses/internal_server_error.yaml
 post:
   summary: Create match
+  description: >
+    Records a match as a DRAFT. A ghost player takes part at most once; the
+    playset and the expansions must be of the game.
   operationId: createMatch
   security:
     - bearerAuth:
         - stx-engine:match-create
   tags:
     - matches
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
@@ -38,7 +50,7 @@ post:
           $ref: ../components/requests/create_match.yaml
   responses:
     '201':
-      $ref: ../components/responses/match.yaml
+      $ref: ../components/responses/created_match.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
@@ -47,5 +59,7 @@ post:
       $ref: ../components/responses/forbidden_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

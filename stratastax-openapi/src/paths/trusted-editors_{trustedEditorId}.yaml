@@ -1,19 +1,55 @@
 parameters:
   - $ref: ../components/parameters/path_trusted_editor_id.yaml
-delete:
-  summary: Revoke trusted editor access
-  operationId: revokeTrustedEditor
+get:
+  summary: Get trusted editor grant
+  operationId: getTrustedEditor
   security:
     - bearerAuth:
-        - stx-engine:trusted-editor-revoke
+        - stx-engine:trusted-editor-read
   tags:
     - trustedEditors
   responses:
-    '204':
-      description: Revoked successfully
+    '200':
+      $ref: ../components/responses/trusted_editor.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':
       $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+delete:
+  summary: Revoke trusted editor access
+  description: >
+    Revokes the grant; it stays as history with revokedAt and revokedBy.
+  operationId: revokeTrustedEditor
+  security:
+    - bearerAuth:
+        - stx-engine:trusted-editor-revoke
+  tags:
+    - trustedEditors
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+    - $ref: ../components/parameters/header_if_match.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/no_content.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

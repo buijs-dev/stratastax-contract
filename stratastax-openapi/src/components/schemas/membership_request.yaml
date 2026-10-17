@@ -13,9 +13,13 @@ properties:
     $ref: ./community_ref.yaml
   proposedBy:
     $ref: ./user_ref.yaml
-  decidedBy:
-    $ref: ./user_ref.yaml
   status:
     $ref: ./approval_status.yaml
+  decidedBy:
+    $ref: ./user_ref.yaml
+  decidedAt:
+    $ref: ./date_time.yaml
   createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
     $ref: ./date_time.yaml

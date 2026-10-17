@@ -3,7 +3,7 @@ required:
   - id
   - owner
   - displayName
-  - members
+  - memberCount
   - createdAt
 properties:
   id:
@@ -13,10 +13,11 @@ properties:
     $ref: ./user_ref.yaml
   displayName:
     $ref: ./display_name.yaml
-  members:
-    type: array
-    items:
-      $ref: ./user_ref.yaml
+  memberCount:
+    type: integer
+    format: int32
+    minimum: 0
+    description: Number of members; list them with listGroupMembers
   createdAt:
     $ref: ./date_time.yaml
   updatedAt:

@@ -1,4 +1,7 @@
 type: object
+description: >
+  New loadout attributes of one participant; they replace the current ones. A participant appears
+  at most once per edit (400 DUPLICATE).
 required:
   - matchParticipantId
   - attributes

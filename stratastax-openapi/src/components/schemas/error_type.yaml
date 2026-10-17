@@ -1,10 +1,9 @@
 type: string
-description: Canonical error type identifier (URI)
-enum:
-  - https://errors.stratastax.io/authentication
-  - https://errors.stratastax.io/authorization
-  - https://errors.stratastax.io/validation
-  - https://errors.stratastax.io/not-found
-  - https://errors.stratastax.io/conflict
-  - https://errors.stratastax.io/precondition-failed
-  - https://errors.stratastax.io/internal
+format: uri
+description: >
+  Canonical error type identifier (URI). Known types, under `https://errors.stratastax.dev/`:
+  `authentication` (401), `authorization` (403), `validation` (400, 422), `not-found` (404),
+  `conflict` (409), `precondition-failed` (412) and `internal` (500). The list is open: a client
+  handles an unknown type by its status.
+examples:
+  - https://errors.stratastax.dev/validation

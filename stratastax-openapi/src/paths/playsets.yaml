@@ -1,5 +1,10 @@
 get:
   summary: List playsets
+  description: >
+    Soft-deleted playsets are never listed. Filterable on `id`, `name`,
+    `variants`, `scenario`, `gameId`, `gameName`, `ownerId`, `ownerName`,
+    `expansionsId`, `expansionsName`, `createdAt`, `updatedAt`; sortable on `id`,
+    `name`, `scenario`, `createdAt`, `updatedAt`.
   operationId: listPlaysets
   security:
     - bearerAuth:
@@ -30,6 +35,8 @@ post:
         - stx-engine:playset-create
   tags:
     - playsets
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
@@ -38,7 +45,7 @@ post:
           $ref: ../components/requests/create_playset.yaml
   responses:
     '201':
-      $ref: ../components/responses/playset.yaml
+      $ref: ../components/responses/created_playset.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
@@ -47,5 +54,7 @@ post:
       $ref: ../components/responses/forbidden_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

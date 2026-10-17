@@ -1,0 +1,4 @@
+type: string
+description: Name of a game or expansion (`game.display_name`, `candidate.display_name`)
+minLength: 1
+maxLength: 255

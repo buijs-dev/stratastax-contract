@@ -12,7 +12,11 @@ get:
   responses:
     '200':
       $ref: ../components/responses/current_user.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':
       $ref: ../components/responses/forbidden_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

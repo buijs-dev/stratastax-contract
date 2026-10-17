@@ -1,5 +1,10 @@
 get:
   summary: List communities
+  description: >
+    Soft-deleted communities are never listed. Filterable on `id`, `name`,
+    `description`, `joinPolicy`, `ownerId`, `ownerName`, `adminGroupId`,
+    `adminGroupName`, `createdAt`, `updatedAt`; sortable on `id`, `name`,
+    `createdAt`, `updatedAt`.
   operationId: listCommunities
   security:
     - bearerAuth:
@@ -30,6 +35,8 @@ post:
         - stx-engine:community-create
   tags:
     - communities
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
@@ -38,7 +45,7 @@ post:
           $ref: ../components/requests/create_community.yaml
   responses:
     '201':
-      $ref: ../components/responses/community.yaml
+      $ref: ../components/responses/created_community.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
@@ -47,5 +54,7 @@ post:
       $ref: ../components/responses/forbidden_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

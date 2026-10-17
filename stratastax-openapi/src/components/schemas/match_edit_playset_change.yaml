@@ -1,7 +1,5 @@
 type: object
-required:
-  - newPlaysetId
+description: The playset the edit gives the match; absent playset means the edit removes it.
 properties:
-  newPlaysetId:
-    type: string
-    format: uuid
+  playset:
+    $ref: ./playset_ref.yaml

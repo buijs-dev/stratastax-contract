@@ -1,5 +1,9 @@
 get:
   summary: Count ghost players
+  description: >
+    Counts the ghost players that match the filter; deleted ghost players are not
+    counted. Filterable on `id`, `name`, `isSelf`, `ownerId`, `ownerName`,
+    `createdAt`, `updatedAt`.
   operationId: countGhostPlayers
   security:
     - bearerAuth:

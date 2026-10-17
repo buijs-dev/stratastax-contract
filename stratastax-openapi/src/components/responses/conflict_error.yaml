@@ -1,22 +1,27 @@
-description:
-  Optimistic locking conflict, or the requested mutation is not allowed in the
-  resource's current state
+description: >
+  The requested mutation is not allowed in the resource's current state, or it
+  conflicts with existing data (a unique value that is already taken)
 content:
   application/problem+json:
     schema:
       $ref: ../schemas/problem_detail.yaml
     examples:
-      concurrent_modification:
+      already_exists:
         value:
-          type: https://errors.stratastax.io/conflict
-          title: Failed to update resource
+          type: https://errors.stratastax.dev/conflict
+          title: Already exists
+          status: 409
+          detail: A game with source bgg:199792 already exists.
+      self_ghost_player:
+        value:
+          type: https://errors.stratastax.dev/conflict
+          title: Self ghost player
           status: 409
           detail:
-            The requested resource could not be updated because it has been
-            modified by another user.
+            The ghost player that represents yourself cannot be deleted or unclaimed.
       finalized_match:
         value:
-          type: https://errors.stratastax.io/conflict
+          type: https://errors.stratastax.dev/conflict
           title: Match is finalized
           status: 409
           detail:

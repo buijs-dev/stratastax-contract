@@ -1,0 +1,9 @@
+type: object
+description: >
+  Replaces the playset of the match: a playset of the match's game, or null to remove the playset.
+required:
+  - playsetId
+properties:
+  playsetId:
+    type: [string, "null"]
+    format: uuid

@@ -2,22 +2,17 @@ type: object
 description: Overrides of the candidate's own values; every field is optional.
 properties:
   displayName:
-    type: string
+    $ref: ../schemas/game_display_name.yaml
   description:
-    type: string
+    $ref: ../schemas/description.yaml
   minPlayers:
-    type: integer
-    format: int32
+    $ref: ../schemas/player_count.yaml
   maxPlayers:
-    type: integer
-    format: int32
+    $ref: ../schemas/player_count.yaml
   imageUrl:
-    type: string
-    format: uri
+    $ref: ../schemas/image_url.yaml
   tags:
-    type: array
-    items:
-      type: string
+    $ref: ../schemas/tag_list.yaml
   scoreType:
     $ref: ../schemas/score_type.yaml
   winCondition:

@@ -1,6 +1,7 @@
 -- Idempotency-Key records of the stratastax-http idempotency-reactive module (reference DDL
--- db/stratastax/idempotency/idempotency_record.sql). Holds the responses of POST /games and
--- POST /games/{gameId}/expansions for replay.
+-- db/stratastax/idempotency/idempotency_record.sql). Holds the response of every mutating request
+-- (POST, PUT, PATCH, DELETE) for replay. No public_id, version or updated_at: the table belongs to
+-- the module, not to the domain.
 CREATE TABLE idempotency_record (
     scope                 VARCHAR(255)  NOT NULL,
     request_id            UUID          NOT NULL,
@@ -11,6 +12,7 @@ CREATE TABLE idempotency_record (
     response_content_type VARCHAR(255),
     response_body         TEXT,
     created_at            TIMESTAMPTZ   NOT NULL DEFAULT now(),
+
     PRIMARY KEY (scope, request_id)
 );
 

@@ -3,6 +3,7 @@ required:
   - id
   - owner
   - displayName
+  - isSelf
   - createdAt
 properties:
   id:
@@ -12,6 +13,11 @@ properties:
     $ref: ./user_ref.yaml
   displayName:
     $ref: ./display_name.yaml
+  isSelf:
+    type: boolean
+    description: >
+      The ghost player that represents the owner themselves in the matches they record. It is
+      claimed by the owner's canonical player and can be neither deleted nor unclaimed.
   createdAt:
     $ref: ./date_time.yaml
   updatedAt:

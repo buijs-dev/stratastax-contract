@@ -1,5 +1,7 @@
-description:
-  Batch match creation result (some items may have failed independently)
+description: Batch match creation result (some items may have failed independently)
+headers:
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml
 content:
   application/json:
     schema:

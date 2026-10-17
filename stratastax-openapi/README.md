@@ -104,12 +104,17 @@ per role (`stx-engine:match-read` -> `MatchRoles.MATCH_READ`).
 Role names follow `<service>:<feature>-<action>`, with the feature in singular kebab-case:
 
 - `stx-engine:match-read`, `stx-engine:match-create`, `stx-engine:match-finalize`
-- `stx-engine:match-edit-decide`, `stx-engine:community-join`, `stx-engine:claim-edge-revoke`
+- `stx-engine:match-edit-decide`, `stx-engine:community-join`, `stx-engine:claim-edge-revoke`,
+  `stx-engine:match-participant-dispute`
+- `stx-engine:game-update`, `stx-engine:expansion-update` (only the game catalog's service account)
 - `stx-game-catalog:candidate-approve`, `stx-game-catalog:pipeline-pause`
 - `stx-i18n:bundle-read`, `stx-i18n:translation-update`, `stx-i18n:release-publish`
 
 Actions: `read` (get, list, count, suggestions), `create`, `update`, `delete`, and a specific
-verb for anything else (`finalize`, `decide`, `join`, `revoke`, `approve`, ...).
+verb for anything else (`finalize`, `decide`, `join`, `revoke`, `approve`, `dispute`, ...).
+
+List endpoints document their filterable and sortable fields in their `description`; a field of a related
+entity is flattened (`game.id` becomes `gameId`, `game.name` becomes `gameName`).
 
 ```yaml
 get:
@@ -173,37 +178,58 @@ One file per path, **not** per operation. All HTTP methods for that path live in
 # paths/matches.yaml
 get:
   summary: List matches
+  description: Filterable on `gameId`, `playedAt`; sortable on `playedAt`.
   operationId: listMatches
+  security:
+    - bearerAuth:
+        - stx-engine:match-read
   tags:
     - matches
   parameters:
-    - $ref: ../parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_limit.yaml
   responses:
-    "200":
-      $ref: ../responses/match_list.yaml
-    "500":
-      $ref: ../responses/internal_server_error.yaml
+    '200':
+      $ref: ../components/responses/match_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
 
 post:
   summary: Create match
   operationId: createMatch
+  security:
+    - bearerAuth:
+        - stx-engine:match-create
   tags:
     - matches
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: ../requests/create_match.yaml
+          $ref: ../components/requests/create_match.yaml
   responses:
-    "201":
-      $ref: ../responses/match.yaml
-    "400":
-      $ref: ../responses/validation_error.yaml
-    "409":
-      $ref: ../responses/conflict_error.yaml
-    "500":
-      $ref: ../responses/internal_server_error.yaml
+    '201':
+      $ref: ../components/responses/created_match.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
 ```
 
 ---
@@ -342,17 +368,62 @@ Always use **relative paths**. No absolute paths, no `#/components/...` referenc
 
 ---
 
-## HTTP status code conventions
-- Paths always return a `500 Internal Server Error` on error.
-- Paths which retrieve entities should return `200 OK`.
-- Paths which create new entities should return `201 Created` and **not** `200 OK`.
-- Paths which create new entities should return `409 Conflict` if any persistence error occurs.
-- Paths that receive input should always return a `400 Bad Request` in case of validation errors.
-- Paths that require authentication should return a `401 Unauthorized` and `403 Forbidden` on failure.
+## HTTP status codes
+
+Every operation declares the complete set of responses that applies to it. The lint rule
+`stratastax/standard-responses` ([`redocly-rules.js`](redocly-rules.js)) fails the build otherwise.
+
+| Response | Declared by                                                           | Component                         |
+|----------|-----------------------------------------------------------------------|-----------------------------------|
+| `400`    | every operation (invalid parameters, body or filter)                  | `validation_error`                |
+| `401`    | every operation                                                       | `unauthorized_error`              |
+| `403`    | every operation                                                       | `forbidden_error`                 |
+| `404`    | every operation with a path parameter                                 | `not_found_error`                 |
+| `409`    | every mutating operation (state does not allow it, unique value taken) | `conflict_error`                 |
+| `412`    | every operation with `If-Match`                                       | `precondition_failed_error`       |
+| `422`    | every mutating operation (Idempotency-Key reused for another payload) | `unprocessable_content_error`     |
+| `500`    | every operation                                                       | `internal_server_error`           |
+
+Success responses:
+
+- `200 OK` for a read, an update and an action that returns the resource (`finalizeMatch`, `approveCandidate`);
+- `201 Created` (never `200`) for a create, with a `created_<entity>` response: `Location`, `ETag` and the body;
+- `204 No Content` (the `no_content` response) when there is nothing to return;
+- `304 Not Modified` only for a conditional GET with `If-None-Match` (`getBundle`).
+
+Actions on a resource are a `POST` on a sub-path named after the verb (`/matches/{matchId}/finalize`,
+`/candidates/{candidateId}/approve`), never a `PATCH` without a body.
+
+## Idempotency
+
+Every mutating operation (`POST`, `PUT`, `PATCH`, `DELETE`) takes a required `Idempotency-Key` header
+(`header_idempotency_key`, a client-generated UUIDv7); the lint rule `stratastax/idempotency-key` enforces it.
+A repeated request with the same key and payload returns the stored response with `Idempotent-Replayed: true`
+(declared on every response a mutation returns); the same key with another payload gets `422`. The records
+are kept in each service's `idempotency_record` table (see stratastax-schema).
+
+## Optimistic locking
+
+Every entity that can be changed has a version, exposed as the `ETag` header of its responses
+(`headers/etag.yaml`). Every operation that changes or deletes such an entity, approve/reject decisions and
+revocations included, requires `If-Match` (`header_if_match`) and answers `412` when the entity changed since.
+
+## Request bodies: absent, null and limits
+
+- In an update request an absent field keeps its value. A field accepts `null` only when the value can be
+  empty in the database, and then `null` clears it (`type: [string, "null"]` or `anyOf` with `type: "null"`).
+  A field that can never be empty (a name, a list, a flag) is not nullable.
+- Every string has the `maxLength` of its column and every number the range of its column, so a value the
+  database would refuse is a `400` and never a `500`. Values with a database limit have a shared schema
+  (`game_display_name`, `display_name`, `image_url`, `score`, `rank`, `player_count`, `source_ref`, ...),
+  which the specs of different services reference alike, so they match by definition.
+- Lists of ids have `uniqueItems: true`; a list of objects that must be unique on a field (participants on
+  `ghostPlayerId`) documents it, and a duplicate is a `400` with code `DUPLICATE`.
 
 ## Bundling with Redocly
 ```bash
-# Bundle and lint every spec into build/openapi/ (also part of ./gradlew build)
+# Bundle and lint every spec into build/openapi/ (also part of ./gradlew build);
+# the lint configuration, with the stratastax rules, is redocly.yaml
 ./gradlew :stratastax-openapi:build
 
 # One spec: bundleOpenApi<Platform|Catalog|I18n>, lintOpenApi<Platform|Catalog|I18n>

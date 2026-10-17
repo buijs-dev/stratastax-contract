@@ -16,7 +16,7 @@ properties:
   displayName:
     $ref: ./display_name.yaml
   description:
-    type: string
+    $ref: ./description.yaml
   joinPolicy:
     $ref: ./join_policy.yaml
   createdAt:

@@ -1,3 +1,6 @@
+description: >
+  Who may see one kind of data of a user. Every user has exactly one setting per data type,
+  created PRIVATE together with the user.
 type: object
 required:
   - id
@@ -12,11 +15,7 @@ properties:
   user:
     $ref: ./user_ref.yaml
   dataType:
-    type: string
-    enum:
-      - PROFILE
-      - MATCH_HISTORY
-      - MATCH_DETAILS
+    $ref: ./privacy_data_type.yaml
   level:
     $ref: ./visibility.yaml
   groups:

@@ -13,10 +13,9 @@ properties:
     type: string
     format: uuid
   score:
-    type: number
+    $ref: ./score.yaml
   rank:
-    type: integer
-    format: int32
+    $ref: ./rank.yaml
   outcome:
     $ref: ./outcome.yaml
   scoreSet:

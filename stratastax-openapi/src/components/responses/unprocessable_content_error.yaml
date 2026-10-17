@@ -6,7 +6,7 @@ content:
     examples:
       idempotency_key_reused:
         value:
-          type: https://errors.stratastax.io/validation
+          type: https://errors.stratastax.dev/validation
           title: Unprocessable Content
           status: 422
           detail: Idempotency key reused for a different request

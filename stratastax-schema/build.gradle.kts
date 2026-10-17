@@ -37,6 +37,12 @@ val generateSchemaDocs =
         description = "Generates ERD + Markdown schema documentation for every service."
     }
 
+val verifyMigrations =
+    tasks.register("verifyMigrations") {
+        group = "verification"
+        description = "Verifies the migrations and seed data of every service against a throwaway Postgres."
+    }
+
 val dockerBuild =
     tasks.register("dockerBuild") {
         group = "docker"
@@ -63,6 +69,19 @@ services.forEach { service ->
         }
 
     generateSchemaDocs.configure { dependsOn(docs) }
+
+    val verify =
+        tasks.register<Exec>("verifyMigrations$suffix") {
+            group = "verification"
+            description =
+                "Applies the v1 migrations and the seed data of $service to a throwaway Postgres and checks " +
+                "naming, structure and the seed data (see verify-migrations.sh)."
+            inputs.dir("src/main/resources/db/migration/$service")
+            inputs.dir("src/main/verify-migrations")
+            commandLine("bash", "./verify-migrations.sh", service)
+        }
+
+    verifyMigrations.configure { dependsOn(verify) }
 
     val build =
         tasks.register<Exec>("dockerBuild$suffix") {
@@ -118,6 +137,7 @@ services.forEach { service ->
 }
 
 tasks.named("check") {
+    dependsOn(verifyMigrations)
     dependsOn(generateSchemaDocs)
 }
 

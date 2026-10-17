@@ -21,6 +21,8 @@ get:
       $ref: ../components/responses/translation_bundle.yaml
     '304':
       $ref: ../components/responses/not_modified.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':

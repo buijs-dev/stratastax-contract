@@ -12,6 +12,10 @@ description = "The bundled OpenAPI specs of the Stratastax APIs"
 
 val openApiOutputDir = layout.buildDirectory.dir("openapi")
 
+/** Lint configuration with the stratastax rules (standard responses, Idempotency-Key). */
+val lintConfig = layout.projectDirectory.file("redocly.yaml")
+val lintRules = layout.projectDirectory.file("redocly-rules.js")
+
 /**
  * Every public contract, bundled into one file each and published under its own classifier:
  * - `openapi`: the platform API (stratastax-engine)
@@ -60,8 +64,9 @@ val bundles =
         val lint =
             tasks.register<NpxTask>("lintOpenApi$suffix") {
                 group = "openapi"
-                description = "Lint the $name OpenAPI spec"
+                description = "Lint the $name OpenAPI spec with the rules of redocly.yaml"
                 inputs.file(bundled)
+                inputs.files(lintConfig, lintRules).withPropertyName("lintConfiguration")
                 dependsOn(bundle)
                 command.set("npx")
                 args.set(
@@ -69,8 +74,8 @@ val bundles =
                         "@redocly/cli",
                         "lint",
                         bundled.get().asFile.absolutePath,
-                        "--skip-rule",
-                        "security-defined",
+                        "--config",
+                        lintConfig.asFile.absolutePath,
                     ),
                 )
             }

@@ -15,13 +15,11 @@ properties:
   game:
     $ref: ./game_ref.yaml
   displayName:
-    type: string
+    $ref: ./playset_display_name.yaml
   variants:
-    type: array
-    items:
-      type: string
+    $ref: ./variant_list.yaml
   scenario:
-    type: string
+    $ref: ./scenario.yaml
   expansions:
     type: array
     items:

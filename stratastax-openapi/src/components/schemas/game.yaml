@@ -7,27 +7,23 @@ required:
   - maxPlayers
   - scoreType
   - tags
+  - createdAt
 properties:
   id:
     type: string
     format: uuid
   displayName:
-    type: string
+    $ref: ./game_display_name.yaml
   description:
-    type: string
+    $ref: ./description.yaml
   minPlayers:
-    type: integer
-    format: int32
+    $ref: ./player_count.yaml
   maxPlayers:
-    type: integer
-    format: int32
+    $ref: ./player_count.yaml
   imageUrl:
-    type: string
-    format: uri
+    $ref: ./image_url.yaml
   tags:
-    type: array
-    items:
-      type: string
+    $ref: ./tag_list.yaml
   scoreType:
     $ref: ./score_type.yaml
   winCondition:
@@ -37,8 +33,7 @@ properties:
     items:
       $ref: ./expansion_ref.yaml
   sourceRef:
-    type: string
-    description: Where it came from, e.g. `bgg:199792`; absent for one entered by hand.
+    $ref: ./source_ref.yaml
   createdAt:
     $ref: ./date_time.yaml
   updatedAt:

@@ -1,0 +1,6 @@
+type: object
+required:
+  - reason
+properties:
+  reason:
+    $ref: ../schemas/dispute_reason.yaml

@@ -15,6 +15,8 @@ get:
   responses:
     '200':
       $ref: ../components/responses/published_locale_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':

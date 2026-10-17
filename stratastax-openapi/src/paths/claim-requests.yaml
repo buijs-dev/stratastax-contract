@@ -1,5 +1,9 @@
 get:
   summary: List claim requests
+  description: >
+    Filterable on `id`, `canonicalPlayerId`, `canonicalPlayerName`, `decidedById`,
+    `decidedByName`, `status`, `ghostPlayersId`, `ghostPlayersName`, `createdAt`;
+    sortable on `id`, `status`, `createdAt`.
   operationId: listClaimRequests
   security:
     - bearerAuth:
@@ -24,12 +28,17 @@ get:
       $ref: ../components/responses/internal_server_error.yaml
 post:
   summary: Create a claim request
+  description: >
+    Proposes to link ghost players to the caller's canonical player. Deleted ghost
+    players, and ghost players with an active claim edge, cannot be claimed (409).
   operationId: createClaimRequest
   security:
     - bearerAuth:
         - stx-engine:claim-request-create
   tags:
     - claimRequests
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
@@ -38,7 +47,7 @@ post:
           $ref: ../components/requests/create_claim_request.yaml
   responses:
     '201':
-      $ref: ../components/responses/claim_request.yaml
+      $ref: ../components/responses/created_claim_request.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
@@ -47,5 +56,7 @@ post:
       $ref: ../components/responses/forbidden_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

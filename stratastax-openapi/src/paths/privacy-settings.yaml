@@ -1,5 +1,11 @@
 get:
-  summary: List privacy settings for authenticated user
+  summary: List the privacy settings of the authenticated user
+  description: >
+    Every user has exactly one setting per data type, created PRIVATE together
+    with the user; they are changed with updatePrivacySetting and never created or
+    deleted through the API. Filterable on `id`, `dataType`, `level`, `groupsId`,
+    `groupsName`, `createdAt`, `updatedAt`; sortable on `id`, `dataType`, `level`,
+    `createdAt`, `updatedAt`.
   operationId: listPrivacySettings
   security:
     - bearerAuth:
@@ -14,36 +20,11 @@ get:
   responses:
     '200':
       $ref: ../components/responses/privacy_setting_list.yaml
-    '401':
-      $ref: ../components/responses/unauthorized_error.yaml
-    '403':
-      $ref: ../components/responses/forbidden_error.yaml
-    '500':
-      $ref: ../components/responses/internal_server_error.yaml
-post:
-  summary: Create or update a privacy setting
-  operationId: createPrivacySetting
-  security:
-    - bearerAuth:
-        - stx-engine:privacy-setting-create
-  tags:
-    - privacySettings
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: ../components/requests/create_privacy_setting.yaml
-  responses:
-    '201':
-      $ref: ../components/responses/privacy_setting.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':
       $ref: ../components/responses/forbidden_error.yaml
-    '409':
-      $ref: ../components/responses/conflict_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

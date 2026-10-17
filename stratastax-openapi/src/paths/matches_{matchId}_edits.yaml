@@ -2,6 +2,10 @@ parameters:
   - $ref: ../components/parameters/path_match_id.yaml
 get:
   summary: List edits for a match
+  description: >
+    Filterable on `id`, `proposedById`, `proposedByName`, `decidedById`,
+    `decidedByName`, `status`, `createdAt`; sortable on `id`, `status`,
+    `createdAt`.
   operationId: listMatchEdits
   security:
     - bearerAuth:
@@ -16,6 +20,8 @@ get:
   responses:
     '200':
       $ref: ../components/responses/match_edit_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
     '401':
       $ref: ../components/responses/unauthorized_error.yaml
     '403':
@@ -26,12 +32,19 @@ get:
       $ref: ../components/responses/internal_server_error.yaml
 post:
   summary: Propose a match edit
+  description: >
+    Proposes a change to a finalized match whose edit requests are enabled: new
+    results or loadouts of its participants, another playset (or none), other
+    expansions of its game (or none). An edit by a trusted editor of the recorder
+    is approved at once.
   operationId: createMatchEdit
   security:
     - bearerAuth:
         - stx-engine:match-edit-create
   tags:
     - matchEdits
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
   requestBody:
     required: true
     content:
@@ -40,7 +53,7 @@ post:
           $ref: ../components/requests/create_match_edit.yaml
   responses:
     '201':
-      $ref: ../components/responses/match_edit.yaml
+      $ref: ../components/responses/created_match_edit.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
     '401':
@@ -51,5 +64,7 @@ post:
       $ref: ../components/responses/not_found_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

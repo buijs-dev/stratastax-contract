@@ -1,5 +1,12 @@
 get:
   summary: Count matches
+  description: >
+    Counts the matches that match the filter; soft-deleted matches are not
+    counted. Filterable on `id`, `gameId`,
+    `gameName`, `playsetId`, `playsetName`, `communityId`, `communityName`,
+    `recorderId`, `recorderName`, `playedAt`, `finalizedAt`,
+    `editRequestsEnabled`, `lastEditedAt`, `lastEditedById`, `createdAt`,
+    `expansionsId`, `expansionsName`.
   operationId: countMatches
   security:
     - bearerAuth:
