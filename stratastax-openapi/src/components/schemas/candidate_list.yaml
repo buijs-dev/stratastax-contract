@@ -1,0 +1,12 @@
+type: object
+allOf:
+  - $ref: ./paged_metadata.yaml
+  - type: object
+    required:
+      - items
+    properties:
+      items:
+        type: array
+        description: Candidates in this page
+        items:
+          $ref: ./candidate.yaml

@@ -36,6 +36,9 @@ properties:
     type: array
     items:
       $ref: ./expansion_ref.yaml
+  sourceRef:
+    type: string
+    description: Where it came from, e.g. `bgg:199792`; absent for one entered by hand.
   createdAt:
     $ref: ./date_time.yaml
   updatedAt:

@@ -1,6 +1,39 @@
 # Stratastax Schema
 
-This module contains the database schema definitions and migration scripts for the Stratastax platform.
+This module contains the database schema definitions and migration scripts for the Stratastax services,
+one directory per service:
+
+| Directory                              | Service                  | Contents                                   |
+|----------------------------------------|--------------------------|--------------------------------------------|
+| `db/migration/engine/v1`               | stratastax-engine        | versioned migrations (owns games/expansions) |
+| `db/migration/engine/testdata`         | stratastax-engine        | seed data for dev and test, never in an image |
+| `db/migration/game-catalog/v1`         | stratastax-game-catalog  | candidates, BGG ranking, raw artifacts, pipeline control |
+| `db/migration/game-catalog/testdata`   | stratastax-game-catalog  | seed data for dev and test                 |
+
+Every service gets its own migration image (`database-schema-engine`, `database-schema-game-catalog`) with only
+its `v1` scripts: `./docker-build.sh <engine|game-catalog>`. The seeds refer to each other: the game-catalog seed's
+published candidate points at the engine seed's game ids (fixed `public_id`s).
+
+## Schema documentation
+
+`./gradlew generateSchemaDocs` (or `./generate-docs.sh <engine|game-catalog> [output-dir]` after `./gradlew jar`)
+generates Markdown and SVG ER diagrams per service with [tbls](https://github.com/k1LoW/tbls), into
+`build/schema-docs/<service>`. It needs Docker: the `v1` migrations of the service are applied to a throwaway
+Postgres, which is removed afterwards. The same script runs in the build of
+[docs.stratastax.dev](https://docs.stratastax.dev/technical/database/), so its output is **public**:
+
+- only the `v1` migrations are applied, never `testdata`, so the docs show structure and no data;
+- [`tbls.yml`](tbls.yml) leaves out `flyway_schema_history`, and the connection string (a local throwaway
+  database) is passed through the environment, not written into the output;
+- the docs never run against a real database.
+
+### Checklist for a new migration
+
+The migrations and seeds are public as well. Before adding one:
+
+- no secrets, real hostnames or connection strings, in SQL or in comments;
+- no real personal data in `testdata`: names are made up, e-mail addresses use `example.test`;
+- a `COMMENT ON` is documentation on the site: write it for a reader outside the project.
 
 ## Infrastructure & Deployment
 
@@ -8,12 +41,13 @@ This module contains the database schema definitions and migration scripts for t
 The Docker image uses a custom entrypoint that runs a single Flyway migration against `filesystem:/flyway/migrations` with up to 10 connection retries and `baselineOnMigrate=true`.
 - **Configuration**: Connection details are supplied via environment variables (`FLYWAY_URL`, `FLYWAY_USER`, `FLYWAY_PASSWORD`).
 
-## Schema Migrations (`src/main/resources/db/migration/v1`)
+## Engine Schema Migrations (`src/main/resources/db/migration/engine/v1`)
 
 These scripts define the core Stratastax domain model.
 
 ### Core Entities
 
+-   **`V19__create_idempotency_record.sql`**: `Idempotency-Key` records of `POST /games` and `POST /games/{gameId}/expansions` (the reference DDL of stratastax-http's `idempotency-reactive`).
 -   **`V1__create_user.sql`**: Defines the `app_user` table. The "app_" prefix is used because "user" is a reserved keyword in PostgreSQL. Users own Credentials and PrivacySettings.
 -   **`V2__user_identity.sql`**: Stores authentication methods (password, OAuth, etc.) linked to a User.
 -   **`V3__create_canonical_player.sql`**: The authoritative identity anchor for gaming history, created during user registration.

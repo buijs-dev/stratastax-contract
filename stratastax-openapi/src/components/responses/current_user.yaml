@@ -1,0 +1,5 @@
+description: Current user retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/current_user.yaml

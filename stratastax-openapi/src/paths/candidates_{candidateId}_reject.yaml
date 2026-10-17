@@ -1,0 +1,24 @@
+parameters:
+  - $ref: ../components/parameters/path_candidate_id.yaml
+post:
+  summary: Reject candidate
+  description: Rejects a candidate that is still pending review; it is never published.
+  operationId: rejectCandidate
+  security:
+    - bearerAuth:
+        - stx-game-catalog:candidate-reject
+  tags:
+    - candidates
+  responses:
+    '200':
+      $ref: ../components/responses/candidate.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

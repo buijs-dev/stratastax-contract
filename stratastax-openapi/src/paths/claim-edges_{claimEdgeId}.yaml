@@ -3,20 +3,34 @@ parameters:
 get:
   summary: Get claim edge
   operationId: getClaimEdge
+  security:
+    - bearerAuth:
+        - stx-engine:claim-edge-read
   tags:
     - claimEdges
   responses:
     '200':
       $ref: ../components/responses/claim_edge.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
 delete:
   summary: Revoke claim edge
   operationId: revokeClaimEdge
+  security:
+    - bearerAuth:
+        - stx-engine:claim-edge-revoke
   tags:
     - claimEdges
   responses:
     '204':
       description: Claim edge revoked successfully
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml

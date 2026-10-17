@@ -4,11 +4,19 @@ plugins {
     id("stratastax.kotlin")
     id("stratastax.publishing")
     id("stratastax.repositories")
-    id("stratastax.spotless")
+    id("stratastax.formatting")
 }
 
-val dockerImageName: String
-    get() = "database-schema:${version.toString().lowercase(getDefault())}"
+description = "The Stratastax database schemas and their Flyway migrations"
+
+/** Every service with its own migrations under db/migration/<service>. */
+val services = listOf("engine", "game-catalog")
+
+fun dockerImageName(service: String): String =
+    "database-schema-$service:${version.toString().lowercase(getDefault())}"
+
+fun taskSuffix(service: String): String =
+    service.split("-").joinToString("") { it.replaceFirstChar(Char::uppercase) }
 
 tasks.jar {
     archiveBaseName.set("schema")
@@ -23,44 +31,90 @@ publishing {
     }
 }
 
-val generateSchemaDocs = tasks.register<Exec>("generateSchemaDocs") {
-    group = "documentation"
-    description = "Generates ERD + Markdown schema documentation via tbls, using a throwaway Postgres."
-    dependsOn(tasks.jar)
-    commandLine("sh", "./generate-docs.sh")
-}
+val generateSchemaDocs =
+    tasks.register("generateSchemaDocs") {
+        group = "documentation"
+        description = "Generates ERD + Markdown schema documentation for every service."
+    }
 
-val dockerBuild = tasks.register<Exec>("dockerBuild") {
-    group = "docker"
-    description = "Build the docker image for schema migration."
-    commandLine("sh", "./docker-build.sh", dockerImageName)
-}
+val dockerBuild =
+    tasks.register("dockerBuild") {
+        group = "docker"
+        description = "Build the schema migration docker image of every service."
+    }
 
-val dockerPublish = tasks.register<Exec>("dockerPublish") {
-    group = "docker"
-    description = "Tag and push the docker image to Repsy repository."
-    dependsOn(dockerBuild)
+val dockerPublish =
+    tasks.register("dockerPublish") {
+        group = "docker"
+        description = "Tag and push the schema migration docker image of every service."
+    }
 
-    val secrets = loadSecrets()
-    
-    val registryUrl = secrets["repsyRepository"]
-        ?: project.findProperty("repsyRepository")?.toString()
-        ?: System.getenv("REPSY_REPOSITORY")
-        ?: throw GradleException("No Repsy repository URL provided.")
+services.forEach { service ->
+    val suffix = taskSuffix(service)
 
-    val user = secrets["repsyUsername"]
-        ?: project.findProperty("repsyUsername")?.toString()
-        ?: System.getenv("REPSY_USERNAME")
-        ?: throw GradleException("No Repsy username provided.")
+    val docs =
+        tasks.register<Exec>("generateSchemaDocs$suffix") {
+            group = "documentation"
+            description =
+                "Generates ERD + Markdown schema documentation for $service via tbls, " +
+                "from a throwaway Postgres with only the v1 migrations."
+            dependsOn(tasks.jar)
+            commandLine("bash", "./generate-docs.sh", service)
+        }
 
-    val pass = secrets["repsyPassword"]
-        ?: project.findProperty("repsyPassword")?.toString()
-        ?: System.getenv("REPSY_PASSWORD")
-        ?: throw GradleException("No Repsy password provided.")
+    generateSchemaDocs.configure { dependsOn(docs) }
 
-    val remoteTag = version.toString().lowercase(getDefault())
+    val build =
+        tasks.register<Exec>("dockerBuild$suffix") {
+            group = "docker"
+            description = "Build the docker image for the $service schema migration."
+            commandLine("sh", "./docker-build.sh", service, dockerImageName(service))
+        }
 
-    commandLine("sh", "./docker-publish.sh", dockerImageName, registryUrl, remoteTag, user, pass)
+    dockerBuild.configure { dependsOn(build) }
+
+    val publish =
+        tasks.register<Exec>("dockerPublish$suffix") {
+            group = "docker"
+            description = "Tag and push the $service docker image to Repsy repository."
+            dependsOn(build)
+
+            doFirst {
+                val secrets = loadSecrets()
+
+                val registryUrl =
+                    secrets["repsyRepository"]
+                        ?: project.findProperty("repsyRepository")?.toString()
+                        ?: System.getenv("REPSY_REPOSITORY")
+                        ?: throw GradleException("No Repsy repository URL provided.")
+
+                val user =
+                    secrets["repsyUsername"]
+                        ?: project.findProperty("repsyUsername")?.toString()
+                        ?: System.getenv("REPSY_USERNAME")
+                        ?: throw GradleException("No Repsy username provided.")
+
+                val pass =
+                    secrets["repsyPassword"]
+                        ?: project.findProperty("repsyPassword")?.toString()
+                        ?: System.getenv("REPSY_PASSWORD")
+                        ?: throw GradleException("No Repsy password provided.")
+
+                val remoteTag = version.toString().lowercase(getDefault())
+
+                commandLine(
+                    "sh",
+                    "./docker-publish.sh",
+                    dockerImageName(service),
+                    registryUrl,
+                    remoteTag,
+                    user,
+                    pass,
+                )
+            }
+        }
+
+    dockerPublish.configure { dependsOn(publish) }
 }
 
 tasks.named("check") {

@@ -1,0 +1,24 @@
+get:
+  summary: Get user suggestions
+  description: >
+    Users whose display name matches the query, e.g. to add one to a group or
+    to grant them trusted editor rights.
+  operationId: getUserSuggestions
+  security:
+    - bearerAuth:
+        - stx-engine:user-read
+  tags:
+    - users
+  parameters:
+    - $ref: ../components/parameters/query_query.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/user_ref_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

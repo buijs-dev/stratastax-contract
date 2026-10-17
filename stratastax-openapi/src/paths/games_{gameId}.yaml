@@ -3,10 +3,17 @@ parameters:
 get:
   summary: Get game
   operationId: getGame
+  security:
+    - bearerAuth:
+        - stx-engine:game-read
   tags:
     - games
   responses:
     '200':
       $ref: ../components/responses/game.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml

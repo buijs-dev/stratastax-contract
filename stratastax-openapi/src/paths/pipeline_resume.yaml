@@ -1,0 +1,24 @@
+post:
+  summary: Resume the pipeline
+  description: >
+    Resumes one automatic step, or all of them without `step`. Also lifts a
+    suspension caused by an unavailable external service.
+  operationId: resumePipeline
+  security:
+    - bearerAuth:
+        - stx-game-catalog:pipeline-resume
+  tags:
+    - pipeline
+  parameters:
+    - $ref: ../components/parameters/query_pipeline_step.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/pipeline_status.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

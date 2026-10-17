@@ -1,0 +1,5 @@
+description: List of releases
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/release_list.yaml

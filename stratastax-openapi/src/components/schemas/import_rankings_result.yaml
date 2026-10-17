@@ -1,0 +1,13 @@
+type: object
+required:
+  - imported
+  - skipped
+properties:
+  imported:
+    type: integer
+    format: int32
+    description: Rows stored as ranking entries
+  skipped:
+    type: integer
+    format: int32
+    description: Rows that could not be read

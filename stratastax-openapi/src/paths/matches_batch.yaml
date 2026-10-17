@@ -1,6 +1,9 @@
 post:
   summary: Create multiple matches in one request
   operationId: createMatchBatch
+  security:
+    - bearerAuth:
+        - stx-engine:match-create
   tags:
     - matches
   requestBody:
@@ -14,5 +17,9 @@ post:
       $ref: ../components/responses/match_batch_result.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

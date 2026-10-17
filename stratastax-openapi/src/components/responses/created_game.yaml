@@ -1,0 +1,8 @@
+description: Game created, or the stored response of an earlier request with the same Idempotency-Key
+headers:
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/game.yaml

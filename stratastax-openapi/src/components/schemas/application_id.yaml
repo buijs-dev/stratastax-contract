@@ -1,0 +1,5 @@
+type: string
+description: Lowercase slug that identifies an application
+pattern: ^[a-z][a-z0-9-]{1,62}$
+examples:
+  - match-tracker

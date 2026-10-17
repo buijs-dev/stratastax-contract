@@ -1,0 +1,16 @@
+type: object
+required:
+  - key
+  - baseText
+properties:
+  key:
+    $ref: ./message_key.yaml
+  baseText:
+    $ref: ./message_text.yaml
+  description:
+    type: string
+    maxLength: 1000
+  arguments:
+    type: array
+    items:
+      $ref: ./message_argument.yaml

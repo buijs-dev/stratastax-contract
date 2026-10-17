@@ -1,6 +1,9 @@
 get:
   summary: Get game suggestions
   operationId: getGameSuggestions
+  security:
+    - bearerAuth:
+        - stx-engine:game-read
   tags:
     - games
   parameters:

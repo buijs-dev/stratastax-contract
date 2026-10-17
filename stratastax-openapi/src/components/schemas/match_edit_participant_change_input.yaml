@@ -1,0 +1,20 @@
+type: object
+description: >
+  A proposed change to one participant's result. A property that is absent is
+  left unchanged; a property that is present replaces the current value, and
+  null clears it.
+required:
+  - matchParticipantId
+properties:
+  matchParticipantId:
+    type: string
+    format: uuid
+  score:
+    type: [number, "null"]
+  rank:
+    type: [integer, "null"]
+    format: int32
+  outcome:
+    anyOf:
+      - $ref: ./outcome.yaml
+      - type: "null"

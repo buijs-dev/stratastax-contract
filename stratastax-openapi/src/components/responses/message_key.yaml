@@ -1,0 +1,10 @@
+description: Message key retrieved successfully
+headers:
+  ETag:
+    schema:
+      type: string
+    description: Current version of the key, use as If-Match on a subsequent PUT/DELETE of a translation
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/message_key_detail.yaml

@@ -4,10 +4,17 @@ parameters:
 delete:
   summary: Remove member from group
   operationId: removeGroupMember
+  security:
+    - bearerAuth:
+        - stx-engine:group-member-remove
   tags:
     - groups
   responses:
     '204':
       description: Member removed successfully
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml

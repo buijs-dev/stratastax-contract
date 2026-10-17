@@ -1,0 +1,31 @@
+post:
+  summary: Import the BGG ranking
+  description: >
+    Stores every row of a BGG ranking CSV export (`boardgames_ranks.csv`) as a
+    ranking entry, all or nothing. The automatic pipeline steps pick the
+    entries up afterwards, best ranked first.
+  operationId: importRankings
+  security:
+    - bearerAuth:
+        - stx-game-catalog:pipeline-import
+  tags:
+    - pipeline
+  requestBody:
+    required: true
+    content:
+      text/csv:
+        schema:
+          type: string
+  responses:
+    '200':
+      $ref: ../components/responses/import_rankings_result.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

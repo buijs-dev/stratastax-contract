@@ -4,10 +4,17 @@ parameters:
 delete:
   summary: Leave or remove a member from a community
   operationId: removeMembership
+  security:
+    - bearerAuth:
+        - stx-engine:membership-delete
   tags:
     - memberships
   responses:
     '204':
       description: Membership removed successfully
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml

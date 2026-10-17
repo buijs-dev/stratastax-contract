@@ -1,6 +1,9 @@
 get:
   summary: List claim requests
   operationId: listClaimRequests
+  security:
+    - bearerAuth:
+        - stx-engine:claim-request-read
   tags:
     - claimRequests
   parameters:
@@ -13,11 +16,18 @@ get:
       $ref: ../components/responses/claim_request_list.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml
 post:
   summary: Create a claim request
   operationId: createClaimRequest
+  security:
+    - bearerAuth:
+        - stx-engine:claim-request-create
   tags:
     - claimRequests
   requestBody:
@@ -31,6 +41,10 @@ post:
       $ref: ../components/responses/claim_request.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
     '500':

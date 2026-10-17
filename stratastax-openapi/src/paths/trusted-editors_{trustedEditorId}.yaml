@@ -3,10 +3,17 @@ parameters:
 delete:
   summary: Revoke trusted editor access
   operationId: revokeTrustedEditor
+  security:
+    - bearerAuth:
+        - stx-engine:trusted-editor-revoke
   tags:
     - trustedEditors
   responses:
     '204':
       description: Revoked successfully
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml

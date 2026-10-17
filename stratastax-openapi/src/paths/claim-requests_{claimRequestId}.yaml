@@ -3,16 +3,26 @@ parameters:
 get:
   summary: Get claim request
   operationId: getClaimRequest
+  security:
+    - bearerAuth:
+        - stx-engine:claim-request-read
   tags:
     - claimRequests
   responses:
     '200':
       $ref: ../components/responses/claim_request.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
 patch:
   summary: Decide on a claim request (approve or reject)
   operationId: decideClaimRequest
+  security:
+    - bearerAuth:
+        - stx-engine:claim-request-decide
   tags:
     - claimRequests
   requestBody:
@@ -26,6 +36,10 @@ patch:
       $ref: ../components/responses/claim_request.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '409':

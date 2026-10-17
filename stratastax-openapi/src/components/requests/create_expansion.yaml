@@ -9,3 +9,9 @@ properties:
   imageUrl:
     type: string
     format: uri
+  sourceRef:
+    type: string
+    maxLength: 64
+    description: >
+      Where the expansion came from, e.g. `bgg:199792`. Unique: creating a second
+      expansion with the same source is refused with 409.

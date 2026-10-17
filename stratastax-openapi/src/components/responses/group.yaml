@@ -1,4 +1,10 @@
 description: Group retrieved successfully
+headers:
+  ETag:
+    schema:
+      type: string
+    description:
+      Current version of the group, use as If-Match on subsequent PATCH/DELETE
 content:
   application/json:
     schema:

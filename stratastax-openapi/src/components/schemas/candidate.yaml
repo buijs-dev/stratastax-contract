@@ -1,0 +1,83 @@
+type: object
+required:
+  - id
+  - bggId
+  - displayName
+  - isExpansion
+  - tags
+  - stage
+  - status
+  - reliability
+  - reliabilityChecks
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  bggId:
+    type: integer
+    format: int64
+  displayName:
+    type: string
+  description:
+    type: string
+  minPlayers:
+    type: integer
+    format: int32
+  maxPlayers:
+    type: integer
+    format: int32
+  playingTime:
+    type: integer
+    format: int32
+    description: Playing time in minutes
+  minAge:
+    type: integer
+    format: int32
+  yearPublished:
+    type: integer
+    format: int32
+  imageUrl:
+    type: string
+    format: uri
+  tags:
+    type: array
+    items:
+      type: string
+  isExpansion:
+    type: boolean
+  baseGameBggId:
+    type: integer
+    format: int64
+    description: BGG id of the base game, for an expansion
+  scoreType:
+    $ref: ./score_type.yaml
+  winCondition:
+    $ref: ./win_condition.yaml
+  stage:
+    $ref: ./candidate_stage.yaml
+  status:
+    $ref: ./candidate_status.yaml
+  reliability:
+    $ref: ./reliability.yaml
+  reliabilityChecks:
+    type: array
+    items:
+      $ref: ./reliability_check.yaml
+  failureReason:
+    type: string
+    description: Why the pipeline or the last publication attempt failed
+  gameId:
+    type: string
+    format: uuid
+    description: >
+      The engine game: the published game itself, or the base game of a
+      published or approved expansion
+  expansionId:
+    type: string
+    format: uuid
+    description: The engine expansion, once published
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

@@ -4,16 +4,26 @@ parameters:
 get:
   summary: Get match edit
   operationId: getMatchEdit
+  security:
+    - bearerAuth:
+        - stx-engine:match-edit-read
   tags:
     - matchEdits
   responses:
     '200':
       $ref: ../components/responses/match_edit.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
 patch:
   summary: Decide on a match edit (approve or reject)
   operationId: decideMatchEdit
+  security:
+    - bearerAuth:
+        - stx-engine:match-edit-decide
   tags:
     - matchEdits
   requestBody:
@@ -27,6 +37,10 @@ patch:
       $ref: ../components/responses/match_edit.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '409':

@@ -1,0 +1,9 @@
+type: string
+description: >
+  Review status: PENDING (awaiting review), APPROVED (queued for publication
+  to the engine), PUBLISHED (in the engine), REJECTED.
+enum:
+  - PENDING
+  - APPROVED
+  - PUBLISHED
+  - REJECTED

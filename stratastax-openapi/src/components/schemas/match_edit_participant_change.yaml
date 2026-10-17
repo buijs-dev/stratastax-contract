@@ -1,6 +1,13 @@
 type: object
+description: >
+  A proposed change to one participant's result. Only the fields flagged as set
+  are written when the edit is applied; a field that is set but absent is
+  cleared.
 required:
   - matchParticipantId
+  - scoreSet
+  - rankSet
+  - outcomeSet
 properties:
   matchParticipantId:
     type: string
@@ -12,3 +19,9 @@ properties:
     format: int32
   outcome:
     $ref: ./outcome.yaml
+  scoreSet:
+    type: boolean
+  rankSet:
+    type: boolean
+  outcomeSet:
+    type: boolean

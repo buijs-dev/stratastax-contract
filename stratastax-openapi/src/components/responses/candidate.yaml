@@ -1,0 +1,5 @@
+description: Candidate retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/candidate.yaml

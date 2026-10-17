@@ -3,16 +3,26 @@ parameters:
 get:
   summary: Get ghost player
   operationId: getGhostPlayer
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-read
   tags:
     - ghostPlayers
   responses:
     '200':
       $ref: ../components/responses/ghost_player.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
 patch:
   summary: Update ghost player
   operationId: updateGhostPlayer
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-update
   tags:
     - ghostPlayers
   parameters:
@@ -28,6 +38,10 @@ patch:
       $ref: ../components/responses/ghost_player.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '412':
@@ -35,6 +49,9 @@ patch:
 delete:
   summary: Delete ghost player
   operationId: deleteGhostPlayer
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-delete
   tags:
     - ghostPlayers
   parameters:
@@ -42,6 +59,10 @@ delete:
   responses:
     '204':
       description: Deleted successfully
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '412':

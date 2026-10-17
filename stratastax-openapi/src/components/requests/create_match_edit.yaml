@@ -3,7 +3,7 @@ properties:
   participantChanges:
     type: array
     items:
-      $ref: ../schemas/match_edit_participant_change.yaml
+      $ref: ../schemas/match_edit_participant_change_input.yaml
   loadoutChanges:
     type: array
     items:

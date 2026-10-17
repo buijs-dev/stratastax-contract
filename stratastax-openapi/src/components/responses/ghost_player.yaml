@@ -1,4 +1,10 @@
 description: Ghost player retrieved successfully
+headers:
+  ETag:
+    schema:
+      type: string
+    description:
+      Current version of the ghost player, use as If-Match on subsequent PATCH/DELETE
 content:
   application/json:
     schema:

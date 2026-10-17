@@ -1,0 +1,8 @@
+name: applicationId
+in: path
+required: true
+description: >
+  Identifier of the application, a lowercase slug chosen at creation
+  (`match-tracker`). Consumer applications configure it, so it never changes.
+schema:
+  $ref: ../schemas/application_id.yaml

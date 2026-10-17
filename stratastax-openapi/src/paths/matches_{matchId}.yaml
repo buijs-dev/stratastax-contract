@@ -3,11 +3,18 @@ parameters:
 get:
   summary: Get match
   operationId: getMatch
+  security:
+    - bearerAuth:
+        - stx-engine:match-read
   tags:
     - matches
   responses:
     '200':
       $ref: ../components/responses/match.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
 patch:
@@ -18,6 +25,9 @@ patch:
     editRequestsEnabled remain directly editable; use POST /matches/{matchId}/edits
     for anything else.
   operationId: updateMatch
+  security:
+    - bearerAuth:
+        - stx-engine:match-update
   tags:
     - matches
   parameters:
@@ -33,6 +43,10 @@ patch:
       $ref: ../components/responses/match.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '409':
@@ -43,6 +57,9 @@ delete:
   summary: Delete match
   description: Only allowed while the match is DRAFT.
   operationId: deleteMatch
+  security:
+    - bearerAuth:
+        - stx-engine:match-delete
   tags:
     - matches
   parameters:
@@ -50,6 +67,10 @@ delete:
   responses:
     '204':
       description: Deleted successfully
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '409':

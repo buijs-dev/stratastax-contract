@@ -7,6 +7,9 @@ patch:
     participants, scores, playset or expansions must go through POST
     /matches/{matchId}/edits. This transition is one-way.
   operationId: finalizeMatch
+  security:
+    - bearerAuth:
+        - stx-engine:match-finalize
   tags:
     - matches
   parameters:
@@ -14,6 +17,10 @@ patch:
   responses:
     '200':
       $ref: ../components/responses/match.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '409':

@@ -1,0 +1,10 @@
+description: Application retrieved successfully
+headers:
+  ETag:
+    schema:
+      type: string
+    description: Current version of the application, use as If-Match on a subsequent PATCH
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/application.yaml

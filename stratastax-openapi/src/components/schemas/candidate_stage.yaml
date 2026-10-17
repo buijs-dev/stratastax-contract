@@ -1,0 +1,10 @@
+type: string
+description: >
+  How far the automatic pipeline got: PENDING_RULES (created from BGG data),
+  RULES_COLLECTED (rulebook sources found), INTERPRETED (ready for review),
+  FAILED (see failureReason).
+enum:
+  - PENDING_RULES
+  - RULES_COLLECTED
+  - INTERPRETED
+  - FAILED

@@ -1,0 +1,7 @@
+name: canonicalPlayerId
+in: path
+required: true
+description: Public canonical player identifier
+schema:
+  type: string
+  format: uuid

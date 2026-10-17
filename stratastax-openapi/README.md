@@ -1,22 +1,53 @@
 # OpenAPI Guidelines
 
 TLDR: OpenAPI specs are split into separate YAML files per path and component, 
-stored in `stratastax-contract` and bundled into a single public contract using Redocly.
+stored in `stratastax-contract` and bundled into a single public contract per API using Redocly.
 
 ## Repository & tooling
 
 - **Repo:** `stratastax-contract` (GitHub)
 - **Root path:** `stratastax-openapi/src/`
 - **Bundler:** Redocly CLI (`redocly bundle`)
-- **Output:** one bundled public contract
+- **Output:** one bundled public contract per spec, in `build/openapi/`
+- **Published:** as Maven artifact `dev.buijs.stratastax:openapi` (one classifier per spec) and on
+  [docs.stratastax.dev](https://docs.stratastax.dev/technical/api/) (see the [root README](../README.md#documentation))
+
+## Specs
+
+| Root document                     | API                                                                              | Roles prefix        |
+|-----------------------------------|----------------------------------------------------------------------------------|---------------------|
+| `stratastax.platform.api-v1.yaml` | Platform: matches, players, communities (stratastax-engine)                      | `stx-engine:`       |
+| `stratastax.catalog.api-v1.yaml`  | Game catalog: ingestion pipeline and review (stratastax-game-catalog)            | `stx-game-catalog:` |
+| `stratastax.i18n.api-v1.yaml`     | Translations: CMS for applications, keys and releases, and the published bundles | `stx-i18n:`         |
+
+A new spec gets its own root document and an entry in the `specs` map of
+[`build.gradle.kts`](build.gradle.kts), which adds its bundle, lint and Maven classifier.
+Changes follow the [versioning rules](../README.md#versioning): breaking changes go into a new
+`api-v(N+1)` file.
+
+### I18n
+
+The i18n spec serves two kinds of callers with different credentials:
+
+- the **CMS**, used by administrators (user tokens): `stx-i18n:application-*`, `stx-i18n:key-*`,
+  `stx-i18n:translation-update`, `stx-i18n:release-*`;
+- **consumer applications**, which load the published translations at startup with a service
+  account (client credentials, no user involved): only `stx-i18n:bundle-read`, which covers
+  `listPublishedLocales` and `getBundle`. Bundles hold published texts only, never drafts.
+
+Message texts are ICU MessageFormat. A key's arguments (name and type) come from the application's
+own translation files through `importMessageKeys`; a translation may only use those arguments, so a
+consumer can safely lay a bundle over the texts it was built with.
 
 ---
 
 ## Directory structure
 
 ```
-src/main/openapi/
-├── stratastax.platform.api-v1.yaml     # Root document (entrypoint for Redocly)
+stratastax-openapi/src/
+├── stratastax.platform.api-v1.yaml     # Root document per spec (entrypoint for Redocly)
+├── stratastax.catalog.api-v1.yaml
+├── stratastax.i18n.api-v1.yaml
 ├── paths/
 │   ├── matches.yaml                    # All operations on /matches
 │   ├── matches_{id}.yaml               # All operations on /matches/{id}
@@ -51,6 +82,42 @@ src/main/openapi/
 | Responses        | descriptive name, no suffix                 | `order.yaml`, `order_list.yaml` |
 | Schemas          | singular, descriptive                       | `order_status.yaml`             |
 | **All files:**   | lowercase with underscores                  | —                               |
+
+---
+
+## Security per operation
+
+Every operation declares its **own** `security`; the root-level `security` is not inherited by
+the code generator (stratastax-codegen), which fails the build for an operation without it.
+This keeps who may call an operation visible in the contract.
+
+| Declaration                                   | Meaning                          | Generated annotation          |
+|-----------------------------------------------|----------------------------------|-------------------------------|
+| `security: []`                                | public, also anonymous           | `@PermitAll`                  |
+| `security: [{ bearerAuth: [] }]`              | any authenticated caller         | `@Authenticated`              |
+| `security: [{ bearerAuth: [role-a, role-b] }]`| a caller with **any** of the roles | `@RolesAllowed(role-a, role-b)` |
+
+Several requirement objects are alternatives as well: all their roles are merged into one
+`@RolesAllowed`. The generator also creates a `${Entity}Roles` object per tag with one constant
+per role (`stx-engine:match-read` -> `MatchRoles.MATCH_READ`).
+
+Role names follow `<service>:<feature>-<action>`, with the feature in singular kebab-case:
+
+- `stx-engine:match-read`, `stx-engine:match-create`, `stx-engine:match-finalize`
+- `stx-engine:match-edit-decide`, `stx-engine:community-join`, `stx-engine:claim-edge-revoke`
+- `stx-game-catalog:candidate-approve`, `stx-game-catalog:pipeline-pause`
+- `stx-i18n:bundle-read`, `stx-i18n:translation-update`, `stx-i18n:release-publish`
+
+Actions: `read` (get, list, count, suggestions), `create`, `update`, `delete`, and a specific
+verb for anything else (`finalize`, `decide`, `join`, `revoke`, `approve`, ...).
+
+```yaml
+get:
+  operationId: getMatch
+  security:
+    - bearerAuth:
+        - stx-engine:match-read
+```
 
 ---
 
@@ -285,18 +352,18 @@ Always use **relative paths**. No absolute paths, no `#/components/...` referenc
 
 ## Bundling with Redocly
 ```bash
-# Bundle into a single public contract
-npx @redocly/cli bundle src/main/openapi/openapi.yaml -o build/openapi/stratastax.platform.api-v1.yaml
+# Bundle and lint every spec into build/openapi/ (also part of ./gradlew build)
+./gradlew :stratastax-openapi:build
 
-# Validate before bundling
-redocly lint src/main/openapi/openapi.yaml
+# One spec: bundleOpenApi<Platform|Catalog|I18n>, lintOpenApi<Platform|Catalog|I18n>
+./gradlew :stratastax-openapi:lintOpenApiI18n
 ```
 
 ---
 
 ## What I do NOT do
-- No inline schema definitions in path files — always use a `$ref` to `/components/schemas/`
-- No operations in the root `openapi.yaml` — only `$ref` to `/paths/`
+- No inline schema definitions in path files; always use a `$ref` to `/components/schemas/`
+- No operations in the root `openapi.yaml`; only `$ref` to `/paths/`
 - No `#/components/...` absolute refs in standalone files before bundling
-- No camelCase or PascalCase filenames — always lowercase with underscores
-- No separate file per HTTP method — one file per path, all methods inside it
+- No camelCase or PascalCase filenames; always lowercase with underscores
+- No separate file per HTTP method; one file per path, all methods inside it

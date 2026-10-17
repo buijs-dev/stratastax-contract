@@ -1,0 +1,7 @@
+name: candidateId
+in: path
+required: true
+description: Public identifier of the candidate
+schema:
+  type: string
+  format: uuid

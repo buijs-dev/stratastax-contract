@@ -3,6 +3,9 @@ parameters:
 get:
   summary: List edits for a match
   operationId: listMatchEdits
+  security:
+    - bearerAuth:
+        - stx-engine:match-edit-read
   tags:
     - matchEdits
   parameters:
@@ -13,6 +16,10 @@ get:
   responses:
     '200':
       $ref: ../components/responses/match_edit_list.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '500':
@@ -20,6 +27,9 @@ get:
 post:
   summary: Propose a match edit
   operationId: createMatchEdit
+  security:
+    - bearerAuth:
+        - stx-engine:match-edit-create
   tags:
     - matchEdits
   requestBody:
@@ -33,6 +43,10 @@ post:
       $ref: ../components/responses/match_edit.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '409':

@@ -45,6 +45,8 @@ tags:
     description: Community membership management.
   - name: membershipRequests
     description: Community membership request workflow.
+  - name: users
+    description: The current user and finding other users.
 paths:
   /api/v1/matches/count:
     $ref: ./paths/matches_count.yaml
@@ -120,6 +122,10 @@ paths:
     $ref: './paths/communities_{communityId}_membership-requests.yaml'
   /api/v1/communities/{communityId}/membership-requests/{requestId}:
     $ref: './paths/communities_{communityId}_membership-requests_{requestId}.yaml'
+  /api/v1/users/me:
+    $ref: ./paths/users_me.yaml
+  /api/v1/users/suggestions:
+    $ref: ./paths/users_suggestions.yaml
 components:
   securitySchemes:
     bearerAuth:

@@ -1,0 +1,40 @@
+type: object
+description: Overrides of the candidate's own values; every field is optional.
+properties:
+  displayName:
+    type: string
+  description:
+    type: string
+  minPlayers:
+    type: integer
+    format: int32
+  maxPlayers:
+    type: integer
+    format: int32
+  imageUrl:
+    type: string
+    format: uri
+  tags:
+    type: array
+    items:
+      type: string
+  scoreType:
+    $ref: ../schemas/score_type.yaml
+  winCondition:
+    $ref: ../schemas/win_condition.yaml
+  gameId:
+    type: string
+    format: uuid
+    description: Engine id of the base game, for an expansion
+  existingGameId:
+    type: string
+    format: uuid
+    description: >
+      For a game candidate: the engine already has this game. The candidate is
+      linked to it instead of publishing a new one.
+  existingExpansionId:
+    type: string
+    format: uuid
+    description: >
+      For an expansion candidate: the engine already has this expansion. The
+      candidate is linked to it instead of publishing a new one.

@@ -1,0 +1,12 @@
+name: Idempotency-Key
+in: header
+required: true
+description: >
+  Client-generated UUIDv7 that makes the request safe to retry. A repeated
+  request with the same key and the same payload returns the stored response
+  (marked with the `Idempotent-Replayed: true` header) instead of executing
+  again. Keys older than the retention window (30 days) are rejected.
+schema:
+  type: string
+  examples:
+    - 0192f100-0000-7000-8000-0000000000a5

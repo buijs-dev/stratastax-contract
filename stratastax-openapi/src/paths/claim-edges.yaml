@@ -1,6 +1,9 @@
 get:
   summary: List claim edges
   operationId: listClaimEdges
+  security:
+    - bearerAuth:
+        - stx-engine:claim-edge-read
   tags:
     - claimEdges
   parameters:
@@ -13,5 +16,9 @@ get:
       $ref: ../components/responses/claim_edge_list.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

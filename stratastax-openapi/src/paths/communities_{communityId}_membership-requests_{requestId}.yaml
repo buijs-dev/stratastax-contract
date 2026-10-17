@@ -4,16 +4,26 @@ parameters:
 get:
   summary: Get membership request
   operationId: getMembershipRequest
+  security:
+    - bearerAuth:
+        - stx-engine:membership-request-read
   tags:
     - membershipRequests
   responses:
     '200':
       $ref: ../components/responses/membership_request.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
 patch:
   summary: Decide on a membership request (approve or reject)
   operationId: decideMembershipRequest
+  security:
+    - bearerAuth:
+        - stx-engine:membership-request-decide
   tags:
     - membershipRequests
   requestBody:
@@ -27,6 +37,10 @@ patch:
       $ref: ../components/responses/membership_request.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
     '409':

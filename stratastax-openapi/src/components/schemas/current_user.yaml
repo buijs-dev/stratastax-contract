@@ -1,0 +1,20 @@
+type: object
+description: >
+  The authenticated user: the canonical player that is their identity in
+  Stratastax, and the ghost player that represents themselves in the matches
+  they record.
+required:
+  - id
+  - displayName
+  - canonicalPlayer
+  - selfGhostPlayer
+properties:
+  id:
+    type: string
+    format: uuid
+  displayName:
+    type: string
+  canonicalPlayer:
+    $ref: ./canonical_player_ref.yaml
+  selfGhostPlayer:
+    $ref: ./ghost_player_ref.yaml

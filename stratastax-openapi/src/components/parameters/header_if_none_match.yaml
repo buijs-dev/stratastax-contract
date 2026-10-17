@@ -1,0 +1,8 @@
+name: If-None-Match
+in: header
+required: false
+description: >
+  ETag of a bundle the client already has. When it is still the published
+  version the response is `304 Not Modified` without a body.
+schema:
+  type: string

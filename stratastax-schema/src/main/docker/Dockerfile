@@ -1,6 +1,9 @@
 FROM flyway/flyway:12.11.0
 
-COPY db/migration/v1 /flyway/migrations
+# The service whose migrations this image applies: engine or game-catalog.
+ARG SERVICE
+
+COPY db/migration/${SERVICE}/v1 /flyway/migrations
 COPY entrypoint.sh /flyway/entrypoint.sh
 RUN chmod +x /flyway/entrypoint.sh
 

@@ -1,0 +1,18 @@
+get:
+  summary: Get the current user
+  description: >
+    The authenticated user, with their canonical player and the ghost player
+    that represents themselves when they record a match.
+  operationId: getCurrentUser
+  security:
+    - bearerAuth:
+        - stx-engine:user-read
+  tags:
+    - users
+  responses:
+    '200':
+      $ref: ../components/responses/current_user.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml

@@ -1,0 +1,7 @@
+description: List of user references retrieved successfully
+content:
+  application/json:
+    schema:
+      type: array
+      items:
+        $ref: ../schemas/user_ref.yaml

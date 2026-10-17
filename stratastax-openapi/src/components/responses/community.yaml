@@ -1,4 +1,10 @@
 description: Community retrieved successfully
+headers:
+  ETag:
+    schema:
+      type: string
+    description:
+      Current version of the community, use as If-Match on subsequent PATCH/DELETE
 content:
   application/json:
     schema:

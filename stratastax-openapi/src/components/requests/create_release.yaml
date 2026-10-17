@@ -1,0 +1,10 @@
+type: object
+properties:
+  locales:
+    type: array
+    description: Locales to publish; all locales with drafts when omitted
+    items:
+      $ref: ../schemas/locale.yaml
+  note:
+    type: string
+    maxLength: 500

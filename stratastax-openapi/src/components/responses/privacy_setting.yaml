@@ -1,4 +1,10 @@
 description: Privacy setting retrieved successfully
+headers:
+  ETag:
+    schema:
+      type: string
+    description:
+      Current version of the privacy setting, use as If-Match on subsequent PATCH/DELETE
 content:
   application/json:
     schema:

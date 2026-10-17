@@ -1,6 +1,9 @@
 get:
   summary: List ghost players
   operationId: listGhostPlayers
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-read
   tags:
     - ghostPlayers
   parameters:
@@ -13,11 +16,18 @@ get:
       $ref: ../components/responses/ghost_player_list.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml
 post:
   summary: Create ghost player
   operationId: createGhostPlayer
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-create
   tags:
     - ghostPlayers
   requestBody:
@@ -31,6 +41,10 @@ post:
       $ref: ../components/responses/ghost_player.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '409':
       $ref: ../components/responses/conflict_error.yaml
     '500':

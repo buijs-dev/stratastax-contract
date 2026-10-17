@@ -1,0 +1,9 @@
+type: object
+required:
+  - items
+properties:
+  items:
+    type: array
+    description: The locales with a published bundle
+    items:
+      $ref: ./published_locale.yaml

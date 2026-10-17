@@ -1,0 +1,15 @@
+type: object
+description: One field compared between BGG and the LLM.
+required:
+  - field
+  - matches
+properties:
+  field:
+    type: string
+    description: e.g. minPlayers, maxPlayers, yearPublished, playingTime, minAge
+  bggValue:
+    type: string
+  llmValue:
+    type: string
+  matches:
+    type: boolean

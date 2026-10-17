@@ -1,0 +1,6 @@
+type: string
+description: Dotted message key, as in the translation files of the application
+pattern: ^[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)*$
+maxLength: 200
+examples:
+  - matchCreateCommand.gameId.label

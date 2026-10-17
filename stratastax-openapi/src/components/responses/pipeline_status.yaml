@@ -1,0 +1,5 @@
+description: Pipeline status
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/pipeline_status.yaml

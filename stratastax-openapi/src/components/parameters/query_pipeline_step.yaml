@@ -1,0 +1,6 @@
+name: step
+in: query
+required: false
+description: The step to act on; all steps when omitted.
+schema:
+  $ref: ../schemas/pipeline_step.yaml

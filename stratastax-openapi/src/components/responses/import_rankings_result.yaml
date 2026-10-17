@@ -1,0 +1,5 @@
+description: Ranking import result
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/import_rankings_result.yaml
