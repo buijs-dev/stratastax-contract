@@ -8,7 +8,7 @@ info:
     url: https://buijs.dev/
   license:
     name: Apache-2.0
-    url: https://github.com/buijs-dev/stratastax-contract/blob/develop/LICENSE
+    url: https://github.com/buijs-dev/stratastax-contract/blob/main/LICENSE
   description: >
     Translations of Stratastax applications. An application owns a catalog of
     message keys, imported from the translation files it is built with. In the

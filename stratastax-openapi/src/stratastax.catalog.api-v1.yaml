@@ -8,7 +8,7 @@ info:
     url: https://buijs.dev/
   license:
     name: Apache-2.0
-    url: https://github.com/buijs-dev/stratastax-contract/blob/develop/LICENSE
+    url: https://github.com/buijs-dev/stratastax-contract/blob/main/LICENSE
   description: >
     Ingestion pipeline of the Stratastax game catalog: imports the BGG ranking,
     enriches every entry into a candidate (BGG data, rules found on the web,

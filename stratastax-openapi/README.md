@@ -373,16 +373,16 @@ Always use **relative paths**. No absolute paths, no `#/components/...` referenc
 Every operation declares the complete set of responses that applies to it. The lint rule
 `stratastax/standard-responses` ([`redocly-rules.js`](redocly-rules.js)) fails the build otherwise.
 
-| Response | Declared by                                                           | Component                         |
-|----------|-----------------------------------------------------------------------|-----------------------------------|
-| `400`    | every operation (invalid parameters, body or filter)                  | `validation_error`                |
-| `401`    | every operation                                                       | `unauthorized_error`              |
-| `403`    | every operation                                                       | `forbidden_error`                 |
-| `404`    | every operation with a path parameter                                 | `not_found_error`                 |
-| `409`    | every mutating operation (state does not allow it, unique value taken) | `conflict_error`                 |
-| `412`    | every operation with `If-Match`                                       | `precondition_failed_error`       |
-| `422`    | every mutating operation (Idempotency-Key reused for another payload) | `unprocessable_content_error`     |
-| `500`    | every operation                                                       | `internal_server_error`           |
+| Response | Declared by                                                            | Component                     |
+|----------|------------------------------------------------------------------------|-------------------------------|
+| `400`    | every operation (invalid parameters, body or filter)                   | `validation_error`            |
+| `401`    | every operation                                                        | `unauthorized_error`          |
+| `403`    | every operation                                                        | `forbidden_error`             |
+| `404`    | every operation with a path parameter                                  | `not_found_error`             |
+| `409`    | every mutating operation (state does not allow it, unique value taken) | `conflict_error`              |
+| `412`    | every operation with `If-Match`                                        | `precondition_failed_error`   |
+| `422`    | every mutating operation (Idempotency-Key reused for another payload)  | `unprocessable_content_error` |
+| `500`    | every operation                                                        | `internal_server_error`       |
 
 Success responses:
 
@@ -412,13 +412,18 @@ revocations included, requires `If-Match` (`header_if_match`) and answers `412` 
 
 - In an update request an absent field keeps its value. A field accepts `null` only when the value can be
   empty in the database, and then `null` clears it (`type: [string, "null"]` or `anyOf` with `type: "null"`).
-  A field that can never be empty (a name, a list, a flag) is not nullable.
+  A field that can never be empty (a name, a list, a flag) is not nullable; the generated models read an explicit
+  `null` for it as absent, so it keeps its value.
 - Every string has the `maxLength` of its column and every number the range of its column, so a value the
   database would refuse is a `400` and never a `500`. Values with a database limit have a shared schema
   (`game_display_name`, `display_name`, `image_url`, `score`, `rank`, `player_count`, `source_ref`, ...),
-  which the specs of different services reference alike, so they match by definition.
+  which the specs of different services reference alike, so they match by definition. The one exception
+  is `image_url`: a `format: uri` is generated as a URI type, which `maxLength` cannot be validated on,
+  so the services check its length themselves.
 - Lists of ids have `uniqueItems: true`; a list of objects that must be unique on a field (participants on
-  `ghostPlayerId`) documents it, and a duplicate is a `400` with code `DUPLICATE`.
+  `ghostPlayerId`) documents it, and a duplicate is a `400` with a code that says what is duplicated
+  (`DUPLICATE_GHOST_PLAYER`, `DUPLICATE_CHANGE`). A duplicate id in a list with `uniqueItems` is not an
+  error: the generated models read such a list as a set.
 
 ## Bundling with Redocly
 ```bash

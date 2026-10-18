@@ -17,5 +17,4 @@ CREATE TABLE app_user_identity (
 CREATE INDEX ix_app_user_identity_user_id ON app_user_identity (user_id);
 
 COMMENT ON TABLE app_user_identity IS
-    'A way to sign in as a user (identity provider + subject). '
-    'Invariant (application): a user cannot remove their last remaining identity.';
+    'A way to sign in as a user (identity provider + subject). Invariant (application): a user cannot remove their last remaining identity.';

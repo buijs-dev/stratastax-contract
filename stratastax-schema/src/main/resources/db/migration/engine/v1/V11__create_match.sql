@@ -32,11 +32,9 @@ CREATE INDEX ix_match_recorder_user_id ON match (recorder_user_id);
 CREATE INDEX ix_match_last_edited_by_user_id ON match (last_edited_by_user_id);
 
 COMMENT ON TABLE match IS
-    'The aggregate root of gaming history. DRAFT while finalized_at is NULL: freely editable, and '
-    'participants that are removed are deleted. FINALIZED afterwards: changed only through match '
-    'edits. Deleting a match (only while DRAFT) soft-deletes it together with its participants. '
-    'Invariants (application): the playset, if set, is for the same game; the expansions belong to the game.';
-COMMENT ON COLUMN match.finalized_at IS 'When the match was finalized; NULL while it is a DRAFT.';
+    'The aggregate root of gaming history. DRAFT while finalized_at is NULL: freely editable, and participants that are removed are deleted. FINALIZED afterwards: changed only through match edits. Deleting a match (only while DRAFT) soft-deletes it together with its participants. Invariants (application): the playset, if set, is for the same game; the expansions belong to the game.';
+COMMENT ON COLUMN match.finalized_at IS
+    'When the match was finalized; NULL while it is a DRAFT.';
 
 CREATE TABLE match_expansion (
     match_id     BIGINT NOT NULL,

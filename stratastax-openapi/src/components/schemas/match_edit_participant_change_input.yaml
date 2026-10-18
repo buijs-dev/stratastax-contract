@@ -2,7 +2,7 @@ type: object
 description: >
   A proposed change to one participant's result. A property that is absent is
   left unchanged; a property that is present replaces the current value, and
-  null clears it. A participant appears at most once per edit (400 DUPLICATE).
+  null clears it. A participant appears at most once per edit (400 DUPLICATE_CHANGE).
 required:
   - matchParticipantId
 properties:

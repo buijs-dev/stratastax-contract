@@ -8,7 +8,7 @@ info:
     url: https://buijs.dev/
   license:
     name: Apache-2.0
-    url: https://github.com/buijs-dev/stratastax-contract/blob/develop/LICENSE
+    url: https://github.com/buijs-dev/stratastax-contract/blob/main/LICENSE
   description: Match tracking API for the Stratastax engine platform.
 servers:
   - url: https://stratastax.dev/rest

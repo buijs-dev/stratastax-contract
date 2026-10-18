@@ -58,13 +58,11 @@ CREATE INDEX ix_candidate_status ON candidate (status);
 CREATE INDEX ix_candidate_base_game_bgg_id ON candidate (base_game_bgg_id);
 
 COMMENT ON TABLE candidate IS
-    'A game or expansion on its way into the engine''s catalogue: created from BGG data, enriched with '
-    'rules found on the web and interpreted by an LLM, reviewed by a human and then published to the '
-    'engine. A published candidate can be approved again with new values; the pipeline then updates '
-    'the engine''s game or expansion.';
+    'A game or expansion on its way into the engine''s catalogue: created from BGG data, enriched with rules found on the web and interpreted by an LLM, reviewed by a human and then published to the engine. A published candidate can be approved again with new values; the pipeline then updates the engine''s game or expansion.';
 COMMENT ON COLUMN candidate.engine_game_id IS
     'Public id of the game in the engine (no FK: the engine owns it). For an expansion: its base game.';
-COMMENT ON COLUMN candidate.engine_expansion_id IS 'Public id of the expansion in the engine, once published.';
+COMMENT ON COLUMN candidate.engine_expansion_id IS
+    'Public id of the expansion in the engine, once published.';
 COMMENT ON COLUMN candidate.publish_request_id IS
     'Idempotency-Key of the pending publication to the engine, so a retry never creates a duplicate.';
 
@@ -88,5 +86,4 @@ CREATE TABLE candidate_reliability_check (
 CREATE INDEX ix_candidate_reliability_check_candidate_id ON candidate_reliability_check (candidate_id);
 
 COMMENT ON TABLE candidate_reliability_check IS
-    'One field compared between the BGG data and the LLM''s reading of the rules; together they '
-    'explain the candidate''s reliability.';
+    'One field compared between the BGG data and the LLM''s reading of the rules; together they explain the candidate''s reliability.';

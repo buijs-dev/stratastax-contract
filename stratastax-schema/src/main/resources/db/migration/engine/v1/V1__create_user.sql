@@ -19,5 +19,4 @@ CREATE TABLE app_user (
 CREATE INDEX ix_app_user_email ON app_user (email);
 
 COMMENT ON TABLE app_user IS
-    'A person with an account. Created together with their canonical player, their self ghost player '
-    'and their three privacy settings (PROFILE, MATCH_HISTORY, MATCH_DETAILS, all PRIVATE).';
+    'A person with an account. Created together with their canonical player, their self ghost player and their three privacy settings (PROFILE, MATCH_HISTORY, MATCH_DETAILS, all PRIVATE).';

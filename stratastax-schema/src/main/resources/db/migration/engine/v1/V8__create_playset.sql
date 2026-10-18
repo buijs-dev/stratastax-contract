@@ -33,6 +33,4 @@ CREATE TABLE playset_expansion (
 CREATE INDEX ix_playset_expansion_expansion_id ON playset_expansion (expansion_id);
 
 COMMENT ON TABLE playset IS
-    'A reusable match configuration (variants, scenario, expansions) for one game. Soft-deleted: '
-    'matches keep referring to a deleted playset, but it can no longer be chosen. '
-    'Invariant (application): its expansions belong to its game.';
+    'A reusable match configuration (variants, scenario, expansions) for one game. Soft-deleted: matches keep referring to a deleted playset, but it can no longer be chosen. Invariant (application): its expansions belong to its game.';

@@ -72,3 +72,6 @@ Every table gets a `COMMENT ON TABLE` ✔ (join tables excepted), and a column w
 obvious a `COMMENT ON COLUMN`. The comments are published on
 [docs.stratastax.dev](https://docs.stratastax.dev/technical/database/): write them for a reader outside
 the project, and state there every invariant of [INVARIANTS.md](INVARIANTS.md) that starts at the table.
+
+A comment is a single string literal, however long: the services generate their jOOQ schema with jOOQ's
+DDL parser, which does not accept PostgreSQL's adjacent literals (`'a' 'b'` on two lines).

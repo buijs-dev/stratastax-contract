@@ -21,6 +21,6 @@ CREATE INDEX ix_bgg_ranking_rank ON bgg_ranking (rank);
 CREATE INDEX ix_bgg_ranking_candidate_id ON bgg_ranking (candidate_id);
 
 COMMENT ON TABLE bgg_ranking IS
-    'A row of the imported BGG ranking CSV. The pipeline creates a candidate for it, best ranked first; '
-    'candidate_id is NULL until then.';
-COMMENT ON COLUMN bgg_ranking.rank IS 'BGG rank; 0 for an entry that BGG does not rank, such as most expansions.';
+    'A row of the imported BGG ranking CSV. The pipeline creates a candidate for it, best ranked first; candidate_id is NULL until then.';
+COMMENT ON COLUMN bgg_ranking.rank IS
+    'BGG rank; 0 for an entry that BGG does not rank, such as most expansions.';

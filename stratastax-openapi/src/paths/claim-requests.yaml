@@ -29,8 +29,7 @@ get:
 post:
   summary: Create a claim request
   description: >
-    Proposes to link ghost players to the caller's canonical player. Deleted ghost
-    players, and ghost players with an active claim edge, cannot be claimed (409).
+    Proposes to link ghost players to the caller's canonical player. A deleted ghost player is unknown (400 NOT_FOUND); a ghost player with an active claim edge cannot be claimed (409).
   operationId: createClaimRequest
   security:
     - bearerAuth:

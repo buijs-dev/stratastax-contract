@@ -16,5 +16,4 @@ CREATE TABLE raw_artifact (
 CREATE INDEX ix_raw_artifact_candidate_id ON raw_artifact (candidate_id);
 
 COMMENT ON TABLE raw_artifact IS
-    'Source material behind a candidate, as received: the BGG API response, the web search result and '
-    'the LLM extraction.';
+    'Source material behind a candidate, as received: the BGG API response, the web search result and the LLM extraction.';

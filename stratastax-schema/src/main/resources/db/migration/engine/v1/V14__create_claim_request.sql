@@ -23,8 +23,7 @@ CREATE INDEX ix_claim_request_canonical_player_id ON claim_request (canonical_pl
 CREATE INDEX ix_claim_request_decided_by_user_id ON claim_request (decided_by_user_id);
 
 COMMENT ON TABLE claim_request IS
-    'A proposal to link ghost players to a canonical player. Approval creates a claim edge per ghost '
-    'player. Invariant (application): deleted ghost players cannot be claimed.';
+    'A proposal to link ghost players to a canonical player. Approval creates a claim edge per ghost player. Invariant (application): deleted ghost players cannot be claimed.';
 
 CREATE TABLE claim_request_target (
     claim_request_id BIGINT NOT NULL,

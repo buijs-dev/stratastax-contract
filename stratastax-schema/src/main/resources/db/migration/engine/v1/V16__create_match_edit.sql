@@ -37,9 +37,7 @@ CREATE INDEX ix_match_edit_new_playset_id ON match_edit (new_playset_id);
 CREATE INDEX ix_match_edit_decided_by_user_id ON match_edit (decided_by_user_id);
 
 COMMENT ON TABLE match_edit IS
-    'A proposed change to a finalized match. Invariants (application): the decider is the match''s '
-    'recorder; an edit only changes participants of its own match; a new playset is for the match''s '
-    'game and new expansions belong to it; only the flagged (*_set) fields are written on approval.';
+    'A proposed change to a finalized match. Invariants (application): the decider is the match''s recorder; an edit only changes participants of its own match; a new playset is for the match''s game and new expansions belong to it; only the flagged (*_set) fields are written on approval.';
 COMMENT ON COLUMN match_edit.playset_set IS
     'The edit replaces the playset with new_playset_id; NULL there clears the playset.';
 COMMENT ON COLUMN match_edit.expansions_set IS
@@ -86,7 +84,8 @@ CREATE TABLE match_edit_participant_change (
 CREATE INDEX ix_match_edit_participant_change_match_participant_id
     ON match_edit_participant_change (match_participant_id);
 
-COMMENT ON TABLE match_edit_participant_change IS 'The new result of one participant, proposed by a match edit.';
+COMMENT ON TABLE match_edit_participant_change IS
+    'The new result of one participant, proposed by a match edit.';
 COMMENT ON COLUMN match_edit_participant_change.score_set IS
     'The edit sets the score: written on approval, NULL clears it. Same for rank_set and outcome_set.';
 

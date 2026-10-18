@@ -12,8 +12,7 @@ CREATE TABLE pipeline_control (
 );
 
 COMMENT ON TABLE pipeline_control IS
-    'A step runs only when it is not paused (through the API) and not suspended (an external service '
-    'answered 5xx/429; suspended_until is when it may try again).';
+    'A step runs only when it is not paused (through the API) and not suspended (an external service answered 5xx/429; suspended_until is when it may try again).';
 
 INSERT INTO pipeline_control (step) VALUES
     ('ENRICH_FROM_BGG'),

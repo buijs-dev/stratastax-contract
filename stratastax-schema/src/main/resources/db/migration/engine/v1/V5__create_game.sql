@@ -32,8 +32,6 @@ CREATE TABLE game (
 );
 
 COMMENT ON TABLE game IS
-    'The catalogue of games. Games are created and updated by the game catalog service, which '
-    'publishes reviewed candidates.';
+    'The catalogue of games. Games are created and updated by the game catalog service, which publishes reviewed candidates.';
 COMMENT ON COLUMN game.source_ref IS
-    'Where the game came from, e.g. ''bgg:199792''. Unique, so publishing the same source twice is '
-    'refused (409) and the catalog links its candidate to the existing game. NULL for a game entered by hand.';
+    'Where the game came from, e.g. ''bgg:199792''. Unique, so publishing the same source twice is refused (409) and the catalog links its candidate to the existing game. NULL for a game entered by hand.';

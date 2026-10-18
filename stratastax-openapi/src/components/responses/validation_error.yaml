@@ -22,16 +22,15 @@ content:
           detail: Received invalid request data
           errors:
             - field: participants[2].ghostPlayerId
-              code: DUPLICATE
+              code: DUPLICATE_GHOST_PLAYER
               message: the ghost player already takes part in this match
       filter_field_not_allowed:
         value:
           type: https://errors.stratastax.dev/validation
           title: Bad Request
           status: 400
-          detail:
-            The filter expression references a field that is not filterable
+          detail: Request validation failed
           errors:
-            - field: filter
-              code: FIELD_NOT_FILTERABLE
-              message: "'gameName' is not a filterable field for this resource"
+            - field: query
+              code: INVALID_SEARCH
+              message: "'nonsense' is not a filterable field"

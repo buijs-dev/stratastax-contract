@@ -23,9 +23,7 @@ CREATE TABLE privacy_setting (
 );
 
 COMMENT ON TABLE privacy_setting IS
-    'Who may see a kind of data of a user. Invariants (application): every user has exactly one '
-    'setting per data type, created PRIVATE together with the user, and settings are never deleted; '
-    'the groups of a setting are owned by its user.';
+    'Who may see a kind of data of a user. Invariants (application): every user has exactly one setting per data type, created PRIVATE together with the user, and settings are never deleted; the groups of a setting are owned by its user.';
 
 CREATE TABLE privacy_setting_group (
     privacy_setting_id BIGINT NOT NULL,

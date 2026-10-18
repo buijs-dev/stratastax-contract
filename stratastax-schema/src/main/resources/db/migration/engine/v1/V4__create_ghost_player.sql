@@ -24,10 +24,6 @@ CREATE UNIQUE INDEX uq_ghost_player_owner_user_id_self
     WHERE is_self;
 
 COMMENT ON TABLE ghost_player IS
-    'A player as a match recorder knows them, in the recorder''s own list. Soft-deleted: a deleted '
-    'ghost player stays in the matches it played, but is no longer listed, suggested or usable in '
-    'new matches and claim requests. Invariant (application): deleting a ghost player revokes its '
-    'active claim edges.';
+    'A player as a match recorder knows them, in the recorder''s own list. Soft-deleted: a deleted ghost player stays in the matches it played, but is no longer listed, suggested or usable in new matches and claim requests. Invariant (application): deleting a ghost player revokes its active claim edges.';
 COMMENT ON COLUMN ghost_player.is_self IS
-    'The ghost player that represents the owner themselves in the matches they record. Created with '
-    'the user, with a claim edge to their own canonical player; never deleted and never unclaimed.';
+    'The ghost player that represents the owner themselves in the matches they record. Created with the user, with a claim edge to their own canonical player; never deleted and never unclaimed.';

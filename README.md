@@ -1,20 +1,21 @@
 # Stratastax Contract
 
+[![Stratastax](https://img.shields.io/badge/Product-stratastax.dev-4F46E5?style=flat)](https://stratastax.dev/)
 [![](https://img.shields.io/badge/Buijs-Software-blue)](https://buijs.dev/)
 [![GitHub](https://img.shields.io/github/license/buijs-dev/klutter?color=black)](https://github.com/buijs-dev/stratastax-infrastructure/blob/main/LICENSE)
 
 The REST API interface definition for the Stratastax platform.
 
-| Module               | Contents                                                                    |
-|----------------------|-----------------------------------------------------------------------------|
-| `stratastax-openapi` | The OpenAPI specs, bundled with Redocly ([guidelines](stratastax-openapi/README.md)) |
-| `stratastax-schema`  | The Flyway migrations per service ([schema](stratastax-schema/README.md))   |
+| Module               | Contents                                                                                       |
+|----------------------|------------------------------------------------------------------------------------------------|
+| `stratastax-openapi` | The OpenAPI specs, bundled with Redocly ([guidelines](stratastax-openapi/README.md))           |
+| `stratastax-schema`  | The Flyway migrations of engine, game-catalog and i18n ([schema](stratastax-schema/README.md)) |
 
-| Spec                            | API                                              | Maven classifier  |
-|---------------------------------|--------------------------------------------------|-------------------|
-| `stratastax.platform.api-v1.yaml` | Platform (stratastax-engine)                   | `openapi`         |
-| `stratastax.catalog.api-v1.yaml`  | Game catalog (stratastax-game-catalog)         | `catalog-openapi` |
-| `stratastax.i18n.api-v1.yaml`     | Translations (the i18n service and its CMS)    | `i18n-openapi`    |
+| Spec                              | API                                         | Maven classifier  |
+|-----------------------------------|---------------------------------------------|-------------------|
+| `stratastax.platform.api-v1.yaml` | Platform (stratastax-engine)                | `openapi`         |
+| `stratastax.catalog.api-v1.yaml`  | Game catalog (stratastax-game-catalog)      | `catalog-openapi` |
+| `stratastax.i18n.api-v1.yaml`     | Translations (the i18n service and its CMS) | `i18n-openapi`    |
 
 ## Documentation
 
@@ -41,10 +42,6 @@ The site always serves the latest bundle, and consumers pin what they generated 
 - a breaking change (removing or renaming anything, making something required, changing a type)
   goes into a new file `api-v(N+1)` next to the old one, which stays until its consumers moved;
 - `info.version` is bumped with every change: minor for additions, patch for documentation.
-
-## TODO
-- maven publish openapi jar
-- maven publish schema jar
 
 ## Related Stratastax projects
 

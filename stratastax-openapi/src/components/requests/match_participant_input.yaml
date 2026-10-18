@@ -1,5 +1,5 @@
 type: object
-description: A participant of a match; a ghost player takes part at most once (400 DUPLICATE).
+description: A participant of a match; a ghost player takes part at most once.
 required:
   - ghostPlayerId
 properties:

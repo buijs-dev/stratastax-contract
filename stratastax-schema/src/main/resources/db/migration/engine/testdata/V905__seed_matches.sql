@@ -21,7 +21,7 @@ DECLARE
     self_ghost_id      BIGINT;
     other_ghost_ids    BIGINT[];
     ghost_id           BIGINT;
-    participant_row_id BIGINT;
+    loadout_row_id     BIGINT;
 BEGIN
     SELECT array_agg(id ORDER BY public_id) INTO game_ids FROM game;
     SELECT array_agg(id ORDER BY id) INTO user_ids FROM app_user;
@@ -70,9 +70,19 @@ BEGIN
                 ghost_id := other_ghost_ids[1 + (i + j - 2) % array_length(other_ghost_ids, 1)];
             END IF;
 
-            INSERT INTO match_participant (public_id, match_id, ghost_player_id, score, outcome, created_at, version)
+            -- A faction for most participants of faction-driven games.
+            loadout_row_id := NULL;
+            IF g.display_name IN ('Scythe', 'Root') AND (i + j) % 5 <> 0 THEN
+                INSERT INTO match_loadout (public_id, attributes, created_at, version)
+                VALUES (format('0192f000-0009-7000-8000-%s', lpad(to_hex(i * 10 + j), 12, '0'))::uuid,
+                        jsonb_build_object('faction', factions[1 + (i + j) % array_length(factions, 1)]),
+                        played + interval '1 hour', 0)
+                RETURNING id INTO loadout_row_id;
+            END IF;
+
+            INSERT INTO match_participant (public_id, match_id, ghost_player_id, loadout_id, score, outcome, created_at, version)
             VALUES (format('0192f000-0008-7000-8000-%s', lpad(to_hex(i * 10 + j), 12, '0'))::uuid,
-                    match_row_id, ghost_id,
+                    match_row_id, ghost_id, loadout_row_id,
                     CASE g.score_type
                         WHEN 'SCORE' THEN 10 + (i * 31 + j * 17) % 190
                         WHEN 'TIME'  THEN 50 + (i * 13 + j * 29) % 550  -- seconds
@@ -81,17 +91,7 @@ BEGIN
                     CASE WHEN g.score_type = 'WIN_LOSS'
                          THEN CASE WHEN j = 1 + i % participant_count THEN 'WIN' ELSE 'LOSS' END
                     END,
-                    played + interval '1 hour', 0)
-            RETURNING id INTO participant_row_id;
-
-            -- A faction for most participants of faction-driven games.
-            IF g.display_name IN ('Scythe', 'Root') AND (i + j) % 5 <> 0 THEN
-                INSERT INTO match_loadout (public_id, match_participant_id, attributes, created_at, version)
-                VALUES (format('0192f000-0009-7000-8000-%s', lpad(to_hex(i * 10 + j), 12, '0'))::uuid,
-                        participant_row_id,
-                        jsonb_build_object('faction', factions[1 + (i + j) % array_length(factions, 1)]),
-                        played + interval '1 hour', 0);
-            END IF;
+                    played + interval '1 hour', 0);
         END LOOP;
     END LOOP;
 END $$;

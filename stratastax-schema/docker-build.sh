@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # usage: docker-build.sh <service> [image-name]
-#   service: the migration subdirectory, engine or game-catalog
-SERVICE=${1:?"usage: docker-build.sh <engine|game-catalog> [image-name]"}
+#   service: the migration subdirectory, engine, game-catalog or i18n
+SERVICE=${1:?"usage: docker-build.sh <engine|game-catalog|i18n> [image-name]"}
 IMAGE_NAME=${2:-"database-schema-${SERVICE}:latest"}
 CONTEXT_DIR="build/docker-context/${SERVICE}"
 

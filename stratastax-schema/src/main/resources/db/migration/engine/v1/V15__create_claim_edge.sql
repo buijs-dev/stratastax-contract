@@ -30,5 +30,4 @@ CREATE INDEX ix_claim_edge_created_via_claim_request_id ON claim_edge (created_v
 CREATE INDEX ix_claim_edge_revoked_by_user_id ON claim_edge (revoked_by_user_id);
 
 COMMENT ON TABLE claim_edge IS
-    'The approved, revocable link between a canonical player and a ghost player. Invariant '
-    '(application): the claim edge of a user''s self ghost player is never revoked.';
+    'The approved, revocable link between a canonical player and a ghost player. Invariant (application): the claim edge of a user''s self ghost player is never revoked.';

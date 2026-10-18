@@ -4,7 +4,7 @@ get:
   summary: List expansions for a game
   description: >
     Filterable on `id`, `name`, `description`, `sourceRef`, `createdAt`,
-    `updatedAt`; sortable on `id`, `name`, `createdAt`, `updatedAt`.
+    `updatedAt`; sortable on `id`, `name`, `description`, `createdAt`, `updatedAt`.
   operationId: listExpansions
   security:
     - bearerAuth:

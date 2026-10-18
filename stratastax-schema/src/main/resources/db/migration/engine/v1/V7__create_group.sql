@@ -30,5 +30,4 @@ CREATE TABLE group_member (
 CREATE INDEX ix_group_member_user_id ON group_member (user_id);
 
 COMMENT ON TABLE app_group IS
-    'A named roster of users, owned by one user, used for privileged access and community admins. '
-    'Soft-deleted: a deleted group grants nothing any more, although its rows still exist.';
+    'A named roster of users, owned by one user, used for privileged access and community admins. Soft-deleted: a deleted group grants nothing any more, although its rows still exist.';

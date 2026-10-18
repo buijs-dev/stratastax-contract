@@ -19,6 +19,7 @@ CREATE TABLE expansion (
 
 CREATE INDEX ix_expansion_game_id ON expansion (game_id);
 
-COMMENT ON TABLE expansion IS 'An expansion of a game; it has no meaning on its own.';
+COMMENT ON TABLE expansion IS
+    'An expansion of a game; it has no meaning on its own.';
 COMMENT ON COLUMN expansion.source_ref IS
     'Where the expansion came from, e.g. ''bgg:199727''; unique like game.source_ref. NULL for one entered by hand.';

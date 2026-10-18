@@ -23,10 +23,7 @@ CREATE INDEX ix_community_owner_user_id ON community (owner_user_id);
 CREATE INDEX ix_community_admin_group_id ON community (admin_group_id);
 
 COMMENT ON TABLE community IS
-    'A set of users with a shared match history. Soft-deleted. Invariants (application): the admin '
-    'group, if set, is owned by the community''s owner and is cleared when ownership is transferred; '
-    'only the owner may remove an admin, any admin may remove a non-admin member; an admin who leaves '
-    'or is removed is also removed from the admin group.';
+    'A set of users with a shared match history. Soft-deleted. Invariants (application): the admin group, if set, is owned by the community''s owner and is cleared when ownership is transferred; only the owner may remove an admin, any admin may remove a non-admin member; an admin who leaves or is removed is also removed from the admin group.';
 
 CREATE SEQUENCE IF NOT EXISTS membership_seq INCREMENT BY 50;
 
@@ -47,4 +44,5 @@ CREATE TABLE membership (
 
 CREATE INDEX ix_membership_user_id ON membership (user_id);
 
-COMMENT ON TABLE membership IS 'A user''s membership of a community; joined_at is when they joined.';
+COMMENT ON TABLE membership IS
+    'A user''s membership of a community; joined_at is when they joined.';

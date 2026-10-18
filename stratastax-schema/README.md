@@ -9,12 +9,15 @@ one directory per service:
 | `db/migration/engine/testdata`         | stratastax-engine        | seed data for dev and test, never in an image |
 | `db/migration/game-catalog/v1`         | stratastax-game-catalog  | candidates, BGG ranking, raw artifacts, pipeline control, idempotency |
 | `db/migration/game-catalog/testdata`   | stratastax-game-catalog  | seed data for dev and test                 |
+| `db/migration/i18n/v1`                 | i18n service (CMS)       | applications, message keys, translations, releases, idempotency |
+| `db/migration/i18n/testdata`           | i18n service (CMS)       | seed data for dev and test                 |
 
 Naming follows [NAMING.md](NAMING.md); the invariants that the database deliberately does not enforce
 are listed in [INVARIANTS.md](INVARIANTS.md).
 
-Every service gets its own migration image (`database-schema-engine`, `database-schema-game-catalog`) with only
-its `v1` scripts: `./docker-build.sh <engine|game-catalog>`. The seeds refer to each other: the game-catalog seed's
+Every service gets its own migration image (`database-schema-engine`, `database-schema-game-catalog`,
+`database-schema-i18n`) with only
+its `v1` scripts: `./docker-build.sh <engine|game-catalog|i18n>`. The seeds refer to each other: the game-catalog seed's
 published candidate points at the engine seed's game ids (fixed `public_id`s).
 
 ## Seed data
@@ -43,7 +46,7 @@ as described above, checks the naming and structure rules of NAMING.md and the s
 
 ## Schema documentation
 
-`./gradlew generateSchemaDocs` (or `./generate-docs.sh <engine|game-catalog> [output-dir]` after `./gradlew jar`)
+`./gradlew generateSchemaDocs` (or `./generate-docs.sh <engine|game-catalog|i18n> [output-dir]` after `./gradlew jar`)
 generates Markdown and SVG ER diagrams per service with [tbls](https://github.com/k1LoW/tbls), into
 `build/schema-docs/<service>`. It needs Docker: the `v1` migrations of the service are applied to a throwaway
 Postgres, which is removed afterwards. The same script runs in the build of
@@ -98,8 +101,8 @@ These scripts define the core Stratastax domain model.
 ### Matches
 
 -   **`V11__create_match.sql`**: the aggregate root of gaming history and its expansions. DRAFT until `finalized_at` is set; soft-deleted.
--   **`V12__create_match_participant.sql`**: a player's result in a match (`score NUMERIC(10,2)`, rank, outcome) and the dispute of a claimed player.
--   **`V13__create_match_loadout.sql`**: per-participant configuration (faction, character, ...), deleted with its participant.
+-   **`V12__create_match_loadout.sql`**: per-participant configuration (faction, character, ...), owned by the participant that refers to it and deleted with it.
+-   **`V13__create_match_participant.sql`**: a player's result in a match (`score NUMERIC(10,2)`, rank, outcome, loadout) and the dispute of a claimed player.
 -   **`V14__create_claim_request.sql`**: proposals to link ghost players to a canonical player.
 -   **`V15__create_claim_edge.sql`**: the approved, revocable links; at most one active per ghost player.
 -   **`V16__create_match_edit.sql`**: proposed changes to a finalized match, fully normalized: result changes (`match_edit_participant_change`), loadout changes (`match_edit_loadout_change`), the new expansions (`match_edit_expansion_change`) and the new playset (on `match_edit`). The `*_set` flags tell "keep the current value" apart from "clear it".
@@ -118,6 +121,25 @@ These scripts define the core Stratastax domain model.
 -   **`V4__create_pipeline_control.sql`**: the run state (paused, suspended) of every automatic pipeline step.
 -   **`V5__create_idempotency_record.sql`**: same as the engine's V19.
 
+## I18n Schema Migrations (`src/main/resources/db/migration/i18n/v1`)
+
+The storage behind `stratastax.i18n.api-v1.yaml`: the translation CMS, where admins translate the keys of an
+application and publish them, and the bundles that consumer apps load at startup.
+
+-   **`V1__create_user.sql`**: `app_user`, the CMS users as known from the identity provider (`subject` is the
+    JWT `sub`), created on their first change; its `public_id` is the user reference in the API.
+-   **`V2__create_application.sql`**: `application` (`application_key` is the slug in the API, such as
+    `match-tracker`) and its locales in `application_locale`, the base locale included.
+-   **`V3__create_message_key.sql`**: `message_key`, the keys with their base text, as imported from the translation
+    files of the application (`obsoleted_at` once an import no longer contains a key), and their ICU arguments in
+    `message_argument`, in the order in which the generated code passes them.
+-   **`V4__create_release.sql`**: `release`, the publications numbered per application, and the locales each one
+    published in `release_locale`. A release never changes.
+-   **`V5__create_translation.sql`**: `translation`, per key and locale the draft and the published text with the
+    release that published it. The status in the API follows from the texts (DRAFT, PUBLISHED, CHANGED; no row is
+    MISSING); `invalidated_at` marks a draft whose arguments an import changed.
+-   **`V6__create_idempotency_record.sql`**: same as the engine's V19.
+
 ## Seed Scripts (`src/main/resources/db/migration/<service>/testdata`)
 
 Version numbers start at 900; see [Seed data](#seed-data) for how they are applied.
@@ -129,3 +151,6 @@ Version numbers start at 900; see [Seed data](#seed-data) for how they are appli
 -   **engine `V904__seed_ghost_players.sql`**: seven ghost players per user (and one deleted), claim edges for Peter and Nora, a pending claim request and a trusted editor.
 -   **engine `V905__seed_matches.sql`**: 520 matches with participants, loadouts and ranks, a dispute and a pending match edit.
 -   **game-catalog `V900`–`V902`**: a slice of the BGG ranking, one candidate per pipeline stage and review status, and raw artifacts.
+-   **i18n `V900__seed_users.sql`**: two CMS users.
+-   **i18n `V901__seed_match_tracker.sql`**: the example app of stratastax-flutter (`match-tracker`, en and nl) with
+    eleven keys, one release, a translation in every status, an obsolete key and an invalidated draft.

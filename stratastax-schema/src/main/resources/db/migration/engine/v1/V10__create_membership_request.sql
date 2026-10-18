@@ -31,5 +31,4 @@ CREATE UNIQUE INDEX uq_membership_request_community_id_proposed_by_user_id_pendi
     WHERE status = 'PENDING';
 
 COMMENT ON TABLE membership_request IS
-    'A request to join a community with the REQUIRES_APPROVAL join policy. Invariant (application): '
-    'the decider is the community''s owner or a member of its admin group.';
+    'A request to join a community with the REQUIRES_APPROVAL join policy. Invariant (application): the decider is the community''s owner or a member of its admin group.';

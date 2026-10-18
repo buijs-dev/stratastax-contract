@@ -11,8 +11,8 @@ set -euo pipefail
 #   4. builds a second database the same way and compares a fingerprint of all data, so the seed
 #      data is proven deterministic.
 #
-# usage: verify-migrations.sh <engine|game-catalog>
-SERVICE=${1:?"usage: verify-migrations.sh <engine|game-catalog>"}
+# usage: verify-migrations.sh <engine|game-catalog|i18n>
+SERVICE=${1:?"usage: verify-migrations.sh <engine|game-catalog|i18n>"}
 MIGRATIONS_DIR="src/main/resources/db/migration/${SERVICE}"
 CHECKS_DIR="src/main/verify-migrations"
 

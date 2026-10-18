@@ -10,7 +10,7 @@ plugins {
 description = "The Stratastax database schemas and their Flyway migrations"
 
 /** Every service with its own migrations under db/migration/<service>. */
-val services = listOf("engine", "game-catalog")
+val services = listOf("engine", "game-catalog", "i18n")
 
 fun dockerImageName(service: String): String =
     "database-schema-$service:${version.toString().lowercase(getDefault())}"
@@ -40,7 +40,8 @@ val generateSchemaDocs =
 val verifyMigrations =
     tasks.register("verifyMigrations") {
         group = "verification"
-        description = "Verifies the migrations and seed data of every service against a throwaway Postgres."
+        description =
+            "Verifies the migrations and seed data of every service against a throwaway Postgres."
     }
 
 val dockerBuild =
@@ -74,8 +75,8 @@ services.forEach { service ->
         tasks.register<Exec>("verifyMigrations$suffix") {
             group = "verification"
             description =
-                "Applies the v1 migrations and the seed data of $service to a throwaway Postgres and checks " +
-                "naming, structure and the seed data (see verify-migrations.sh)."
+                "Applies the v1 migrations and the seed data of $service to a throwaway Postgres " +
+                "and checks naming, structure and the seed data (see verify-migrations.sh)."
             inputs.dir("src/main/resources/db/migration/$service")
             inputs.dir("src/main/verify-migrations")
             commandLine("bash", "./verify-migrations.sh", service)

@@ -6,10 +6,10 @@ set -euo pipefail
 # is published on docs.stratastax.dev, so it must not contain data or connection details; see
 # tbls.yml for what is left out.
 #
-# usage: generate-docs.sh <engine|game-catalog> [output-dir]
+# usage: generate-docs.sh <engine|game-catalog|i18n> [output-dir]
 #   output-dir defaults to build/schema-docs/<service>; run `./gradlew jar` first, the migrations
 #   are read from build/resources/main.
-SERVICE=${1:?"usage: generate-docs.sh <engine|game-catalog> [output-dir]"}
+SERVICE=${1:?"usage: generate-docs.sh <engine|game-catalog|i18n> [output-dir]"}
 OUTPUT_DIR=${2:-"build/schema-docs/${SERVICE}"}
 MIGRATIONS_DIR="build/resources/main/db/migration/${SERVICE}/v1"
 

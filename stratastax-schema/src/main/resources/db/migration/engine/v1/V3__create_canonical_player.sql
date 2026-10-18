@@ -16,5 +16,4 @@ ALTER TABLE app_user
     FOREIGN KEY (canonical_player_id) REFERENCES canonical_player (id);
 
 COMMENT ON TABLE canonical_player IS
-    'The authoritative identity of a person in gaming history, created when the user registers. '
-    'Ghost players are linked to it through claim edges.';
+    'The authoritative identity of a person in gaming history, created when the user registers. Ghost players are linked to it through claim edges.';
