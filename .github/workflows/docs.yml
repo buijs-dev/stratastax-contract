@@ -42,18 +42,11 @@ jobs:
   notify:
     needs: verify
     runs-on: ubuntu-latest
-    env:
-      DOCS_DISPATCH_TOKEN: ${{ secrets.DOCS_DISPATCH_TOKEN }}
     steps:
-      - name: Missing token
-        if: env.DOCS_DISPATCH_TOKEN == ''
-        run: echo "::warning::DOCS_DISPATCH_TOKEN is not set; stratastax-horizon is not rebuilt"
-
       - name: Rebuild docs.stratastax.dev
-        if: env.DOCS_DISPATCH_TOKEN != ''
-        uses: peter-evans/repository-dispatch@v3
+        uses: buijs-dev/ci-templates/.github/actions/notify-repository@main
         with:
-          token: ${{ env.DOCS_DISPATCH_TOKEN }}
+          token: ${{ secrets.DOCS_DISPATCH_TOKEN }}
           repository: buijs-dev/stratastax-horizon
           event-type: contract-updated
           client-payload: '{"sha": "${{ github.sha }}"}'

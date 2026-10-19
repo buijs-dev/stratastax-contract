@@ -1,13 +1,13 @@
 name: Publish Release
 
 on:
-  push:
-    tags: [ 'v*' ]
+  pull_request:
+    types: [ closed ]
+    branches: [ main ]
 
 permissions:
   contents: write
   packages: write
-  pull-requests: write
 
 jobs:
   publish:
