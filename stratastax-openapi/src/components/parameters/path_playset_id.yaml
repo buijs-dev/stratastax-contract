@@ -1,0 +1,7 @@
+name: playsetId
+in: path
+required: true
+description: Public playset identifier
+schema:
+  type: string
+  format: uuid

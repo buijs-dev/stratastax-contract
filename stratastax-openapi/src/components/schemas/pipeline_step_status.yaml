@@ -1,0 +1,19 @@
+type: object
+required:
+  - step
+  - paused
+  - running
+properties:
+  step:
+    $ref: ./pipeline_step.yaml
+  paused:
+    type: boolean
+    description: Paused through the API
+  suspendedUntil:
+    $ref: ./date_time.yaml
+  suspendReason:
+    type: string
+    description: Why an external service made the step stop for a while
+  running:
+    type: boolean
+    description: Neither paused nor suspended

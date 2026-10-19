@@ -1,7 +1,0 @@
-name: requestId
-in: path
-required: true
-description: Public request identifier
-schema:
-  type: string
-  format: uuid

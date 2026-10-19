@@ -1,0 +1,6 @@
+name: messageKey
+in: path
+required: true
+description: Dotted message key (`matchCreateCommand.gameId.label`)
+schema:
+  $ref: ../schemas/message_key.yaml

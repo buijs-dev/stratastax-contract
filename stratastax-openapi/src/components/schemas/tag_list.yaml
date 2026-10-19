@@ -1,0 +1,5 @@
+type: array
+maxItems: 20
+uniqueItems: true
+items:
+  $ref: ./tag.yaml

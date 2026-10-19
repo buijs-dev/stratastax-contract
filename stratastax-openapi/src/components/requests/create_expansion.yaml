@@ -3,9 +3,10 @@ required:
   - displayName
 properties:
   displayName:
-    type: string
+    $ref: ../schemas/game_display_name.yaml
   description:
-    type: string
+    $ref: ../schemas/description.yaml
   imageUrl:
-    type: string
-    format: uri
+    $ref: ../schemas/image_url.yaml
+  sourceRef:
+    $ref: ../schemas/source_ref.yaml

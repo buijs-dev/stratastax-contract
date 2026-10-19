@@ -1,0 +1,10 @@
+type: object
+description: >
+  Replaces the playset of the match with a playset of the match's game. Without `playsetId`, or with
+  `null`, the edit removes the playset.
+properties:
+  playsetId:
+    # Optional rather than required-and-nullable: the code generators of the services drop the
+    # null of a required property.
+    type: [string, "null"]
+    format: uuid

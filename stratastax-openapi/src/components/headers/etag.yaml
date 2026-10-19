@@ -1,0 +1,3 @@
+description: Current version of the resource; send it as If-Match to change or delete it
+schema:
+  type: string

@@ -1,0 +1,5 @@
+description: List of message keys
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/message_key_list.yaml

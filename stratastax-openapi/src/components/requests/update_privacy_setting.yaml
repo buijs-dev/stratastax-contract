@@ -1,12 +1,14 @@
 type: object
+description: Every field is optional; an absent field keeps its value.
 properties:
   level:
-    anyOf:
-      - $ref: ../schemas/visibility.yaml
-      - type: "null"
+    $ref: ../schemas/visibility.yaml
   groupIds:
-    type: [array, "null"]
-    description: Only meaningful when level is PRIVILEGED_ACCESS
+    type: array
+    description: >
+      Groups of the caller that get access; replaces the current groups. Only meaningful when
+      level is PRIVILEGED_ACCESS.
+    uniqueItems: true
     items:
       type: string
       format: uuid

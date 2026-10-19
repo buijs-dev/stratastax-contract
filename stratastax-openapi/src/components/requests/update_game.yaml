@@ -1,26 +1,25 @@
 type: object
+description: >
+  Every field is optional; an absent field keeps its value. Only the fields that can be empty
+  (imageUrl, winCondition) accept null, which clears them. After the update the win condition is
+  set unless the score type is WIN_LOSS, and absent then.
 properties:
   displayName:
-    type: [string, "null"]
+    $ref: ../schemas/game_display_name.yaml
   description:
-    type: [string, "null"]
+    $ref: ../schemas/description.yaml
   minPlayers:
-    type: [integer, "null"]
-    format: int32
+    $ref: ../schemas/player_count.yaml
   maxPlayers:
-    type: [integer, "null"]
-    format: int32
+    $ref: ../schemas/player_count.yaml
   imageUrl:
-    type: [string, "null"]
-    format: uri
-  tags:
-    type: [array, "null"]
-    items:
-      type: string
-  scoreType:
     anyOf:
-      - $ref: ../schemas/score_type.yaml
+      - $ref: ../schemas/image_url.yaml
       - type: "null"
+  tags:
+    $ref: ../schemas/tag_list.yaml
+  scoreType:
+    $ref: ../schemas/score_type.yaml
   winCondition:
     anyOf:
       - $ref: ../schemas/win_condition.yaml

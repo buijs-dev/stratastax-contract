@@ -1,0 +1,6 @@
+type: object
+required:
+  - text
+properties:
+  text:
+    $ref: ../schemas/message_text.yaml

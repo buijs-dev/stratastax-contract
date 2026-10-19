@@ -1,4 +1,6 @@
 type: object
+description: >
+  A new game. The win condition is required unless the score type is WIN_LOSS, and absent then.
 required:
   - displayName
   - description
@@ -8,24 +10,20 @@ required:
   - tags
 properties:
   displayName:
-    type: string
+    $ref: ../schemas/game_display_name.yaml
   description:
-    type: string
+    $ref: ../schemas/description.yaml
   minPlayers:
-    type: integer
-    format: int32
+    $ref: ../schemas/player_count.yaml
   maxPlayers:
-    type: integer
-    format: int32
+    $ref: ../schemas/player_count.yaml
   imageUrl:
-    type: string
-    format: uri
+    $ref: ../schemas/image_url.yaml
   tags:
-    type: array
-    items:
-      type: string
-    default: []
+    $ref: ../schemas/tag_list.yaml
   scoreType:
     $ref: ../schemas/score_type.yaml
   winCondition:
     $ref: ../schemas/win_condition.yaml
+  sourceRef:
+    $ref: ../schemas/source_ref.yaml

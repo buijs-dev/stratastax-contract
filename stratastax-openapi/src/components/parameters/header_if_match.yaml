@@ -2,7 +2,8 @@ name: If-Match
 in: header
 required: true
 description: >
-  ETag of the resource being modified, for optimistic concurrency control.
-  Obtain this from the ETag response header of a previous GET/PATCH.
+  ETag of the resource being modified, for optimistic concurrency control: the request is refused
+  with 412 when the resource changed since. Obtain it from the ETag response header of a previous
+  GET or mutation.
 schema:
   type: string

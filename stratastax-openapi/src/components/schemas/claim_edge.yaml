@@ -21,3 +21,5 @@ properties:
     $ref: ./user_ref.yaml
   createdAt:
     $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

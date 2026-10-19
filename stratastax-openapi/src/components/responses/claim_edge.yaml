@@ -1,4 +1,9 @@
-description: Claim edge retrieved successfully
+description: Claim edge retrieved or changed successfully
+headers:
+  ETag:
+    $ref: ../headers/etag.yaml
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml
 content:
   application/json:
     schema:

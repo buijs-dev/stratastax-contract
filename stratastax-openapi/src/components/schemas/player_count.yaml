@@ -1,0 +1,4 @@
+type: integer
+format: int32
+description: Number of players; the maximum is never below the minimum
+minimum: 1

@@ -3,19 +3,34 @@ parameters:
 get:
   summary: Get playset
   operationId: getPlayset
+  security:
+    - bearerAuth:
+        - stx-engine:playset-read
   tags:
     - playsets
   responses:
     '200':
       $ref: ../components/responses/playset.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
 patch:
   summary: Update playset
   operationId: updatePlayset
+  security:
+    - bearerAuth:
+        - stx-engine:playset-update
   tags:
     - playsets
   parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
     - $ref: ../components/parameters/header_if_match.yaml
   requestBody:
     required: true
@@ -28,21 +43,50 @@ patch:
       $ref: ../components/responses/playset.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
     '412':
       $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
 delete:
   summary: Delete playset
+  description: >
+    Soft-deletes the playset: matches keep referring to it, but it is no longer
+    listed and cannot be chosen for a match or a match edit.
   operationId: deletePlayset
+  security:
+    - bearerAuth:
+        - stx-engine:playset-delete
   tags:
     - playsets
   parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
     - $ref: ../components/parameters/header_if_match.yaml
   responses:
     '204':
-      description: Deleted successfully
+      $ref: ../components/responses/no_content.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '404':
       $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
     '412':
       $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

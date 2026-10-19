@@ -1,0 +1,7 @@
+type: string
+description: An automatic pipeline step.
+enum:
+  - ENRICH_FROM_BGG
+  - COLLECT_RULES
+  - INTERPRET_RULES
+  - PUBLISH

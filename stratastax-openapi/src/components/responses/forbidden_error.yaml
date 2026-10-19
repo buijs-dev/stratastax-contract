@@ -6,7 +6,7 @@ content:
     examples:
       forbidden:
         value:
-          type: https://errors.stratastax.io/authorization
+          type: https://errors.stratastax.dev/authorization
           title: Access denied
           status: 403
           detail: Insufficient permissions

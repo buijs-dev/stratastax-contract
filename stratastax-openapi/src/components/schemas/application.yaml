@@ -1,0 +1,27 @@
+type: object
+required:
+  - id
+  - displayName
+  - baseLocale
+  - locales
+  - createdAt
+properties:
+  id:
+    $ref: ./application_id.yaml
+  displayName:
+    $ref: ./display_name.yaml
+  baseLocale:
+    $ref: ./locale.yaml
+  locales:
+    type: array
+    description: Every locale of the application, the base locale first
+    items:
+      $ref: ./locale.yaml
+  latestRelease:
+    type:
+      - integer
+      - 'null'
+    format: int32
+    description: Version of the latest release; null before the first publication
+  createdAt:
+    $ref: ./date_time.yaml

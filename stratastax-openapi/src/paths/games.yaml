@@ -1,6 +1,14 @@
 get:
   summary: List games
+  description: >
+    Filterable on `id`, `name`, `description`, `minPlayers`, `maxPlayers`, `tags`,
+    `scoreType`, `winCondition`, `sourceRef`, `createdAt`, `updatedAt`,
+    `expansionsId`, `expansionsName`; sortable on `id`, `name`, `createdAt`,
+    `updatedAt`.
   operationId: listGames
+  security:
+    - bearerAuth:
+        - stx-engine:game-read
   tags:
     - games
   parameters:
@@ -13,5 +21,43 @@ get:
       $ref: ../components/responses/game_list.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Create game
+  description: >
+    Adds a game to the catalogue. Requires the `stx-engine:game-create` role; the
+    game catalog service publishes approved candidates through this operation.
+  operationId: createGame
+  security:
+    - bearerAuth:
+        - stx-engine:game-create
+  tags:
+    - games
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_game.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/created_game.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

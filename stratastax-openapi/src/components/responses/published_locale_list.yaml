@@ -1,0 +1,5 @@
+description: The locales with a published bundle
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/published_locale_list.yaml

@@ -1,0 +1,6 @@
+type: string
+format: uri
+description: >
+  At most 500 characters (the column it is stored in); a longer URL is refused with 400. Not
+  declared as `maxLength`: the services read a `uri` as a URI type, which length validation does
+  not apply to, so they check the length themselves.

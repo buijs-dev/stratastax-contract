@@ -1,6 +1,13 @@
 get:
   summary: Count ghost players
+  description: >
+    Counts the ghost players that match the filter; deleted ghost players are not
+    counted. Filterable on `id`, `name`, `isSelf`, `ownerId`, `ownerName`,
+    `createdAt`, `updatedAt`.
   operationId: countGhostPlayers
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-read
   tags:
     - ghostPlayers
   parameters:
@@ -10,5 +17,9 @@ get:
       $ref: ../components/responses/count.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

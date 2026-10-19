@@ -6,7 +6,7 @@ content:
     examples:
       precondition_failed:
         value:
-          type: https://errors.stratastax.io/precondition-failed
+          type: https://errors.stratastax.dev/precondition-failed
           title: Resource has changed
           status: 412
           detail:

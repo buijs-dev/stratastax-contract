@@ -26,14 +26,16 @@ properties:
     $ref: ./date_time.yaml
   editRequestsEnabled:
     type: boolean
-  lockedAt:
+  finalizedAt:
     $ref: ./date_time.yaml
-    description: Set automatically when the match transitions to FINALIZED.
+    description: When the match was finalized; absent while it is a DRAFT.
   lastEditedAt:
     $ref: ./date_time.yaml
   lastEditedBy:
     $ref: ./user_ref.yaml
   createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
     $ref: ./date_time.yaml
   expansions:
     type: array

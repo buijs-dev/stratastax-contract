@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Stratastax Game Catalog API
+  contact:
+    name: Contact our support
+    email: info@buijs.dev
+    url: https://buijs.dev/
+  license:
+    name: Apache-2.0
+    url: https://github.com/buijs-dev/stratastax-contract/blob/main/LICENSE
+  description: >
+    Ingestion pipeline of the Stratastax game catalog: imports the BGG ranking,
+    enriches every entry into a candidate (BGG data, rules found on the web,
+    LLM interpretation with a reliability check), lets a human review the
+    candidates and publishes approved ones to the engine, which owns the
+    games and expansions.
+servers:
+  - url: https://stratastax.dev/rest
+security:
+  - bearerAuth: []
+tags:
+  - name: candidates
+    description: Review of games and expansions before they are published to the engine.
+  - name: pipeline
+    description: Ranking import and control of the automatic pipeline steps.
+paths:
+  /api/v1/candidates:
+    $ref: ./paths/candidates.yaml
+  /api/v1/candidates/{candidateId}:
+    $ref: './paths/candidates_{candidateId}.yaml'
+  /api/v1/candidates/{candidateId}/approve:
+    $ref: './paths/candidates_{candidateId}_approve.yaml'
+  /api/v1/candidates/{candidateId}/reject:
+    $ref: './paths/candidates_{candidateId}_reject.yaml'
+  /api/v1/pipeline/import-rankings:
+    $ref: ./paths/pipeline_import-rankings.yaml
+  /api/v1/pipeline/status:
+    $ref: ./paths/pipeline_status.yaml
+  /api/v1/pipeline/pause:
+    $ref: ./paths/pipeline_pause.yaml
+  /api/v1/pipeline/resume:
+    $ref: ./paths/pipeline_resume.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

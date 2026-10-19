@@ -1,6 +1,16 @@
 get:
   summary: Count matches
+  description: >
+    Counts the matches that match the filter; soft-deleted matches are not
+    counted. Filterable on `id`, `gameId`,
+    `gameName`, `playsetId`, `playsetName`, `communityId`, `communityName`,
+    `recorderId`, `recorderName`, `playedAt`, `finalizedAt`,
+    `editRequestsEnabled`, `lastEditedAt`, `lastEditedById`, `createdAt`,
+    `expansionsId`, `expansionsName`.
   operationId: countMatches
+  security:
+    - bearerAuth:
+        - stx-engine:match-read
   tags:
     - matches
   parameters:
@@ -10,5 +20,9 @@ get:
       $ref: ../components/responses/count.yaml
     '400':
       $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
     '500':
       $ref: ../components/responses/internal_server_error.yaml

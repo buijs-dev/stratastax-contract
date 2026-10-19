@@ -1,0 +1,7 @@
+name: matchId
+in: path
+required: true
+description: Public match identifier
+schema:
+  type: string
+  format: uuid

@@ -1,0 +1,33 @@
+parameters:
+  - $ref: ../components/parameters/path_application_id.yaml
+  - $ref: ../components/parameters/path_locale.yaml
+get:
+  summary: Get published bundle
+  description: >
+    The published translations of a locale. Called by consumer applications
+    with a service account, at startup and when the locale changes. Pass the
+    ETag of a cached bundle as If-None-Match to get `304 Not Modified` while it
+    is still current. Drafts are never part of a bundle.
+  operationId: getBundle
+  security:
+    - bearerAuth:
+        - stx-i18n:bundle-read
+  tags:
+    - bundles
+  parameters:
+    - $ref: ../components/parameters/header_if_none_match.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/translation_bundle.yaml
+    '304':
+      $ref: ../components/responses/not_modified.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

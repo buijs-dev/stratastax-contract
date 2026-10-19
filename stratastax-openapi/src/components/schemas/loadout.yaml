@@ -12,3 +12,5 @@ properties:
     additionalProperties: true
   createdAt:
     $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

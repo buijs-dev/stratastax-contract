@@ -8,7 +8,7 @@ info:
     url: https://buijs.dev/
   license:
     name: Apache-2.0
-    url: https://github.com/buijs-dev/stratastax-contract/blob/develop/LICENSE
+    url: https://github.com/buijs-dev/stratastax-contract/blob/main/LICENSE
   description: Match tracking API for the Stratastax engine platform.
 servers:
   - url: https://stratastax.dev/rest
@@ -45,6 +45,8 @@ tags:
     description: Community membership management.
   - name: membershipRequests
     description: Community membership request workflow.
+  - name: users
+    description: The current user and finding other users.
 paths:
   /api/v1/matches/count:
     $ref: ./paths/matches_count.yaml
@@ -56,6 +58,8 @@ paths:
     $ref: './paths/matches_{matchId}_edits.yaml'
   /api/v1/matches/{matchId}/edits/{editId}:
     $ref: './paths/matches_{matchId}_edits_{editId}.yaml'
+  /api/v1/matches/{matchId}/participants/{matchParticipantId}/dispute:
+    $ref: './paths/matches_{matchId}_participants_{matchParticipantId}_dispute.yaml'
   /api/v1/matches:
     $ref: ./paths/matches.yaml
   /api/v1/matches/batch:
@@ -118,8 +122,12 @@ paths:
     $ref: './paths/communities_{communityId}_memberships_{userId}.yaml'
   /api/v1/communities/{communityId}/membership-requests:
     $ref: './paths/communities_{communityId}_membership-requests.yaml'
-  /api/v1/communities/{communityId}/membership-requests/{requestId}:
-    $ref: './paths/communities_{communityId}_membership-requests_{requestId}.yaml'
+  /api/v1/communities/{communityId}/membership-requests/{membershipRequestId}:
+    $ref: './paths/communities_{communityId}_membership-requests_{membershipRequestId}.yaml'
+  /api/v1/users/me:
+    $ref: ./paths/users_me.yaml
+  /api/v1/users/suggestions:
+    $ref: ./paths/users_suggestions.yaml
 components:
   securitySchemes:
     bearerAuth:

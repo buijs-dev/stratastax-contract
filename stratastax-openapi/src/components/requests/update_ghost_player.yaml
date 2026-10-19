@@ -1,6 +1,4 @@
 type: object
 properties:
   displayName:
-    anyOf:
-      - $ref: ../schemas/display_name.yaml
-      - type: "null"
+    $ref: ../schemas/display_name.yaml

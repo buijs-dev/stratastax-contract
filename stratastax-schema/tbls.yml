@@ -1,0 +1,12 @@
+# Configuration of generate-docs.sh; the DSN, output path and name come from the environment.
+# The output is public (docs.stratastax.dev): only structure, never data or connection details.
+name: ${TBLS_NAME}
+dsn: ${TBLS_DSN}
+docPath: ${TBLS_DOC_PATH}
+exclude:
+  - public.flyway_schema_history
+format:
+  adjust: true
+er:
+  format: svg
+  comment: true

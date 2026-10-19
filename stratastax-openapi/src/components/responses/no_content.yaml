@@ -1,0 +1,4 @@
+description: Done; there is no content to return
+headers:
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml

@@ -1,55 +1,103 @@
 import com.github.gradle.node.npm.task.NpxTask
 
 plugins {
+    base
     id("stratastax.node")
     id("stratastax.publishing")
     id("stratastax.repositories")
-    id("stratastax.spotless")
+    id("stratastax.formatting")
 }
 
-val openApiInput = layout.projectDirectory.file("src/stratastax.platform.api-v1.yaml")
+description = "The bundled OpenAPI specs of the Stratastax APIs"
+
 val openApiOutputDir = layout.buildDirectory.dir("openapi")
-val bundledFile = openApiOutputDir.map { it.file("stratastax.platform.api-v1.yaml") }
 
-val bundleOpenApi = tasks.register<NpxTask>("bundleOpenApi") {
-    group = "openapi"
-    description = "Bundle OpenAPI into single file"
+/** Lint configuration with the stratastax rules (standard responses, Idempotency-Key). */
+val lintConfig = layout.projectDirectory.file("redocly.yaml")
+val lintRules = layout.projectDirectory.file("redocly-rules.js")
 
-    inputs.dir(layout.projectDirectory.dir("src")).withPropertyName("openApiSources")
-    outputs.file(bundledFile)
+/**
+ * Every public contract, bundled into one file each and published under its own classifier:
+ * - `openapi`: the platform API (stratastax-engine)
+ * - `catalog-openapi`: the game catalog API (stratastax-game-catalog)
+ * - `i18n-openapi`: the translations API (the i18n service and its CMS)
+ */
+val specs =
+    mapOf(
+        "platform" to ("stratastax.platform.api-v1.yaml" to "openapi"),
+        "catalog" to ("stratastax.catalog.api-v1.yaml" to "catalog-openapi"),
+        "i18n" to ("stratastax.i18n.api-v1.yaml" to "i18n-openapi"),
+    )
 
-    dependsOn("npmInstall")
+val bundles =
+    specs.map { (name, spec) ->
+        val (fileName, classifier) = spec
+        val input = layout.projectDirectory.file("src/$fileName")
+        val bundled = openApiOutputDir.map { it.file(fileName) }
 
-    doFirst {
-        openApiOutputDir.get().asFile.mkdirs()
+        val suffix = name.replaceFirstChar(Char::uppercase)
+
+        val bundle =
+            tasks.register<NpxTask>("bundleOpenApi$suffix") {
+                group = "openapi"
+                description = "Bundle the $name OpenAPI spec into a single file"
+
+                inputs.dir(layout.projectDirectory.dir("src")).withPropertyName("openApiSources")
+                outputs.file(bundled)
+
+                dependsOn("npmInstall")
+
+                doFirst { openApiOutputDir.get().asFile.mkdirs() }
+
+                command.set("npx")
+                args.set(
+                    listOf(
+                        "@redocly/cli",
+                        "bundle",
+                        input.asFile.absolutePath,
+                        "-o",
+                        bundled.get().asFile.absolutePath,
+                    ),
+                )
+            }
+
+        val lint =
+            tasks.register<NpxTask>("lintOpenApi$suffix") {
+                group = "openapi"
+                description = "Lint the $name OpenAPI spec with the rules of redocly.yaml"
+                inputs.file(bundled)
+                inputs.files(lintConfig, lintRules).withPropertyName("lintConfiguration")
+                dependsOn(bundle)
+                command.set("npx")
+                args.set(
+                    listOf(
+                        "@redocly/cli",
+                        "lint",
+                        bundled.get().asFile.absolutePath,
+                        "--config",
+                        lintConfig.asFile.absolutePath,
+                    ),
+                )
+            }
+
+        Triple(classifier, bundled to bundle, lint)
     }
-
-    command.set("npx")
-    args.set(listOf("@redocly/cli", "bundle", openApiInput.asFile.absolutePath, "-o", bundledFile.get().asFile.absolutePath))
-}
-
-val lintOpenApi = tasks.register<NpxTask>("lintOpenApi") {
-    group = "openapi"
-    description = "Lint OpenAPI specification"
-    inputs.file(bundledFile)
-    dependsOn(bundleOpenApi)
-    command.set("npx")
-    args.set(listOf("@redocly/cli", "lint", bundledFile.get().asFile.absolutePath, "--skip-rule", "security-defined"))
-}
 
 publishing {
     publications {
         create<MavenPublication>("openapi") {
             artifactId = "openapi"
-            artifact(bundledFile) {
-                classifier = "openapi"
-                extension = "yaml"
-                builtBy(bundleOpenApi)
+            bundles.forEach { (classifier, bundle, _) ->
+                artifact(bundle.first) {
+                    this.classifier = classifier
+                    extension = "yaml"
+                    builtBy(bundle.second)
+                }
             }
         }
     }
 }
 
 tasks.named("build") {
-    dependsOn(lintOpenApi)
+    bundles.forEach { (_, _, lint) -> dependsOn(lint) }
 }

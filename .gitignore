@@ -2,3 +2,7 @@
 /build/
 /.gradle/
 /secrets.env
+
+# Gradle and node caches and build output of every module
+.gradle/
+build/

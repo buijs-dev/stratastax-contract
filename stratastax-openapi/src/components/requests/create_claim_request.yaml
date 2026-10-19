@@ -4,7 +4,10 @@ required:
 properties:
   ghostPlayerIds:
     type: array
+    description: Ghost players to claim for the caller's canonical player; deleted ghost players cannot be claimed
     minItems: 1
+    maxItems: 100
+    uniqueItems: true
     items:
       type: string
       format: uuid

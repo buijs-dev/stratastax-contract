@@ -1,0 +1,6 @@
+type: string
+description: The kind of data a privacy setting is about
+enum:
+  - PROFILE
+  - MATCH_HISTORY
+  - MATCH_DETAILS

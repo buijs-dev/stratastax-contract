@@ -1,0 +1,12 @@
+description: Application created, or the stored response of an earlier request with the same Idempotency-Key
+headers:
+  Location:
+    $ref: ../headers/location.yaml
+  ETag:
+    $ref: ../headers/etag.yaml
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/application.yaml

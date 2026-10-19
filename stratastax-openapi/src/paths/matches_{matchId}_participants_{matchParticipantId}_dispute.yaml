@@ -1,0 +1,77 @@
+parameters:
+  - $ref: ../components/parameters/path_match_id.yaml
+  - $ref: ../components/parameters/path_match_participant_id.yaml
+post:
+  summary: Dispute a result
+  description: >
+    Records that the claimed player of a participant disagrees with their recorded result, with the
+    reason; the recorder sees it in the match. Only a user whose canonical player has an active
+    claim edge to the participant's ghost player may dispute it, and only in a finalized match. A
+    new dispute replaces an earlier one. The dispute is cleared when it is withdrawn or when an
+    approved match edit changes the participant; the way to have the result corrected is a match
+    edit (POST /matches/{matchId}/edits).
+  operationId: disputeMatchParticipant
+  security:
+    - bearerAuth:
+        - stx-engine:match-participant-dispute
+  tags:
+    - matches
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+    - $ref: ../components/parameters/header_if_match.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/dispute_participant.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/match.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+delete:
+  summary: Withdraw a dispute
+  description: Withdraws the dispute of the caller on the participant.
+  operationId: withdrawMatchParticipantDispute
+  security:
+    - bearerAuth:
+        - stx-engine:match-participant-dispute
+  tags:
+    - matches
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+    - $ref: ../components/parameters/header_if_match.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/match.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

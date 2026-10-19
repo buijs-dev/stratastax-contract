@@ -1,0 +1,66 @@
+parameters:
+  - $ref: ../components/parameters/path_application_id.yaml
+get:
+  summary: List releases
+  description: Sortable on `version` and `publishedAt`; newest first by default.
+  operationId: listReleases
+  security:
+    - bearerAuth:
+        - stx-i18n:release-read
+  tags:
+    - releases
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/release_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Publish drafts
+  description: >
+    Publishes the drafts of the given locales (all locales with drafts when
+    omitted) as a new release; consumer applications get them with their next
+    bundle request. Returns 409 when there is nothing to publish, or when a
+    draft no longer matches the arguments of its key after an import.
+  operationId: publishRelease
+  security:
+    - bearerAuth:
+        - stx-i18n:release-publish
+  tags:
+    - releases
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_release.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/created_release.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

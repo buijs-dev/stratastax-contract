@@ -1,0 +1,8 @@
+type: string
+description: >
+  Where a game or expansion came from, as `<source>:<id>`, e.g. `bgg:199792`. Unique per game and
+  per expansion: creating a second one with the same source is refused with 409.
+maxLength: 64
+pattern: ^[a-z]+:[0-9]+$
+examples:
+  - bgg:199792

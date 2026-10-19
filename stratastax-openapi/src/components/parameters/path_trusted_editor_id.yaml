@@ -1,0 +1,7 @@
+name: trustedEditorId
+in: path
+required: true
+description: Public trusted editor identifier
+schema:
+  type: string
+  format: uuid

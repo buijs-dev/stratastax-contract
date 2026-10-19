@@ -1,0 +1,7 @@
+name: ghostPlayerId
+in: path
+required: true
+description: Public ghost player identifier
+schema:
+  type: string
+  format: uuid

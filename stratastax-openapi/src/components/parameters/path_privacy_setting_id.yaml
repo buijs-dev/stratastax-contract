@@ -1,0 +1,7 @@
+name: privacySettingId
+in: path
+required: true
+description: Public privacy setting identifier
+schema:
+  type: string
+  format: uuid

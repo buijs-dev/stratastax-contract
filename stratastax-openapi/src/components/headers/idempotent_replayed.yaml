@@ -1,0 +1,7 @@
+description: >
+  Present (`true`) when the response was replayed from an earlier request with the same
+  Idempotency-Key, instead of being executed again
+schema:
+  type: string
+  enum:
+    - 'true'

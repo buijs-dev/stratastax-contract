@@ -1,0 +1,26 @@
+type: object
+description: >
+  The published translations of one locale. Holds only the keys that have a
+  published translation; a consumer keeps its built-in text for every other key.
+required:
+  - application
+  - locale
+  - version
+  - publishedAt
+  - messages
+properties:
+  application:
+    $ref: ./application_id.yaml
+  locale:
+    $ref: ./locale.yaml
+  version:
+    type: integer
+    format: int32
+    description: Release that published this bundle
+  publishedAt:
+    $ref: ./date_time.yaml
+  messages:
+    type: object
+    description: Message key to text
+    additionalProperties:
+      $ref: ./message_text.yaml

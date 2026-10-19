@@ -1,0 +1,5 @@
+description: List of applications
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/application_list.yaml

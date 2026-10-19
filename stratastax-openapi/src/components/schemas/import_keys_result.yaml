@@ -1,0 +1,37 @@
+type: object
+required:
+  - added
+  - updated
+  - obsoleted
+  - unchanged
+properties:
+  added:
+    type: integer
+    format: int32
+    description: New keys
+  updated:
+    type: integer
+    format: int32
+    description: Keys with a new base text, description or arguments
+  obsoleted:
+    type: integer
+    format: int32
+    description: Keys that were not in the catalog and are now obsolete
+  unchanged:
+    type: integer
+    format: int32
+  invalidated:
+    type: array
+    description: >
+      Translations whose arguments no longer match their key after the import.
+      They are kept, but cannot be published until they are fixed.
+    items:
+      type: object
+      required:
+        - key
+        - locale
+      properties:
+        key:
+          $ref: ./message_key.yaml
+        locale:
+          $ref: ./locale.yaml

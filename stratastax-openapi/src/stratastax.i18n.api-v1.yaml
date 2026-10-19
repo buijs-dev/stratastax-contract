@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Stratastax I18n API
+  contact:
+    name: Contact our support
+    email: info@buijs.dev
+    url: https://buijs.dev/
+  license:
+    name: Apache-2.0
+    url: https://github.com/buijs-dev/stratastax-contract/blob/main/LICENSE
+  description: >
+    Translations of Stratastax applications. An application owns a catalog of
+    message keys, imported from the translation files it is built with. In the
+    CMS an administrator writes a draft translation per key and locale and
+    publishes the drafts as a release. A consumer application fetches the
+    published bundle of a locale with a service account (client credentials)
+    and lays it over its built-in translations.
+servers:
+  - url: https://stratastax.dev/rest
+security:
+  - bearerAuth: []
+tags:
+  - name: applications
+    description: Applications that are translated, with their locales.
+  - name: bundles
+    description: Published translations of a locale, read by consumer applications.
+  - name: keys
+    description: The message keys of an application and their draft translations.
+  - name: releases
+    description: Publication of the draft translations.
+paths:
+  /api/v1/applications:
+    $ref: ./paths/applications.yaml
+  /api/v1/applications/{applicationId}:
+    $ref: './paths/applications_{applicationId}.yaml'
+  /api/v1/applications/{applicationId}/locales:
+    $ref: './paths/applications_{applicationId}_locales.yaml'
+  /api/v1/applications/{applicationId}/bundles/{locale}:
+    $ref: './paths/applications_{applicationId}_bundles_{locale}.yaml'
+  /api/v1/applications/{applicationId}/keys:
+    $ref: './paths/applications_{applicationId}_keys.yaml'
+  /api/v1/applications/{applicationId}/keys/import:
+    $ref: './paths/applications_{applicationId}_keys_import.yaml'
+  /api/v1/applications/{applicationId}/keys/{messageKey}:
+    $ref: './paths/applications_{applicationId}_keys_{messageKey}.yaml'
+  /api/v1/applications/{applicationId}/keys/{messageKey}/translations/{locale}:
+    $ref: './paths/applications_{applicationId}_keys_{messageKey}_translations_{locale}.yaml'
+  /api/v1/applications/{applicationId}/releases:
+    $ref: './paths/applications_{applicationId}_releases.yaml'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,27 @@
+get:
+  summary: List candidates
+  description: >
+    Filterable on `stage`, `status`, `reliability`, `bggId` and `isExpansion`,
+    e.g. `stage==INTERPRETED;status==PENDING` for the review queue.
+  operationId: listCandidates
+  security:
+    - bearerAuth:
+        - stx-game-catalog:candidate-read
+  tags:
+    - candidates
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/candidate_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

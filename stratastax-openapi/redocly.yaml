@@ -1,0 +1,15 @@
+# Lint configuration of every spec (see build.gradle.kts). The stratastax rules enforce the
+# conventions of README.md: the standard responses of every operation, and an Idempotency-Key on
+# every mutating operation.
+extends:
+  - recommended
+
+plugins:
+  - ./redocly-rules.js
+
+rules:
+  # Every operation declares its own security (stratastax-codegen fails without it); the
+  # root-level security is not inherited, which this rule would report.
+  security-defined: off
+  stratastax/standard-responses: error
+  stratastax/idempotency-key: error
