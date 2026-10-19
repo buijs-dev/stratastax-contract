@@ -1,0 +1,30 @@
+get:
+  summary: List the privacy settings of the authenticated user
+  description: >
+    Every user has exactly one setting per data type, created PRIVATE together
+    with the user; they are changed with updatePrivacySetting and never created or
+    deleted through the API. Filterable on `id`, `dataType`, `level`, `groupsId`,
+    `groupsName`, `createdAt`, `updatedAt`; sortable on `id`, `dataType`, `level`,
+    `createdAt`, `updatedAt`.
+  operationId: listPrivacySettings
+  security:
+    - bearerAuth:
+        - stx-engine:privacy-setting-read
+  tags:
+    - privacySettings
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/privacy_setting_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

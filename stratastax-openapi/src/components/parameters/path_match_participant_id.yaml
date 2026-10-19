@@ -1,0 +1,7 @@
+name: matchParticipantId
+in: path
+required: true
+description: Public match participant identifier
+schema:
+  type: string
+  format: uuid

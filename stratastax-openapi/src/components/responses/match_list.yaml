@@ -1,0 +1,5 @@
+description: List of matches
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/match_list.yaml

@@ -1,0 +1,4 @@
+type: integer
+format: int32
+description: Position in the match, 1 for the winner; tied participants share a rank
+minimum: 1

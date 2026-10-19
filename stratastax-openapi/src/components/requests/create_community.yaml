@@ -1,0 +1,15 @@
+type: object
+required:
+  - displayName
+  - joinPolicy
+properties:
+  displayName:
+    $ref: ../schemas/display_name.yaml
+  description:
+    $ref: ../schemas/description.yaml
+  joinPolicy:
+    $ref: ../schemas/join_policy.yaml
+  adminGroupId:
+    type: string
+    format: uuid
+    description: A group owned by the caller, whose members administer the community

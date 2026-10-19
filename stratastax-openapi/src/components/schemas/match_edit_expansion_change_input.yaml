@@ -1,0 +1,13 @@
+type: object
+description: >
+  Replaces the expansions of the match with these expansions of the match's game; an empty list
+  removes them all.
+required:
+  - expansionIds
+properties:
+  expansionIds:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+      format: uuid

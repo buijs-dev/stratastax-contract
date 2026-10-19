@@ -1,0 +1,7 @@
+name: expansionId
+in: path
+required: true
+description: Public expansion identifier
+schema:
+  type: string
+  format: uuid

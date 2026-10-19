@@ -1,0 +1,7 @@
+name: gameId
+in: path
+required: true
+description: Public game identifier
+schema:
+  type: string
+  format: uuid

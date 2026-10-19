@@ -1,0 +1,29 @@
+description: >
+  Who may see one kind of data of a user. Every user has exactly one setting per data type,
+  created PRIVATE together with the user.
+type: object
+required:
+  - id
+  - user
+  - dataType
+  - level
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  user:
+    $ref: ./user_ref.yaml
+  dataType:
+    $ref: ./privacy_data_type.yaml
+  level:
+    $ref: ./visibility.yaml
+  groups:
+    type: array
+    description: Only meaningful when level is PRIVILEGED_ACCESS
+    items:
+      $ref: ./group_ref.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

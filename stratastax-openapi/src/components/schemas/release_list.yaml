@@ -1,0 +1,12 @@
+type: object
+allOf:
+  - $ref: ./paged_metadata.yaml
+  - type: object
+    required:
+      - items
+    properties:
+      items:
+        type: array
+        description: Releases in this page, newest first by default
+        items:
+          $ref: ./release.yaml

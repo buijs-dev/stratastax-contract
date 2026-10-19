@@ -1,0 +1,16 @@
+description: The Idempotency-Key was already used for a request with a different payload
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/validation_problem_detail.yaml
+    examples:
+      idempotency_key_reused:
+        value:
+          type: https://errors.stratastax.dev/validation
+          title: Unprocessable Content
+          status: 422
+          detail: Idempotency key reused for a different request
+          errors:
+            - field: Idempotency-Key
+              code: IDEMPOTENCY_KEY_REUSED
+              message: 0192f100-0000-7000-8000-0000000000a5 was already used for a different request

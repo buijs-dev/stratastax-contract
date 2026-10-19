@@ -1,0 +1,31 @@
+parameters:
+  - $ref: ../components/parameters/path_application_id.yaml
+get:
+  summary: List message keys
+  description: >
+    Filterable on `key` (`key==match*`), `obsolete` and `status` with the locale
+    (`status.nl==MISSING`); sortable on `key`.
+  operationId: listMessageKeys
+  security:
+    - bearerAuth:
+        - stx-i18n:key-read
+  tags:
+    - keys
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/message_key_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

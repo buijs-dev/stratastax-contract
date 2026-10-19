@@ -1,0 +1,94 @@
+parameters:
+  - $ref: ../components/parameters/path_ghost_player_id.yaml
+get:
+  summary: Get ghost player
+  operationId: getGhostPlayer
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-read
+  tags:
+    - ghostPlayers
+  responses:
+    '200':
+      $ref: ../components/responses/ghost_player.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+patch:
+  summary: Update ghost player
+  operationId: updateGhostPlayer
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-update
+  tags:
+    - ghostPlayers
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+    - $ref: ../components/parameters/header_if_match.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/update_ghost_player.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/ghost_player.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+delete:
+  summary: Delete ghost player
+  description: >
+    Soft-deletes the ghost player and revokes its claim edges. It stays in the
+    matches it played, but is no longer listed or suggested and cannot be used in
+    new matches or claim requests. The ghost player that represents the caller
+    (`isSelf`) cannot be deleted (409).
+  operationId: deleteGhostPlayer
+  security:
+    - bearerAuth:
+        - stx-engine:ghost-player-delete
+  tags:
+    - ghostPlayers
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+    - $ref: ../components/parameters/header_if_match.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/no_content.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

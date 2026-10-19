@@ -1,0 +1,56 @@
+get:
+  summary: List applications
+  description: Filterable on `id` and `baseLocale`; sortable on `id`, `displayName` and `createdAt`.
+  operationId: listApplications
+  security:
+    - bearerAuth:
+        - stx-i18n:application-read
+  tags:
+    - applications
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/application_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Create application
+  operationId: createApplication
+  security:
+    - bearerAuth:
+        - stx-i18n:application-create
+  tags:
+    - applications
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_application.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/created_application.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

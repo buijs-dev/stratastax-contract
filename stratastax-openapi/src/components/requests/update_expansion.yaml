@@ -1,0 +1,15 @@
+type: object
+description: >
+  Every field is optional; an absent field keeps its value. Only the fields that can be empty
+  (description, imageUrl) accept null, which clears them.
+properties:
+  displayName:
+    $ref: ../schemas/game_display_name.yaml
+  description:
+    anyOf:
+      - $ref: ../schemas/description.yaml
+      - type: "null"
+  imageUrl:
+    anyOf:
+      - $ref: ../schemas/image_url.yaml
+      - type: "null"

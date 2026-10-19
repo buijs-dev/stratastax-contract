@@ -1,0 +1,67 @@
+parameters:
+  - $ref: ../components/parameters/path_game_id.yaml
+get:
+  summary: List expansions for a game
+  description: >
+    Filterable on `id`, `name`, `description`, `sourceRef`, `createdAt`,
+    `updatedAt`; sortable on `id`, `name`, `description`, `createdAt`, `updatedAt`.
+  operationId: listExpansions
+  security:
+    - bearerAuth:
+        - stx-engine:expansion-read
+  tags:
+    - expansions
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/expansion_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Create expansion
+  description: >
+    Adds an expansion to a game. Requires the `stx-engine:expansion-create` role; the
+    game catalog service publishes approved candidates through this operation.
+  operationId: createExpansion
+  security:
+    - bearerAuth:
+        - stx-engine:expansion-create
+  tags:
+    - expansions
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_expansion.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/created_expansion.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

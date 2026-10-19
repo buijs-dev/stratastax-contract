@@ -1,0 +1,5 @@
+description: Claim requests retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/claim_request_list.yaml

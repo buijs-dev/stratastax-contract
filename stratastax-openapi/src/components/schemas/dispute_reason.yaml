@@ -1,0 +1,4 @@
+type: string
+description: Why the player disagrees with the recorded result
+minLength: 1
+maxLength: 1000

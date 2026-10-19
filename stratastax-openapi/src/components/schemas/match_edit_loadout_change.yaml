@@ -1,0 +1,14 @@
+type: object
+description: >
+  New loadout attributes of one participant; they replace the current ones. A participant appears
+  at most once per edit (400 DUPLICATE_CHANGE).
+required:
+  - matchParticipantId
+  - attributes
+properties:
+  matchParticipantId:
+    type: string
+    format: uuid
+  attributes:
+    type: object
+    additionalProperties: true

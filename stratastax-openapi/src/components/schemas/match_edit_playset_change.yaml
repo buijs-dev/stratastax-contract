@@ -1,0 +1,5 @@
+type: object
+description: The playset the edit gives the match; absent playset means the edit removes it.
+properties:
+  playset:
+    $ref: ./playset_ref.yaml

@@ -1,0 +1,7 @@
+name: membershipRequestId
+in: path
+required: true
+description: Public membership request identifier
+schema:
+  type: string
+  format: uuid

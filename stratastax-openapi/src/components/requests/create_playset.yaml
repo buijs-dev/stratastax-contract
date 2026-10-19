@@ -1,0 +1,21 @@
+type: object
+required:
+  - gameId
+  - variants
+properties:
+  gameId:
+    type: string
+    format: uuid
+  displayName:
+    $ref: ../schemas/playset_display_name.yaml
+  variants:
+    $ref: ../schemas/variant_list.yaml
+  scenario:
+    $ref: ../schemas/scenario.yaml
+  expansions:
+    type: array
+    description: Expansions of the game
+    uniqueItems: true
+    items:
+      type: string
+      format: uuid

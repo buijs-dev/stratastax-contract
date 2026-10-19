@@ -1,0 +1,27 @@
+parameters:
+  - $ref: ../components/parameters/path_application_id.yaml
+get:
+  summary: List published locales
+  description: >
+    The locales of the application that have a published bundle, with the
+    release that last changed each of them. Called by consumer applications with
+    a service account.
+  operationId: listPublishedLocales
+  security:
+    - bearerAuth:
+        - stx-i18n:bundle-read
+  tags:
+    - bundles
+  responses:
+    '200':
+      $ref: ../components/responses/published_locale_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

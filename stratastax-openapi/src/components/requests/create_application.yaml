@@ -1,0 +1,17 @@
+type: object
+required:
+  - id
+  - displayName
+  - baseLocale
+properties:
+  id:
+    $ref: ../schemas/application_id.yaml
+  displayName:
+    $ref: ../schemas/display_name.yaml
+  baseLocale:
+    $ref: ../schemas/locale.yaml
+  locales:
+    type: array
+    description: Further locales; the base locale is always included
+    items:
+      $ref: ../schemas/locale.yaml

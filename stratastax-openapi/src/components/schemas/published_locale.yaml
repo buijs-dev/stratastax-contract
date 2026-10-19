@@ -1,0 +1,19 @@
+type: object
+required:
+  - locale
+  - version
+  - publishedAt
+  - messageCount
+properties:
+  locale:
+    $ref: ./locale.yaml
+  version:
+    type: integer
+    format: int32
+    description: Release that last changed this locale
+  publishedAt:
+    $ref: ./date_time.yaml
+  messageCount:
+    type: integer
+    format: int32
+    description: Number of keys with a published translation

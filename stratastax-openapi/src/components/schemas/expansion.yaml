@@ -1,0 +1,24 @@
+type: object
+required:
+  - id
+  - game
+  - displayName
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  game:
+    $ref: ./game_ref.yaml
+  displayName:
+    $ref: ./game_display_name.yaml
+  description:
+    $ref: ./description.yaml
+  imageUrl:
+    $ref: ./image_url.yaml
+  sourceRef:
+    $ref: ./source_ref.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

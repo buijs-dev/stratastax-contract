@@ -1,0 +1,27 @@
+type: object
+required:
+  - steps
+  - unlinkedRankings
+  - candidatesByStage
+  - candidatesByStatus
+properties:
+  steps:
+    type: array
+    items:
+      $ref: ./pipeline_step_status.yaml
+  unlinkedRankings:
+    type: integer
+    format: int64
+    description: Ranking entries still waiting for the BGG enrichment
+  candidatesByStage:
+    type: object
+    description: Number of candidates per stage
+    additionalProperties:
+      type: integer
+      format: int64
+  candidatesByStatus:
+    type: object
+    description: Number of candidates per review status
+    additionalProperties:
+      type: integer
+      format: int64

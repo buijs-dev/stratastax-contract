@@ -1,0 +1,10 @@
+type: string
+description: >
+  Status of a translation: MISSING (no text yet), DRAFT (a text that is not
+  published), PUBLISHED (the published text, without a newer draft), CHANGED
+  (published, with a newer draft).
+enum:
+  - MISSING
+  - DRAFT
+  - PUBLISHED
+  - CHANGED

@@ -1,0 +1,5 @@
+type: string
+description: Decision on a pending request
+enum:
+  - APPROVED
+  - REJECTED

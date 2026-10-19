@@ -1,0 +1,59 @@
+name: Docs
+
+# Lints and bundles the OpenAPI specs and validates the migrations, then asks stratastax-horizon
+# to rebuild docs.stratastax.dev, which bundles the specs and generates the schema docs itself.
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'stratastax-openapi/**'
+      - 'stratastax-schema/**'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: docs
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Java & Gradle
+        uses: buijs-dev/ci-templates/.github/actions/setup-java@main
+
+      - name: Set up Node (Redocly)
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Lint and bundle
+        run: ./gradlew build --stacktrace
+
+  notify:
+    needs: verify
+    runs-on: ubuntu-latest
+    env:
+      DOCS_DISPATCH_TOKEN: ${{ secrets.DOCS_DISPATCH_TOKEN }}
+    steps:
+      - name: Missing token
+        if: env.DOCS_DISPATCH_TOKEN == ''
+        run: echo "::warning::DOCS_DISPATCH_TOKEN is not set; stratastax-horizon is not rebuilt"
+
+      - name: Rebuild docs.stratastax.dev
+        if: env.DOCS_DISPATCH_TOKEN != ''
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ env.DOCS_DISPATCH_TOKEN }}
+          repository: buijs-dev/stratastax-horizon
+          event-type: contract-updated
+          client-payload: '{"sha": "${{ github.sha }}"}'

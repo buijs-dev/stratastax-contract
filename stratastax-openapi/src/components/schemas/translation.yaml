@@ -1,0 +1,19 @@
+type: object
+required:
+  - locale
+  - status
+properties:
+  locale:
+    $ref: ./locale.yaml
+  status:
+    $ref: ./translation_status.yaml
+  draft:
+    description: Text that is published with the next release; absent without a draft
+    $ref: ./message_text.yaml
+  published:
+    description: Text of the latest release; absent before the key is published
+    $ref: ./message_text.yaml
+  updatedAt:
+    $ref: ./date_time.yaml
+  updatedBy:
+    $ref: ./user_ref.yaml

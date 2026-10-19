@@ -1,0 +1,24 @@
+parameters:
+  - $ref: ../components/parameters/path_application_id.yaml
+  - $ref: ../components/parameters/path_message_key.yaml
+get:
+  summary: Get message key
+  operationId: getMessageKey
+  security:
+    - bearerAuth:
+        - stx-i18n:key-read
+  tags:
+    - keys
+  responses:
+    '200':
+      $ref: ../components/responses/message_key.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

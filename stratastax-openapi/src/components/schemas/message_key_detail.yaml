@@ -1,0 +1,31 @@
+type: object
+description: A message key with its base text and the translation per locale
+required:
+  - key
+  - baseText
+  - arguments
+  - obsolete
+  - translations
+properties:
+  key:
+    $ref: ./message_key.yaml
+  baseText:
+    description: Text in the base locale, from the last import
+    $ref: ./message_text.yaml
+  description:
+    type: string
+    description: Context for translators, from the last import
+  arguments:
+    type: array
+    description: Arguments a translation may use
+    items:
+      $ref: ./message_argument.yaml
+  obsolete:
+    type: boolean
+    description: >
+      The last import no longer contained this key. An obsolete key is not
+      published.
+  translations:
+    type: array
+    items:
+      $ref: ./translation.yaml

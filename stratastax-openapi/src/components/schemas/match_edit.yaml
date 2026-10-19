@@ -1,0 +1,41 @@
+type: object
+description: >
+  A proposed change to a finalized match. Only the parts that are present are changed when the
+  edit is approved.
+required:
+  - id
+  - matchId
+  - proposedBy
+  - status
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  matchId:
+    type: string
+    format: uuid
+  proposedBy:
+    $ref: ./user_ref.yaml
+  status:
+    $ref: ./approval_status.yaml
+  decidedBy:
+    $ref: ./user_ref.yaml
+  decidedAt:
+    $ref: ./date_time.yaml
+  participantChanges:
+    type: array
+    items:
+      $ref: ./match_edit_participant_change.yaml
+  loadoutChanges:
+    type: array
+    items:
+      $ref: ./match_edit_loadout_change.yaml
+  playsetChange:
+    $ref: ./match_edit_playset_change.yaml
+  expansionChange:
+    $ref: ./match_edit_expansion_change.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

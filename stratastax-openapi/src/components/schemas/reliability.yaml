@@ -1,0 +1,11 @@
+type: string
+description: >
+  How well the LLM's reading of the rules agrees with the BGG data:
+  HIGH (at least three fields compared, all equal), MEDIUM (all compared
+  fields equal, fewer than three), LOW (at least one mismatch), UNVERIFIED
+  (nothing to compare).
+enum:
+  - HIGH
+  - MEDIUM
+  - LOW
+  - UNVERIFIED

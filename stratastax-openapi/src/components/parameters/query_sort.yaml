@@ -1,0 +1,19 @@
+name: sort
+in: query
+required: false
+description: |
+  Sort order. Format: `field:direction`. Direction is ASC or DESC (default ASC if omitted). 
+  Use a comma-separated list for multi-column sorting; priority follows the parameter order.
+schema:
+  type: string
+  pattern: ^([a-zA-Z0-9_]+(:(ASC|DESC))?)(,([a-zA-Z0-9_]+(:(ASC|DESC))?))*$
+examples:
+  singleColumn:
+    summary: Sort by a single column
+    value: playedAt:DESC
+  multiColumn:
+    summary: Sort by multiple columns
+    value: playedAt:DESC,status:ASC
+  implicitDirection:
+    summary: Omitted direction defaults to ASC
+    value: status,playedAt:DESC

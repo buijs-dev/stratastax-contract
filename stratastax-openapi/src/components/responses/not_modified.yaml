@@ -1,0 +1,6 @@
+description: The bundle of the If-None-Match header is still the published version
+headers:
+  ETag:
+    schema:
+      type: string
+    description: Version of the bundle

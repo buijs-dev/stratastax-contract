@@ -1,0 +1,11 @@
+name: filter
+in: query
+required: false
+description: >
+  RSQL filter expression evaluated against this resource's filterable fields.
+  Combine multiple conditions with `;` (AND) or `,` (OR), e.g.
+  `gameId==3fa85f64-...;playedAt=gt=2026-01-01T00:00:00Z`. The set of filterable
+  fields is documented per endpoint in the API reference;
+  filtering on a field that isn't in that whitelist returns 400 Bad Request.
+schema:
+  type: string

@@ -1,0 +1,5 @@
+description: List of candidates
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/candidate_list.yaml

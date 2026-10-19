@@ -1,0 +1,10 @@
+type: string
+description: >
+  Review status: PENDING (awaiting review), APPROVED (queued for publication to the engine),
+  PUBLISHED (in the engine), REJECTED. A PUBLISHED candidate that is approved again with new values
+  is APPROVED until the pipeline has updated the engine's game or expansion.
+enum:
+  - PENDING
+  - APPROVED
+  - PUBLISHED
+  - REJECTED

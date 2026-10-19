@@ -1,0 +1,64 @@
+parameters:
+  - $ref: ../components/parameters/path_match_id.yaml
+  - $ref: ../components/parameters/path_edit_id.yaml
+get:
+  summary: Get match edit
+  operationId: getMatchEdit
+  security:
+    - bearerAuth:
+        - stx-engine:match-edit-read
+  tags:
+    - matchEdits
+  responses:
+    '200':
+      $ref: ../components/responses/match_edit.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+patch:
+  summary: Decide on a match edit (approve or reject)
+  description: >
+    Approves or rejects a pending edit; only the match's recorder decides. On
+    approval the proposed changes are written to the match, and a dispute on a
+    changed participant is cleared. A decided edit cannot be decided again (409).
+  operationId: decideMatchEdit
+  security:
+    - bearerAuth:
+        - stx-engine:match-edit-decide
+  tags:
+    - matchEdits
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+    - $ref: ../components/parameters/header_if_match.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/decide_match_edit.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/match_edit.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '412':
+      $ref: ../components/responses/precondition_failed_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

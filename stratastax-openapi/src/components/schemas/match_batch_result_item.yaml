@@ -1,0 +1,13 @@
+type: object
+required:
+  - status
+properties:
+  status:
+    type: string
+    enum:
+      - CREATED
+      - FAILED
+  match:
+    $ref: ./match.yaml
+  error:
+    $ref: ./problem_detail.yaml

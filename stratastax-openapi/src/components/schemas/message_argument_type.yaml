@@ -1,0 +1,9 @@
+type: string
+description: >
+  Type of a message argument: ANY (formatted with toString), NUMBER (number,
+  plural and `#`), DATE (date and time), STRING (select).
+enum:
+  - ANY
+  - NUMBER
+  - DATE
+  - STRING

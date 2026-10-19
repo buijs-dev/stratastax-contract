@@ -1,0 +1,8 @@
+type: string
+description: >
+  Text of a message in ICU MessageFormat: plain text, `{name}`,
+  `{n, number}`, `{d, date, short}`, `{n, plural, one {...} other {...}}` and
+  `{x, select, a {...} other {...}}`. It may only use the arguments of its key.
+maxLength: 4000
+examples:
+  - '{count, plural, =0 {Nog geen spelers} one {# speler} other {# spelers}}'

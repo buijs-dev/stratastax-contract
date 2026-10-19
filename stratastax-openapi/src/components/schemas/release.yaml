@@ -1,0 +1,27 @@
+type: object
+required:
+  - version
+  - locales
+  - messageCount
+  - publishedAt
+  - publishedBy
+properties:
+  version:
+    type: integer
+    format: int32
+    description: Sequence number of the release, starting at 1
+  locales:
+    type: array
+    description: Locales whose drafts this release published
+    items:
+      $ref: ./locale.yaml
+  messageCount:
+    type: integer
+    format: int32
+    description: Number of translations this release changed
+  note:
+    type: string
+  publishedAt:
+    $ref: ./date_time.yaml
+  publishedBy:
+    $ref: ./user_ref.yaml

@@ -1,0 +1,7 @@
+description: List of game references retrieved successfully
+content:
+  application/json:
+    schema:
+      type: array
+      items:
+        $ref: ../schemas/game_ref.yaml

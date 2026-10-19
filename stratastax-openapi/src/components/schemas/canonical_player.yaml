@@ -1,0 +1,15 @@
+type: object
+required:
+  - id
+  - displayName
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  displayName:
+    $ref: ./display_name.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

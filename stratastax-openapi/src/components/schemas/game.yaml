@@ -1,0 +1,40 @@
+type: object
+required:
+  - id
+  - displayName
+  - description
+  - minPlayers
+  - maxPlayers
+  - scoreType
+  - tags
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  displayName:
+    $ref: ./game_display_name.yaml
+  description:
+    $ref: ./description.yaml
+  minPlayers:
+    $ref: ./player_count.yaml
+  maxPlayers:
+    $ref: ./player_count.yaml
+  imageUrl:
+    $ref: ./image_url.yaml
+  tags:
+    $ref: ./tag_list.yaml
+  scoreType:
+    $ref: ./score_type.yaml
+  winCondition:
+    $ref: ./win_condition.yaml
+  expansions:
+    type: array
+    items:
+      $ref: ./expansion_ref.yaml
+  sourceRef:
+    $ref: ./source_ref.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

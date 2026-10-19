@@ -1,0 +1,5 @@
+description: Canonical player retrieved successfully
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/canonical_player.yaml

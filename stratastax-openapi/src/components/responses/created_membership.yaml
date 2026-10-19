@@ -1,0 +1,10 @@
+description: Membership created, or the stored response of an earlier request with the same Idempotency-Key
+headers:
+  Location:
+    $ref: ../headers/location.yaml
+  Idempotent-Replayed:
+    $ref: ../headers/idempotent_replayed.yaml
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/membership.yaml

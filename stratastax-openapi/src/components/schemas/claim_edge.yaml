@@ -1,0 +1,25 @@
+type: object
+required:
+  - id
+  - canonicalPlayer
+  - ghostPlayer
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  canonicalPlayer:
+    $ref: ./canonical_player_ref.yaml
+  ghostPlayer:
+    $ref: ./ghost_player_ref.yaml
+  createdViaClaimRequestId:
+    type: string
+    format: uuid
+  revokedAt:
+    $ref: ./date_time.yaml
+  revokedBy:
+    $ref: ./user_ref.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml

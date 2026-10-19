@@ -1,0 +1,11 @@
+type: object
+description: >
+  Every field is optional. A locale that is removed keeps its translations, but
+  is no longer published.
+properties:
+  displayName:
+    $ref: ../schemas/display_name.yaml
+  locales:
+    type: array
+    items:
+      $ref: ../schemas/locale.yaml

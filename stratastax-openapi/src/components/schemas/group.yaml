@@ -1,0 +1,26 @@
+type: object
+required:
+  - id
+  - owner
+  - displayName
+  - memberCount
+  - createdAt
+properties:
+  id:
+    type: string
+    format: uuid
+  owner:
+    $ref: ./user_ref.yaml
+  displayName:
+    $ref: ./display_name.yaml
+  memberCount:
+    type: integer
+    format: int32
+    minimum: 0
+    description: Number of members; list them with listGroupMembers
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml
+  deletedAt:
+    $ref: ./date_time.yaml

@@ -1,0 +1,7 @@
+description: List of ghost player references retrieved successfully
+content:
+  application/json:
+    schema:
+      type: array
+      items:
+        $ref: ../schemas/ghost_player_ref.yaml

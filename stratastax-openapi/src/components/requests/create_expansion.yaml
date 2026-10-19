@@ -1,0 +1,12 @@
+type: object
+required:
+  - displayName
+properties:
+  displayName:
+    $ref: ../schemas/game_display_name.yaml
+  description:
+    $ref: ../schemas/description.yaml
+  imageUrl:
+    $ref: ../schemas/image_url.yaml
+  sourceRef:
+    $ref: ../schemas/source_ref.yaml

@@ -1,0 +1,23 @@
+parameters:
+  - $ref: ../components/parameters/path_canonical_player_id.yaml
+get:
+  summary: Get canonical player
+  operationId: getCanonicalPlayer
+  security:
+    - bearerAuth:
+        - stx-engine:canonical-player-read
+  tags:
+    - canonicalPlayers
+  responses:
+    '200':
+      $ref: ../components/responses/canonical_player.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml

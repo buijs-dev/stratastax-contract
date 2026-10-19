@@ -1,0 +1,12 @@
+description: Authentication required or token invalid
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/problem_detail.yaml
+    examples:
+      authentication:
+        value:
+          type: https://errors.stratastax.dev/authentication
+          title: Unauthorized
+          status: 401
+          detail: Authentication required

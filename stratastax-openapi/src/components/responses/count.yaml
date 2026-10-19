@@ -1,0 +1,9 @@
+description: Total number of matching records
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/count.yaml
+    examples:
+      count:
+        value:
+          count: 42

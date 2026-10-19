@@ -1,0 +1,9 @@
+type: object
+description: The expansions the edit gives the match; they replace the current ones, none removes them all.
+required:
+  - expansions
+properties:
+  expansions:
+    type: array
+    items:
+      $ref: ./expansion_ref.yaml

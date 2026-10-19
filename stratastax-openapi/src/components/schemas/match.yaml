@@ -1,0 +1,48 @@
+type: object
+required:
+  - id
+  - game
+  - recorder
+  - status
+  - playedAt
+  - editRequestsEnabled
+  - createdAt
+  - participants
+properties:
+  id:
+    type: string
+    format: uuid
+  game:
+    $ref: ./game_ref.yaml
+  playset:
+    $ref: ./playset_ref.yaml
+  community:
+    $ref: ./community_ref.yaml
+  recorder:
+    $ref: ./user_ref.yaml
+  status:
+    $ref: ./match_status.yaml
+  playedAt:
+    $ref: ./date_time.yaml
+  editRequestsEnabled:
+    type: boolean
+  finalizedAt:
+    $ref: ./date_time.yaml
+    description: When the match was finalized; absent while it is a DRAFT.
+  lastEditedAt:
+    $ref: ./date_time.yaml
+  lastEditedBy:
+    $ref: ./user_ref.yaml
+  createdAt:
+    $ref: ./date_time.yaml
+  updatedAt:
+    $ref: ./date_time.yaml
+  expansions:
+    type: array
+    items:
+      $ref: ./expansion_ref.yaml
+  participants:
+    type: array
+    minItems: 1
+    items:
+      $ref: ./match_participant.yaml

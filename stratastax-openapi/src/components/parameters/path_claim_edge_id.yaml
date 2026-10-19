@@ -1,0 +1,7 @@
+name: claimEdgeId
+in: path
+required: true
+description: Public claim edge identifier
+schema:
+  type: string
+  format: uuid

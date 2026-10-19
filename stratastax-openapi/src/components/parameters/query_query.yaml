@@ -1,0 +1,7 @@
+name: query
+in: query
+required: true
+schema:
+  type: string
+  minLength: 1
+description: Free-text search term for suggestion matching

@@ -1,0 +1,17 @@
+type: object
+description: A participant of a match; a ghost player takes part at most once.
+required:
+  - ghostPlayerId
+properties:
+  ghostPlayerId:
+    type: string
+    format: uuid
+  score:
+    $ref: ../schemas/score.yaml
+  rank:
+    $ref: ../schemas/rank.yaml
+  outcome:
+    $ref: ../schemas/outcome.yaml
+  loadoutAttributes:
+    type: object
+    additionalProperties: true

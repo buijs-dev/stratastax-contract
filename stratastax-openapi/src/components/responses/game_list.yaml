@@ -1,0 +1,5 @@
+description: List of games
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/game_list.yaml

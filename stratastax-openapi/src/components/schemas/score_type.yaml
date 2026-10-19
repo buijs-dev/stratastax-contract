@@ -1,0 +1,11 @@
+type: string
+description: >
+  How a game is won: by score (SCORE), time (TIME) or number of turns (TURNS), each with a win
+  condition, or by winning and losing (WIN_LOSS), which never has a win condition. The engine
+  (`chk_game_win_condition`) and the game catalog (`chk_candidate_win_condition`) enforce the
+  same rule.
+enum:
+  - SCORE
+  - TIME
+  - TURNS
+  - WIN_LOSS

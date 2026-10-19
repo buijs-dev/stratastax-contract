@@ -1,0 +1,15 @@
+type: object
+description: >
+  The complete key catalog of the application in its base locale, as compiled
+  from its translation files. Keys that are not in the catalog become obsolete.
+required:
+  - baseLocale
+  - keys
+properties:
+  baseLocale:
+    $ref: ../schemas/locale.yaml
+  keys:
+    type: array
+    maxItems: 10000
+    items:
+      $ref: ../schemas/key_catalog_entry.yaml

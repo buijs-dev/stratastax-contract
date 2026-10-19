@@ -1,0 +1,4 @@
+type: object
+properties:
+  displayName:
+    $ref: ../schemas/display_name.yaml

@@ -1,0 +1,62 @@
+parameters:
+  - $ref: ../components/parameters/path_community_id.yaml
+get:
+  summary: List membership requests for a community
+  description: >
+    Filterable on `id`, `proposedById`, `proposedByName`, `decidedById`,
+    `decidedByName`, `status`, `createdAt`; sortable on `id`, `status`,
+    `createdAt`.
+  operationId: listMembershipRequests
+  security:
+    - bearerAuth:
+        - stx-engine:membership-request-read
+  tags:
+    - membershipRequests
+  parameters:
+    - $ref: ../components/parameters/query_limit.yaml
+    - $ref: ../components/parameters/query_cursor.yaml
+    - $ref: ../components/parameters/query_filter.yaml
+    - $ref: ../components/parameters/query_sort.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/membership_request_list.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
+post:
+  summary: Submit a membership request (REQUIRES_APPROVAL join policy)
+  description: >
+    Asks to join a community with the REQUIRES_APPROVAL join policy. A user has at
+    most one pending request per community (409).
+  operationId: createMembershipRequest
+  security:
+    - bearerAuth:
+        - stx-engine:membership-request-create
+  tags:
+    - membershipRequests
+  parameters:
+    - $ref: ../components/parameters/header_idempotency_key.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/created_membership_request.yaml
+    '400':
+      $ref: ../components/responses/validation_error.yaml
+    '401':
+      $ref: ../components/responses/unauthorized_error.yaml
+    '403':
+      $ref: ../components/responses/forbidden_error.yaml
+    '404':
+      $ref: ../components/responses/not_found_error.yaml
+    '409':
+      $ref: ../components/responses/conflict_error.yaml
+    '422':
+      $ref: ../components/responses/unprocessable_content_error.yaml
+    '500':
+      $ref: ../components/responses/internal_server_error.yaml
