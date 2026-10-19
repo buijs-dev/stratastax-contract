@@ -88,7 +88,7 @@ services.forEach { service ->
         tasks.register<Exec>("dockerBuild$suffix") {
             group = "docker"
             description = "Build the docker image for the $service schema migration."
-            commandLine("sh", "./docker-build.sh", service, dockerImageName(service))
+            commandLine("bash", "./docker-build.sh", service, dockerImageName(service))
         }
 
     dockerBuild.configure { dependsOn(build) }

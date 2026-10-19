@@ -14,7 +14,7 @@ val openApiOutputDir = layout.buildDirectory.dir("openapi")
 
 /** Lint configuration with the stratastax rules (standard responses, Idempotency-Key). */
 val lintConfig = layout.projectDirectory.file("redocly.yaml")
-val lintRules = layout.projectDirectory.file("redocly-rules.js")
+val lintRules = layout.projectDirectory.file("redocly-rules.cjs")
 
 /**
  * Every public contract, bundled into one file each and published under its own classifier:

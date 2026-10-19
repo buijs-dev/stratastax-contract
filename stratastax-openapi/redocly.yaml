@@ -5,7 +5,7 @@ extends:
   - recommended
 
 plugins:
-  - ./redocly-rules.js
+  - ./redocly-rules.cjs
 
 rules:
   # Every operation declares its own security (stratastax-codegen fails without it); the
