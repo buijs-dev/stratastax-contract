@@ -371,7 +371,7 @@ Always use **relative paths**. No absolute paths, no `#/components/...` referenc
 ## HTTP status codes
 
 Every operation declares the complete set of responses that applies to it. The lint rule
-`stratastax/standard-responses` ([`redocly-rules.js`](redocly-rules.js)) fails the build otherwise.
+`stratastax/standard-responses` ([`redocly-rules.cjs`](redocly-rules.cjs)) fails the build otherwise.
 
 | Response | Declared by                                                            | Component                     |
 |----------|------------------------------------------------------------------------|-------------------------------|
